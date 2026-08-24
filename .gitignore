@@ -1,0 +1,7 @@
+.venv
+*.toml
+.env
+.out
+.opencode/
+__pycache__/
+*.pyc
