@@ -1,4 +1,4 @@
-name: Build Desktop App
+name: Build Windows Installer
 
 on:
   push:
@@ -16,7 +16,7 @@ env:
 
 jobs:
   # ──────────────────────────────────────────────
-  # Job 1: Build the Vite frontend (runs once)
+  # Job 1: Build the Vite frontend
   # ──────────────────────────────────────────────
   build-frontend:
     name: Build Frontend
@@ -48,10 +48,10 @@ jobs:
           retention-days: 1
 
   # ──────────────────────────────────────────────
-  # Job 2a: Windows installer (NSIS .exe)
+  # Job 2: Build Windows installer (NSIS .exe)
   # ──────────────────────────────────────────────
   build-windows:
-    name: Build Windows (exe)
+    name: Build Windows Installer
     needs: build-frontend
     runs-on: windows-latest
     steps:
@@ -80,108 +80,12 @@ jobs:
         run: npm run electron:build
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Windows installer
+      - name: Upload installer artifact
         uses: actions/upload-artifact@v7
         with:
-          name: installer-windows
-          path: |
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.exe
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
-          retention-days: 30
-
-  # ──────────────────────────────────────────────
-  # Job 2b: macOS installer (DMG)
-  # ──────────────────────────────────────────────
-  build-macos:
-    name: Build macOS (dmg)
-    needs: build-frontend
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
-
-      - name: Download frontend dist
-        uses: actions/download-artifact@v8
-        with:
-          name: frontend-dist
-          path: ${{ env.FRONTEND_DIR }}/dist/
-
-      - name: Install dependencies
-        working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm ci --legacy-peer-deps
-
-      - name: Build Electron macOS installer
-        working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm run electron:build
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-          CSC_LINK: ''
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload macOS installer
-        uses: actions/upload-artifact@v7
-        with:
-          name: installer-macos
-          path: |
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.dmg
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.zip
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
-          retention-days: 30
-
-  # ──────────────────────────────────────────────
-  # Job 2c: Linux installer (AppImage + .deb)
-  # ──────────────────────────────────────────────
-  build-linux:
-    name: Build Linux (AppImage + deb)
-    needs: build-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
-
-      - name: Download frontend dist
-        uses: actions/download-artifact@v8
-        with:
-          name: frontend-dist
-          path: ${{ env.FRONTEND_DIR }}/dist/
-
-      - name: Install dependencies
-        working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm ci --legacy-peer-deps
-
-      - name: Install Linux build dependencies
-        run: sudo apt-get update && sudo apt-get install -y libarchive-tools rpm
-
-      - name: Build Electron Linux installers
-        working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm run electron:build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Linux installers
-        uses: actions/upload-artifact@v7
-        with:
-          name: installer-linux
-          path: |
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.AppImage
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.deb
-            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
+          name: sentinel-windows-installer
+          path: ${{ env.FRONTEND_DIR }}/dist-electron/*.exe
           retention-days: 30
 
   # ──────────────────────────────────────────────
@@ -189,19 +93,17 @@ jobs:
   # ──────────────────────────────────────────────
   create-release:
     name: Create GitHub Release
-    needs: [build-windows, build-macos, build-linux]
+    needs: build-windows
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
-      - name: Download all installer artifacts
+      - name: Download installer
         uses: actions/download-artifact@v8
         with:
-          path: ./installers/
+          name: sentinel-windows-installer
+          path: ./installer/
 
-      - name: List all downloaded files
-        run: find ./installers -type f | sort
-
-      - name: Create GitHub Release
+      - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}
@@ -209,29 +111,17 @@ jobs:
           body: |
             ## Sentinel HR Simulator ${{ github.ref_name }}
 
-            ### Downloads
-
-            | Platform | File | Notes |
-            |----------|------|-------|
-            | 🪟 Windows | `Sentinel Setup *.exe` | Windows 10/11 (64-bit) installer |
-            | 🍎 macOS | `Sentinel *.dmg` | macOS 11+ (Apple Silicon) |
-            | 🐧 Linux | `Sentinel *.AppImage` | Portable — `chmod +x` then run |
-            | 🐧 Linux | `sentinel_*.deb` | Debian/Ubuntu package |
-
             ### Installation
-            1. Download the file for your platform
-            2. **Windows:** Run the `.exe` installer
-            3. **macOS:** Open the `.dmg` and drag to Applications *(note: unsigned — right-click → Open on first launch)*
-            4. **Linux AppImage:** `chmod +x Sentinel*.AppImage && ./Sentinel*.AppImage`
-            5. **Linux deb:** `sudo dpkg -i sentinel_*.deb`
+            1. Download `Sentinel Setup *.exe`
+            2. Run the installer
+            3. Launch Sentinel from Start Menu or Desktop shortcut
 
             ### System Requirements
+            - Windows 10/11 (64-bit)
             - 4 GB RAM minimum
             - Internet connection required for AI features
-
-            See [CHANGELOG.md](CHANGELOG.md) for changes.
           files: |
-            ./installers/**/*
+            ./installer/*.exe
           draft: false
           prerelease: false
         env:
