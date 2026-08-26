@@ -1,0 +1,238 @@
+name: Build Desktop App
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  NODE_VERSION: '22'
+  FRONTEND_DIR: './frontend'
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Build the Vite frontend (runs once)
+  # ──────────────────────────────────────────────
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm ci --legacy-peer-deps
+
+      - name: Build frontend
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run build
+
+      - name: Upload frontend dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: ${{ env.FRONTEND_DIR }}/dist/
+          retention-days: 1
+
+  # ──────────────────────────────────────────────
+  # Job 2a: Windows installer (NSIS .exe)
+  # ──────────────────────────────────────────────
+  build-windows:
+    name: Build Windows (exe)
+    needs: build-frontend
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+
+      - name: Download frontend dist
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: ${{ env.FRONTEND_DIR }}/dist/
+
+      - name: Install dependencies
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm ci --legacy-peer-deps
+
+      - name: Build Electron Windows installer
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run electron:build
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-windows
+          path: |
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.exe
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
+          retention-days: 30
+
+  # ──────────────────────────────────────────────
+  # Job 2b: macOS installer (DMG)
+  # ──────────────────────────────────────────────
+  build-macos:
+    name: Build macOS (dmg)
+    needs: build-frontend
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+
+      - name: Download frontend dist
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: ${{ env.FRONTEND_DIR }}/dist/
+
+      - name: Install dependencies
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm ci --legacy-peer-deps
+
+      - name: Build Electron macOS installer
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run electron:build
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          CSC_LINK: ''
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload macOS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-macos
+          path: |
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.dmg
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.zip
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
+          retention-days: 30
+
+  # ──────────────────────────────────────────────
+  # Job 2c: Linux installer (AppImage + .deb)
+  # ──────────────────────────────────────────────
+  build-linux:
+    name: Build Linux (AppImage + deb)
+    needs: build-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+
+      - name: Download frontend dist
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: ${{ env.FRONTEND_DIR }}/dist/
+
+      - name: Install dependencies
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Linux build dependencies
+        run: sudo apt-get update && sudo apt-get install -y libarchive-tools rpm
+
+      - name: Build Electron Linux installers
+        working-directory: ${{ env.FRONTEND_DIR }}
+        run: npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux installers
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-linux
+          path: |
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.AppImage
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.deb
+            ${{ env.FRONTEND_DIR }}/dist-electron/*.yaml
+          retention-days: 30
+
+  # ──────────────────────────────────────────────
+  # Job 3: Create GitHub Release (on tag push)
+  # ──────────────────────────────────────────────
+  create-release:
+    name: Create GitHub Release
+    needs: [build-windows, build-macos, build-linux]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all installer artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./installers/
+
+      - name: List all downloaded files
+        run: find ./installers -type f | sort
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Sentinel ${{ github.ref_name }}
+          body: |
+            ## Sentinel HR Simulator ${{ github.ref_name }}
+
+            ### Downloads
+
+            | Platform | File | Notes |
+            |----------|------|-------|
+            | 🪟 Windows | `Sentinel Setup *.exe` | Windows 10/11 (64-bit) installer |
+            | 🍎 macOS | `Sentinel *.dmg` | macOS 11+ (Apple Silicon) |
+            | 🐧 Linux | `Sentinel *.AppImage` | Portable — `chmod +x` then run |
+            | 🐧 Linux | `sentinel_*.deb` | Debian/Ubuntu package |
+
+            ### Installation
+            1. Download the file for your platform
+            2. **Windows:** Run the `.exe` installer
+            3. **macOS:** Open the `.dmg` and drag to Applications *(note: unsigned — right-click → Open on first launch)*
+            4. **Linux AppImage:** `chmod +x Sentinel*.AppImage && ./Sentinel*.AppImage`
+            5. **Linux deb:** `sudo dpkg -i sentinel_*.deb`
+
+            ### System Requirements
+            - 4 GB RAM minimum
+            - Internet connection required for AI features
+
+            See [CHANGELOG.md](CHANGELOG.md) for changes.
+          files: |
+            ./installers/**/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
