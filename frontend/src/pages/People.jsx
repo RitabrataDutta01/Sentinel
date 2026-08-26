@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useOrg } from '../lib/useOrg'
 import { verdictStyle } from '../lib/verdict'
-import PageHero from '../components/layout/PageHero'
 import StatTile from '../components/ui/StatTile'
+import PageHero from '../components/layout/PageHero'
 import {
   createOrg,
   joinOrg,
@@ -16,7 +16,6 @@ import {
 } from '../lib/api'
 import { fetchMemberSessions, aggregateAnalytics, reportOf, sessionScore, sessionMinutes, endMoodOf } from '../lib/supabase'
 import { moodColor } from '../lib/mood'
-import PageShell from '../components/layout/PageShell'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
@@ -309,21 +308,19 @@ export default function People() {
 
   if (loading) {
     return (
-      <PageShell className="px-6 py-12">
-        <div className="flex min-h-[50vh] items-center justify-center">
-          <div className="flex items-center gap-2 text-sm text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            Loading…
-          </div>
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+          Loading…
         </div>
-      </PageShell>
+      </div>
     )
   }
 
   /* ── No org yet: onboarding (create / join) ───────────────────── */
   if (!org) {
     return (
-      <PageShell className="px-6 py-12">
+      <div className="px-6 py-12">
         <div className="mx-auto max-w-md">
           <div className="relative overflow-hidden rounded-2xl border border-border bg-surface px-6 py-10 mb-8">
             <div
@@ -432,7 +429,7 @@ export default function People() {
             </form>
           )}
         </div>
-      </PageShell>
+      </div>
     )
   }
 
@@ -440,7 +437,7 @@ export default function People() {
   const yourUserId = membership?.user_id
 
   return (
-    <PageShell className="px-6 py-12">
+    <div className="px-6 py-12">
       <div className="w-full">
         <PageHero
           eyebrow="Organization"
@@ -641,6 +638,6 @@ export default function People() {
           </div>
         )}
       </div>
-    </PageShell>
+    </div>
   )
 }

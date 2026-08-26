@@ -4,8 +4,8 @@ from httpx import stream
 from app.utils import count_filler_words
 
 # Configuration constants
-GROQ_MODEL_MAIN = "llama-3.1-70b-versatile"
-GROQ_MODEL_FAST = "llama-3.1-8b-instant"
+GROQ_MODEL_MAIN = "openai/gpt-oss-120b"
+GROQ_MODEL_FAST = "openai/gpt-oss-20b"
 TEMPERATURE_DEFAULT = 0.7
 TEMPERATURE_BRUTAL = 0.8
 TEMPERATURE_GRADER = 0.3

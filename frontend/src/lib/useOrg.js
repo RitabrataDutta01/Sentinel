@@ -18,19 +18,29 @@ function setCache(next) {
 
 async function loadOrg() {
   if (inflight) return inflight
-  inflight = Promise.all([getMyOrg(), fetchPendingInvites()])
-    .then(([d, invites]) =>
+  inflight = (async () => {
+    try {
+      // Fetch both independently so a pending-invites failure doesn't lose org data
+      const [orgResult, invitesResult] = await Promise.allSettled([
+        getMyOrg(),
+        fetchPendingInvites(),
+      ])
+
+      const orgData = orgResult.status === 'fulfilled' ? orgResult.value : null
+      const invites = invitesResult.status === 'fulfilled' ? invitesResult.value : []
+
       setCache({
-        org: d?.org ?? null,
-        membership: d?.membership ?? null,
+        org: orgData?.org ?? null,
+        membership: orgData?.membership ?? null,
         pendingInvites: invites ?? [],
         loading: false,
-      }),
-    )
-    .catch(() => setCache({ org: null, membership: null, pendingInvites: [], loading: false }))
-    .finally(() => {
+      })
+    } catch {
+      setCache({ org: null, membership: null, pendingInvites: [], loading: false })
+    } finally {
       inflight = null
-    })
+    }
+  })()
   return inflight
 }
 

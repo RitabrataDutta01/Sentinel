@@ -316,7 +316,7 @@ const conversation = [
 
 const simBody = root.querySelector('#simBody');
 const moodBadge = root.querySelector('#moodBadge');
-let currentIndex = 0;
+let _currentIndex = 0;
 let isRunning = false;
 
 function createTypingIndicator() {

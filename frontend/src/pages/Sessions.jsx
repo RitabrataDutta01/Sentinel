@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fetchSessions, reportOf, sessionScore, sessionMinutes, endMoodOf } from '../lib/supabase'
 import { moodColor } from '../lib/mood'
-import PageShell from '../components/layout/PageShell'
 import PageHero from '../components/layout/PageHero'
 import StatTile from '../components/ui/StatTile'
 import { verdictStyle, verdictCssColor } from '../lib/verdict'
@@ -19,6 +18,144 @@ function MoodShift({ session }) {
     <span className={`text-xs font-mono tabular-nums ${color}`} title={`Mood ${start} → ${end}/10`}>
       {arrow} {Math.abs(delta)} · {end}/10
     </span>
+  )
+}
+
+function SessionItem({ session, expanded, setExpanded }) {
+  const rep = reportOf(session)
+  const score = sessionScore(session)
+  const minutes = sessionMinutes(session)
+  const isOpen = expanded === session.id
+  const verdictColor = verdictCssColor(rep?.verdict, rep)
+
+  return (
+    <motion.div
+      key={session.id}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: 0.04 }}
+      className={`relative overflow-hidden rounded-2xl border bg-surface transition-colors ${
+        isOpen ? 'border-accent/50' : 'border-border hover:border-border-light'
+      }`}
+    >
+      <div
+        className="flex items-center justify-between p-4"
+        onClick={() => setExpanded(isOpen ? null : session.id)}
+      >
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 shrink-0">
+            <span className="text-sm font-semibold text-accent">
+              {session.scenario?.charAt(0).toUpperCase() ?? 'S'}
+            </span>
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-foreground truncate">{session.scenario}</p>
+            <p className="text-xs text-muted truncate">
+              {session.context || 'No context'}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 text-sm text-muted shrink-0">
+          {rep ? (
+            <>
+              <span className="flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: moodColor(endMoodOf(session)) }} />
+                <MoodShift session={session} />
+              </span>
+              <span className={`inline-flex items-center px-2 py-1 rounded-lg border text-[11px] font-semibold capitalize ${verdictStyle(rep?.verdict, rep)}`}>
+                {rep?.verdict ?? 'PENDING'}
+              </span>
+              {score != null && (
+                <span className="flex items-center gap-1 font-mono tabular-nums text-primary">
+                  {score}/100
+                </span>
+              )}
+              {minutes != null && (
+                <span className="flex items-center gap-1 font-mono tabular-nums text-muted">
+                  {minutes} min
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="italic text-muted">In progress</span>
+          )}
+        </div>
+      </div>
+      <AnimatePresence>
+        {expanded === session.id && rep && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-border bg-surface/50"
+          >
+            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-xs font-semibold text-muted mb-1">Personality</p>
+                <p className="text-primary">{session.personality || '—'}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-muted mb-1">Brutal mode</p>
+                <p className="text-primary">{session.brutal_mode ? 'On' : 'Off'}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-xs font-semibold text-muted mb-2">Executive summary</p>
+                <p className="text-primary">{rep.executive_summary || '—'}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-xs font-semibold text-muted mb-2">Strengths</p>
+                <ul className="flex flex-col gap-1 text-primary">
+                  {rep.strengths?.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-mood-warm">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-xs font-semibold text-muted mb-2">Weaknesses</p>
+                <ul className="flex flex-col gap-1 text-primary">
+                  {rep.critical_weaknesses?.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-mood-cold">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="px-4 pb-4 flex justify-end">
+              <Link
+                to={`/report/${session.id}`}
+                className="inline-block text-sm font-semibold text-accent hover:text-accent-light transition-colors"
+              >
+                View full report →
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}
+
+function SessionList({ sessions, expanded, setExpanded }) {
+  const reverse = useMemo(() => [...sessions].reverse(), [sessions])
+
+  return (
+    <div className="flex flex-col gap-3">
+      <AnimatePresence>
+        {reverse.map((s, i) => (
+          <SessionItem
+            key={s.id}
+            session={s}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          />
+        ))}
+      </AnimatePresence>
+    </div>
   )
 }
 
@@ -50,197 +187,93 @@ export default function Sessions() {
     return sessions.filter((s) => s.scenario === filter)
   }, [sessions, filter])
 
-  const reverse = useMemo(() => [...filtered].reverse(), [filtered])
-
   const bestScore = useMemo(() => {
     const scores = sessions.map(sessionScore).filter((s) => s != null)
     return scores.length ? Math.max(...scores) : null
   }, [sessions])
 
-  return (
-    <PageShell className="px-6 py-12">
-      <div className="w-full">
+  if (loading) {
+    return (
+      <div className="px-6 py-12">
         <PageHero
           eyebrow="Session history"
           title="Your sessions"
-          subtitle={
-            sessions.length > 0
-              ? `${sessions.length} completed run${sessions.length > 1 ? 's' : ''} across ${scenarioOptions.length} scenario${scenarioOptions.length !== 1 ? 's' : ''}.`
-              : 'No sessions yet — start your first scenario.'
-          }
-        >
-          {scenarioOptions.length > 1 && (
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
-            >
-              <option value="all">All scenarios</option>
-              {scenarioOptions.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          )}
-        </PageHero>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
-          <StatTile label="Completed runs" value={sessions.length} tone="accent" />
-          <StatTile label="Scenarios" value={scenarioOptions.length} tone="neutral" />
-          <StatTile
-            label="Best score"
-            value={bestScore ?? '—'}
-            tone="warm"
-            accentValue={bestScore != null}
-          />
+          subtitle="Loading sessions…"
+        />
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+          Loading sessions…
         </div>
-
-        {error && (
-          <div className="mb-6 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
-            {error}
-          </div>
-        )}
-
-        {loading ? (
-          <div className="flex items-center gap-2 text-sm text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            Loading sessions…
-          </div>
-        ) : reverse.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-border px-5 py-12 text-center">
-            <p className="text-sm text-muted mb-4">No completed sessions yet.</p>
-            <Link
-              to="/scenarios"
-              className="inline-block px-5 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-accent-light transition-colors"
-            >
-              Start a scenario
-            </Link>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {reverse.map((s, i) => {
-              const rep = reportOf(s)
-              const score = sessionScore(s)
-              const minutes = sessionMinutes(s)
-              const isOpen = expanded === s.id
-              const verdictColor = verdictCssColor(rep?.verdict, rep)
-              return (
-                <motion.div
-                  key={s.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: 0.04 * i }}
-                  className={`relative overflow-hidden rounded-2xl border bg-surface transition-colors ${
-                    isOpen ? 'border-accent/50' : 'border-border hover:border-border-light'
-                  }`}
-                >
-                  <div
-                    className="absolute left-0 top-0 bottom-0 w-[3px]"
-                    style={{ background: verdictColor }}
-                  />
-                  <button
-                    onClick={() => setExpanded(isOpen ? null : s.id)}
-                    className="w-full text-left px-5 pl-8 py-4"
-                  >
-                    <div className="flex items-center justify-between gap-3 flex-wrap">
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-primary truncate">
-                          {s.scenario}
-                        </p>
-                        <p className="text-xs text-dim mt-0.5">
-                          {new Date(s.created_at).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })}
-                          {minutes ? ` · ${minutes}m` : ''}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <MoodShift session={s} />
-                        {score != null && (
-                          <span className="text-sm font-mono font-semibold tabular-nums" style={{ color: moodColor(Math.max(1, Math.min(10, 1 + score / 12))) }}>
-                            {score}
-                          </span>
-                        )}
-                        {rep?.verdict && (
-                          <span className={`inline-block px-2.5 py-1 rounded-lg border text-[11px] font-bold tracking-wide ${verdictStyle(rep.verdict, rep)}`}>
-                            {rep.verdict}
-                          </span>
-                        )}
-                        <span className={`text-xs text-dim transition-transform ${isOpen ? 'rotate-180' : ''}`}>▾</span>
-                      </div>
-                    </div>
-                  </button>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.18 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-5 pt-1 border-t border-border/60 pl-8">
-                          {rep?.executive_summary && (
-                            <p className="text-sm text-muted leading-relaxed mb-4 max-w-prose">{rep.executive_summary}</p>
-                          )}
-
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                              <p className="text-[11px] font-semibold uppercase tracking-wider text-mood-warm mb-2">
-                                Strengths
-                              </p>
-                              {rep?.strengths?.length ? (
-                                <ul className="flex flex-col gap-1.5">
-                                  {rep.strengths.map((item, i) => (
-                                    <li key={i} className="text-sm text-muted flex items-start gap-2">
-                                      <span className="text-mood-warm mt-0.5">•</span>
-                                      <span>{item}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : (
-                                <p className="text-sm text-dim italic">None noted.</p>
-                              )}
-                            </div>
-                            <div>
-                              <p className="text-[11px] font-semibold uppercase tracking-wider text-mood-cold mb-2">
-                                Weaknesses
-                              </p>
-                              {rep?.critical_weaknesses?.length ? (
-                                <ul className="flex flex-col gap-1.5">
-                                  {rep.critical_weaknesses.map((item, i) => (
-                                    <li key={i} className="text-sm text-muted flex items-start gap-2">
-                                      <span className="text-mood-cold mt-0.5">•</span>
-                                      <span>{item}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : (
-                                <p className="text-sm text-dim italic">None noted.</p>
-                              )}
-                            </div>
-                          </div>
-
-                          <Link
-                            to={`/report/${s.id}`}
-                            className="inline-block text-sm font-semibold text-accent hover:text-accent-light transition-colors"
-                          >
-                            View full report →
-                          </Link>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              )
-            })}
-          </div>
-        )}
       </div>
-    </PageShell>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="px-6 py-12">
+        <PageHero
+          eyebrow="Session history"
+          title="Your sessions"
+          subtitle="Error loading sessions"
+        />
+        <div className="mb-6 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+          {error}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="px-6 py-12">
+      <PageHero
+        eyebrow="Session history"
+        title="Your sessions"
+        subtitle={
+          sessions.length > 0
+            ? `${sessions.length} completed run${sessions.length > 1 ? 's' : ''} across ${scenarioOptions.length} scenario${scenarioOptions.length !== 1 ? 's' : ''}.`
+            : 'No sessions yet — start your first scenario.'
+        }
+      >
+        {scenarioOptions.length > 1 && (
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
+          >
+            <option value="all">All scenarios</option>
+            {scenarioOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        )}
+      </PageHero>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
+        <StatTile label="Completed runs" value={sessions.length} tone="accent" />
+        <StatTile label="Scenarios" value={scenarioOptions.length} tone="neutral" />
+        <StatTile
+          label="Best score"
+          value={bestScore ?? '—'}
+          tone="warm"
+          accentValue={bestScore != null}
+        />
+      </div>
+
+      {sessions.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border px-5 py-12 text-center">
+          <p className="text-sm text-muted mb-4">No completed sessions yet.</p>
+          <Link
+            to="/scenarios"
+            className="inline-block px-5 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-accent-light transition-colors"
+          >
+            Start a scenario
+          </Link>
+        </div>
+      ) : (
+        <SessionList sessions={filtered} expanded={expanded} setExpanded={setExpanded} />
+      )}
+    </div>
   )
 }

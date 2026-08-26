@@ -562,6 +562,51 @@ def remove_org_member(org_id, user_id):
 
     return jsonify({"message": "Member removed"}), 200
 
+@api.route('/reports', methods = ['GET'])
+@requires_auth
+def list_reports():
+
+    """Return all sessions that have an evaluation report, for the Reports page."""
+
+    try:
+        response = state_db.db.table("sessions").select(
+            "id, scenario, context, personality, brutal_mode, current_mood, mood_timeline, evaluation_report, created_at"
+        ).eq("user_id", g.user_id).order("created_at", desc=True).execute()
+
+        sessions = response.data or []
+
+        reports = []
+        for s in sessions:
+            report = s.get("evaluation_report")
+            if not report:
+                continue
+            if isinstance(report, str):
+                try:
+                    report = json.loads(report)
+                except Exception:
+                    continue
+            reports.append({
+                "id": s["id"],
+                "scenario": s.get("scenario", ""),
+                "context": s.get("context", ""),
+                "personality": s.get("personality", ""),
+                "brutal_mode": s.get("brutal_mode", False),
+                "created_at": s.get("created_at"),
+                "overall_score": report.get("overall_score"),
+                "verdict": report.get("verdict"),
+                "verdict_level": report.get("verdict_level"),
+                "confidence_score": report.get("confidence_score"),
+                "skills": report.get("skills", {}),
+                "executive_summary": report.get("executive_summary", ""),
+                "duration_sec": report.get("duration_sec"),
+            })
+
+        return jsonify({"reports": reports}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to load reports: {str(e)}"}), 500
+
+
 @api.route('/scenarios', methods = ['GET'])
 @requires_auth
 def list_scenarios():

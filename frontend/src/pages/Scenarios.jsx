@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { getScenarios, startSession } from '../lib/api'
 import { fetchSessions } from '../lib/supabase'
 import { useSessionStore } from '../store/sessionStore'
-import PageShell from '../components/layout/PageShell'
 import PageHero from '../components/layout/PageHero'
 import { Button } from '../components/ui/button'
 import { Label } from '../components/ui/label'
@@ -123,16 +122,9 @@ export default function Scenarios() {
     }
   }
 
-  return (
-    <PageShell className="px-6 py-12">
-      <div className="w-full">
-        <PageHero
-          eyebrow="Scenario library"
-          title="Choose a battle"
-          subtitle="Each scenario drops you into a high-stakes conversation with a realistic counterpart. Pick one, tune the pressure, and the interviewer takes it from there."
-        />
-
-        {error && (
+return (
+    <div className="px-6 py-12">
+      {error && (
           <div className="mb-8 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
             {error}
           </div>
@@ -277,9 +269,8 @@ export default function Scenarios() {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+</motion.div>
         )}
-      </div>
-    </PageShell>
+    </div>
   )
 }

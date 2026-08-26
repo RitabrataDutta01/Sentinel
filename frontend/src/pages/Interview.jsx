@@ -1,16 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { ArrowUp } from 'lucide-react'
 import { streamChat, sendAudioTurn } from '../lib/api'
 import { useSessionStore } from '../store/sessionStore'
 import { moodColor } from '../lib/mood'
-import PageShell from '../components/layout/PageShell'
-
-/**
- * The confirmed 1-10 mood int is mapped to a color (see lib/mood.js) —
- * this IS the "ambient cue, not a labeled meter" the brief asks for.
- * The number itself is never shown to the user.
- */
 
 function TypingDots() {
   return (
@@ -18,7 +12,7 @@ function TypingDots() {
       {[0, 1, 2].map((i) => (
         <motion.span
           key={i}
-          className="w-1.5 h-1.5 rounded-full bg-muted"
+          className="h-1.5 w-1.5 rounded-full bg-muted"
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.15 }}
         />
@@ -56,8 +50,6 @@ export default function Interview() {
   const [muted, setMuted] = useState(true)
   const scrollRef = useRef(null)
 
-  // If the store's session doesn't match the URL (e.g. page refresh),
-  // there's no setup data to resume from — send them back to start one.
   const sessionMismatch = !sessionId || sessionId !== sessionIdParam
 
   useEffect(() => {
@@ -86,7 +78,7 @@ export default function Interview() {
         terminateSession(err.reason)
         navigate(`/report/${sessionId}?terminated=${encodeURIComponent(err.reason)}`)
       } else {
-        setError(err.message || 'Connection to the interviewer dropped — try again.')
+        setError(err.message || 'Connection to the interviewer dropped.')
       }
     } finally {
       if (!terminated) {
@@ -102,17 +94,6 @@ export default function Interview() {
     return () => clearInterval(id)
   }, [])
 
-  function fmtTime(sec) {
-    const m = String(Math.floor(sec / 60)).padStart(2, '0')
-    const s = String(sec % 60).padStart(2, '0')
-    return `${m}:${s}`
-  }
-
-  // ASSUMPTION (unconfirmed): the interviewer's opening question is
-  // fetched by sending an empty first message to /api/chat right after
-  // /api/start. If the backend instead sends the opener as part of
-  // /api/start's response, swap this for reading it off that response
-  // in Setup.jsx instead.
   useEffect(() => {
     if (sessionMismatch || openingRequested || messages.length > 0) return
     setOpeningRequested(true)
@@ -124,34 +105,14 @@ export default function Interview() {
   const mediaRecorderRef = useRef(null)
   const audioChunksRef = useRef([])
 
-  // Helper function to get supported audio MIME type
   const getSupportedAudioMimeType = () => {
-    const mimeTypes = [
-      'audio/webm;codecs=opus',
-      'audio/webm',
-      'audio/ogg;codecs=opus',
-      'audio/ogg'
-    ];
-
-    // Check if MediaRecorder is supported
-    if (!window.MediaRecorder) {
-      return null;
-    }
-
-    // Try each MIME type until we find one that's supported
+    const mimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/ogg']
+    if (!window.MediaRecorder) return null
     for (const mimeType of mimeTypes) {
-      try {
-        if (MediaRecorder.isTypeSupported(mimeType)) {
-          return mimeType;
-        }
-      } catch (e) {
-        // Some browsers throw errors on unsupported types
-        continue;
-      }
+      try { if (MediaRecorder.isTypeSupported(mimeType)) return mimeType } catch { continue }
     }
-
-    return null;
-  };
+    return null
+  }
 
   function speakText(text) {
     if (muted || !text) return
@@ -159,8 +120,7 @@ export default function Interview() {
     const u = new SpeechSynthesisUtterance(text)
     u.rate = 1.0
     const voices = window.speechSynthesis.getVoices()
-    u.voice = voices.find(v => v.lang.startsWith('en-US'))
-      || voices.find(v => v.lang.startsWith('en'))
+    u.voice = voices.find(v => v.lang.startsWith('en-US')) || voices.find(v => v.lang.startsWith('en'))
     window.speechSynthesis.speak(u)
   }
 
@@ -169,79 +129,40 @@ export default function Interview() {
   async function startRecording() {
     stopSpeaking()
     try {
-      // Check for MediaRecorder support
-      if (!window.MediaRecorder) {
-        setError('Audio recording is not supported in this browser.')
-        return
-      }
-
-      // Get supported MIME type
+      if (!window.MediaRecorder) { setError('Audio recording not supported.'); return }
       const mimeType = getSupportedAudioMimeType()
-      if (!mimeType) {
-        setError('No supported audio format found for recording.')
-        return
-      }
+      if (!mimeType) { setError('No supported audio format found.'); return }
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const mediaRecorder = new MediaRecorder(stream, { mimeType })
       mediaRecorderRef.current = mediaRecorder
       audioChunksRef.current = []
 
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) audioChunksRef.current.push(e.data)
-      }
+      mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data) }
 
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: mimeType })
-        const audioFile = new File([audioBlob], `audio_turn.${mimeType.includes('webm') ? 'webm' : 'ogg'}`, { type: mimeType })
-
+        const audioFile = new File([audioBlob], `audio.${mimeType.includes('webm') ? 'webm' : 'ogg'}`, { type: mimeType })
         setError(null)
         beginAiStream()
         try {
           const res = await sendAudioTurn({ audioFile, sessionId })
-          addAudioTurn({
-            userTranscript: res.user_transcript,
-            response: res.response,
-            currentMood: res.current_mood,
-            fillerAnalysis: res.current_turn_fillers,
-          })
+          addAudioTurn({ userTranscript: res.user_transcript, response: res.response, currentMood: res.current_mood, fillerAnalysis: res.current_turn_fillers })
           speakText(res.response)
-        } catch (err) {
-          setError(err.message || 'Audio processing failed — try again.')
-        } finally {
-          finishAiStream()
-          stream.getTracks().forEach(track => track.stop())
-        }
+        } catch (err) { setError(err.message || 'Audio processing failed.') }
+        finally { finishAiStream(); stream.getTracks().forEach(t => t.stop()) }
       }
 
       mediaRecorder.start()
       setRecording(true)
     } catch (err) {
-      // Handle specific error types
-      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-        setError('Microphone access denied. Please grant permission to use your microphone.')
-      } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-        setError('No microphone found. Please connect a microphone and try again.')
-      } else {
-        setError('Microphone access failed — please check your microphone settings and try again.')
-      }
+      if (err.name === 'NotAllowedError') setError('Microphone access denied.')
+      else if (err.name === 'NotFoundError') setError('No microphone found.')
+      else setError('Microphone access failed.')
     }
   }
 
-  function stopRecording() {
-    if (mediaRecorderRef.current && recording) {
-      mediaRecorderRef.current.stop()
-      setRecording(false)
-    }
-  }
-
-  function toggleRecording() {
-    if (recording) {
-      stopRecording()
-    } else {
-      startRecording()
-    }
-  }
+  function stopRecording() { if (mediaRecorderRef.current && recording) { mediaRecorderRef.current.stop(); setRecording(false) } }
 
   async function handleSend() {
     stopSpeaking()
@@ -253,72 +174,44 @@ export default function Interview() {
   }
 
   function handleKeyDown(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
   }
 
   if (sessionMismatch) {
     return (
-      <PageShell className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-full">
         <div className="text-center max-w-sm">
-          <h1 className="text-xl font-semibold mb-2">No active session</h1>
-          <p className="text-muted text-sm mb-6">
-            This interview link isn't tied to a session in progress. Start a new one to continue.
-          </p>
-          <button
-            onClick={() => navigate('/scenarios')}
-            className="px-5 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-accent-light transition-colors"
-          >
+          <h1 className="text-lg font-semibold mb-2">No active session</h1>
+          <p className="text-muted text-sm mb-6">This interview link isn't tied to a session in progress.</p>
+          <button onClick={() => navigate('/scenarios')} className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-light transition-colors">
             Start a session
           </button>
         </div>
-      </PageShell>
+      </div>
     )
   }
 
   const glow = moodColor(currentMood)
 
   return (
-    <PageShell className="flex flex-col h-screen">
-      {/* ambient mood bar — the only visible signal, no number/label */}
+    <div className="flex h-full flex-col">
+      {/* Ambient mood bar */}
       <motion.div
-        className="h-[3px] w-full shrink-0"
-        animate={{ backgroundColor: glow, boxShadow: `0 0 20px ${glow}` }}
+        className="h-[2px] w-full shrink-0"
+        animate={{ backgroundColor: glow, boxShadow: `0 0 16px ${glow}` }}
         transition={{ duration: 0.8, ease: 'easeInOut' }}
       />
 
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">
-            {setup?.scenario ?? 'Interview'}
-          </p>
-          <p className="text-sm text-muted mt-0.5">{setup?.context}</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-mono text-dim tabular-nums">{fmtTime(elapsed)}</span>
-          <button
-            onClick={() => {
-              setDuration(elapsed)
-              navigate(`/report/${sessionId}`)
-            }}
-            className="px-4 py-2 rounded-lg border border-border text-sm text-muted hover:border-border-light hover:text-primary transition-colors"
-          >
-            End session
-          </button>
-        </div>
-      </div>
-
+      {/* Chat messages */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 py-6">
-        <div className="max-w-2xl mx-auto flex flex-col gap-4">
+        <div className="mx-auto flex max-w-2xl flex-col gap-3">
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                   m.role === 'user'
-                    ? 'bg-accent text-white rounded-br-sm'
-                    : 'bg-surface border border-border rounded-bl-sm'
+                    ? 'bg-elevated text-foreground rounded-br-sm'
+                    : 'bg-surface text-secondary border border-border rounded-bl-sm'
                 }`}
               >
                 {m.content}
@@ -328,9 +221,9 @@ export default function Interview() {
 
           {isStreaming && (
             <div className="flex justify-start">
-              <div className="bg-surface border border-border rounded-2xl rounded-bl-sm max-w-[80%]">
+              <div className="max-w-[80%] rounded-2xl rounded-bl-sm border border-border bg-surface">
                 {streamingText ? (
-                  <p className="px-4 py-3 text-sm leading-relaxed">{streamingText}</p>
+                  <p className="px-4 py-2.5 text-sm leading-relaxed text-secondary">{streamingText}</p>
                 ) : (
                   <TypingDots />
                 )}
@@ -338,51 +231,60 @@ export default function Interview() {
             </div>
           )}
 
-          {error && <p className="text-sm text-mood-cold text-center">{error}</p>}
+          {error && <p className="text-center text-sm text-red-400">{error}</p>}
         </div>
       </div>
 
-      <div className="border-t border-border px-6 py-4 shrink-0">
-        <div className="max-w-2xl mx-auto flex items-end gap-3">
-          <textarea
+      {/* Input area */}
+      <div className="shrink-0 border-t border-border px-6 py-3">
+        <div className="mx-auto flex max-w-2xl items-center gap-2">
+          {/* Voice toggle */}
+          <button
+            type="button"
+            onClick={() => { if (recording) stopRecording(); else startRecording() }}
+            disabled={isStreaming}
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors ${
+              recording
+                ? 'border-red-400/40 bg-red-400/10 text-red-400 animate-pulse'
+                : 'border-border-light bg-surface text-muted hover:text-foreground'
+            }`}
+            title={recording ? 'Stop recording' : 'Record voice'}
+          >
+            <svg className="h-4 w-4" fill={recording ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+            </svg>
+          </button>
+
+          {/* Text input */}
+          <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isStreaming}
-            placeholder="Type your answer…"
-            rows={1}
-            className="flex-1 resize-none rounded-lg border border-border bg-surface px-4 py-3 text-sm placeholder:text-dim focus:outline-none focus:border-accent transition-colors disabled:opacity-50"
+            placeholder="Type your response..."
+            className="flex-1 rounded-xl border border-border-light bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-accent transition-colors disabled:opacity-40"
           />
-          <button
-            type="button"
-            onClick={toggleRecording}
-            disabled={isStreaming}
-            className={`px-4 py-3 rounded-lg border text-sm font-semibold transition-colors ${
-              recording
-                ? 'bg-mood-cold/20 border-mood-cold text-mood-cold animate-pulse'
-                : 'border-border bg-surface text-muted hover:border-border-light hover:text-primary'
-            }`}
-            title={recording ? 'Stop recording' : 'Record voice answer'}
-          >
-            🎤 {recording ? 'Stop' : 'Voice'}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMuted(m => !m)}
-            className="px-3 py-3 rounded-lg border border-border bg-surface text-sm hover:border-border-light transition-colors"
-            title={muted ? 'Unmute voice' : 'Mute voice'}
-          >
-            {muted ? '🔇' : '🔊'}
-          </button>
+
+          {/* Send button */}
           <button
             onClick={handleSend}
             disabled={!input.trim() || isStreaming}
-            className="px-5 py-3 rounded-lg bg-accent text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-accent-light transition-colors"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-elevated text-muted transition-colors hover:bg-accent/20 hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            Send
+            <ArrowUp className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* End session */}
+        <div className="mx-auto mt-2 flex max-w-2xl justify-center">
+          <button
+            onClick={() => { setDuration(elapsed); navigate(`/report/${sessionId}`) }}
+            className="text-[11px] text-dim hover:text-muted transition-colors"
+          >
+            end session
           </button>
         </div>
       </div>
-    </PageShell>
+    </div>
   )
 }

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { evaluateSession, exportReportPdf } from '../lib/api'
 import { useSessionStore } from '../store/sessionStore'
 import { moodColor } from '../lib/mood'
-import PageShell from '../components/layout/PageShell'
 import ScoreRing from '../components/ui/ScoreRing'
 import { verdictStyle } from '../lib/verdict'
 
@@ -127,18 +126,18 @@ export default function Report() {
 
   if (loading) {
     return (
-      <PageShell className="flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="flex items-center gap-2 text-sm text-muted">
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
           Evaluating session performance…
         </div>
-      </PageShell>
+      </div>
     )
   }
 
   if (error && !report) {
     return (
-      <PageShell className="flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center max-w-sm">
           <h1 className="text-xl font-semibold mb-2">Report unavailable</h1>
           <p className="text-muted text-sm mb-6">{error}</p>
@@ -149,12 +148,12 @@ export default function Report() {
             Back to dashboard
           </button>
         </div>
-      </PageShell>
+      </div>
     )
   }
 
   return (
-    <PageShell className="px-6 py-14">
+    <div className="px-6 py-14">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -307,6 +306,6 @@ export default function Report() {
           </section>
         </div>
       </motion.div>
-    </PageShell>
+    </div>
   )
 }
