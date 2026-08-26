@@ -2,15 +2,17 @@
   "name": "frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:electron": "node -e \"const fs=require('fs');const path=require('path');const buildDir=path.resolve(__dirname,'dist-electron-build');fs.rmSync(buildDir,{recursive:true,force:true});fs.mkdirSync(buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'dist'),buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'../electron/main.js'),path.resolve(buildDir,'main.js'));fs.cpSync(path.resolve(__dirname,'../electron/preload.js'),path.resolve(buildDir,'preload.js'));fs.cpSync(path.resolve(__dirname,'../electron/icons'),path.resolve(buildDir,'icons'),{recursive:true});const pkg=JSON.parse(fs.readFileSync(path.resolve(__dirname,'package.json'),'utf8'));delete pkg.scripts;delete pkg.devDependencies;delete pkg.build;pkg.main='main.js';pkg.devDependencies={...pkg.devDependencies,'electron':'43.4.1'};fs.writeFileSync(path.resolve(buildDir,'package.json'),JSON.stringify(pkg,null,2));console.log('Created build directory at',buildDir)\"",
+    "build:all": "npm run build && npm run build:electron",
     "lint": "oxlint",
     "preview": "vite preview",
     "electron": "electron",
     "electron:dev": "concurrently \"npm run dev\" \"electron ../electron/\"",
-    "electron:build": "electron-builder",
+    "electron:build": "npm run build:electron && electron-builder --projectDir=dist-electron-build --config=dist-electron-build/package.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -55,5 +57,46 @@
   },
   "allowScripts": {
     "electron-winstaller@5.4.0": true
-  }
+  },
+  "build": {
+    "appId": "com.sentinel.app",
+    "productName": "Sentinel",
+    "copyright": "Copyright © 2025 Sentinel",
+    "directories": {
+      "output": "dist-electron",
+      "app": "dist-electron-build"
+    },
+    "files": [
+      "dist/**/*"
+    ],
+    "asar": false,
+    "extraResources": [
+      {
+        "from": "electron/icons",
+        "to": "icons",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "electron/icons/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Sentinel",
+      "uninstallDisplayName": "Sentinel HR Simulator",
+      "installerIcon": "electron/icons/icon.ico",
+      "uninstallerIcon": "electron/icons/icon.ico",
+      "installerHeaderIcon": "electron/icons/icon.ico"
+}
+}
 }

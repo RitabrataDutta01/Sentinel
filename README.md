@@ -16,6 +16,7 @@ Sentinel doesn't ask scripted questions. A dynamic **mood engine** (1–10 scale
 - **Org staff visibility** — active `admin`/`hr` members can expand a teammate in the roster and view their sessions and reports (RLS-scoped)
 - **Invite emails** — optional SMTP (Gmail etc.) so invites land in the invitee's inbox; if unconfigured, invites still appear on the invitee's dashboard
 - **Owned-data isolation** — Supabase Row Level Security scopes every row to the signed-in user (org staff can read their org's data)
+- **Desktop app** — Electron wrapper with native titlebar, custom mood chip, global shortcuts (Cmd+N, Cmd+,, Cmd+B), system tray with "Resume last session"
 
 ## Documentation
 
@@ -32,10 +33,11 @@ Sentinel doesn't ask scripted questions. A dynamic **mood engine** (1–10 scale
 | Layer | Stack |
 |-------|-------|
 | Frontend | React 19, Vite, Tailwind CSS v4, Framer Motion, Zustand, React Query, Recharts, shadcn-style components |
-| Backend | Flask (Python), Groq (Llama 3.3-70B), Whisper (transcription), scikit-learn (toxicity model), smtplib (invite email) |
+| Backend | Flask (Python), Groq (GPT-OSS-120B / Llama 3.2-3B), Whisper (transcription), scikit-learn (toxicity model), smtplib (invite email) |
 | Database | PostgreSQL via Supabase (RLS) |
 | Auth | Supabase Auth (email + password, JWT) |
 | PDF | WeasyPrint |
+| Desktop | Electron 43, electron-builder (NSIS installer) |
 
 ## Environment Setup
 
@@ -85,6 +87,75 @@ Open http://localhost:5173, sign up, pick a scenario, and start a session.
 
 Apply the RLS migration so users can only see their own data (Supabase Dashboard → SQL Editor → run `supabase/migrations/0001_enable_rls.sql`).
 
+## Desktop App (Electron)
+
+### Development
+
+```bash
+cd frontend
+npm run electron:dev    # Runs Vite dev server + Electron with hot reload
+```
+
+### Production Build (Windows Installer)
+
+The desktop app is built with Electron + electron-builder (NSIS).
+
+```bash
+cd frontend
+npm run electron:build  # Creates NSIS installer in dist-electron/
+```
+
+**Output:** `dist-electron/Sentinel Setup <version>.exe`
+
+### Global Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + N` | New session |
+| `Cmd/Ctrl + ,` | Open Settings |
+| `Cmd/Ctrl + B` | Toggle sidebar |
+| `F1` | Documentation |
+| `Cmd/Ctrl + Shift + U` | Check for updates |
+
+### System Tray
+
+Right-click the tray icon for:
+- Show Sentinel
+- New Session
+- **Resume Last Session**
+- View Active Sessions
+- Settings
+- Quit
+
+### App Icons
+
+- **Light mode:** `icons/sentinel_light_mode_icon.ico` (Windows)
+- **Dark mode:** `icons/sentinel_dark_mode_icon.png` (macOS/Linux tray)
+
+## CI/CD Pipeline (GitHub Actions)
+
+The repository includes a workflow (`.github/workflows/build-windows.yml`) that:
+
+1. **Builds frontend** on Ubuntu (Vite production build)
+2. **Builds Windows installer** on `windows-latest` runner using electron-builder (NSIS)
+3. **Creates GitHub Release** automatically when a `v*` tag is pushed
+4. Uploads artifacts for `main` branch pushes (7-day retention)
+
+### Triggering a Release
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+This creates a GitHub Release with the Windows installer attached.
+
+### Manual Build
+
+```bash
+# Go to Actions tab → "Build Windows Installer" → Run workflow
+```
+
 ## Deploying to Render
 
 1. Add a **Web Service** pointing at the repo, root directory `/backend`, build command `./render-build.sh`, start command `gunicorn run:app` (see `backend/Procfile`).
@@ -95,6 +166,51 @@ Apply the RLS migration so users can only see their own data (Supabase Dashboard
 
 ```bash
 cd frontend
-npm run lint   # oxlint
-npm run build  # production build → dist/
+npm run lint      # oxlint
+npm run build     # production build → dist/
+npm run build:all # build frontend + copy electron files
+npm run electron:build  # full build + NSIS installer
 ```
+
+## Project Structure
+
+```
+Sentinel/
+├── backend/                 # Flask API
+│   ├── app/
+│   │   ├── routes.py       # API endpoints
+│   │   ├── engine.py       # Groq + mood engine
+│   │   ├── models.py       # Supabase models
+│   │   └── prompts.json    # Scenario definitions
+│   └── requirements.txt
+├── frontend/                # React + Vite + Electron
+│   ├── src/
+│   │   ├── components/     # UI components
+│   │   ├── pages/          # Route pages
+│   │   ├── lib/            # Supabase, API, Electron bridge
+│   │   ├── store/          # Zustand stores
+│   │   └── desktop/        # Electron integration
+│   ├── electron/           # Electron main/preload
+│   │   ├── main.js         # Main process
+│   │   ├── preload.js      # Preload script
+│   │   └── icons/          # App icons
+│   └── package.json
+├── electron/                # Electron config (copied to frontend/dist at build)
+│   ├── main.js
+│   ├── preload.js
+│   └── icons/
+│       ├── icon.ico        # Windows (from icons/sentinel_light_mode_icon.ico)
+│       └── icon.png        # macOS/Linux (from icons/sentinel_dark_mode_icon.png)
+├── icons/                   # Source icons
+│   ├── sentinel_light_mode_icon.ico
+│   └── sentinel_dark_mode_icon.png
+├── supabase/
+│   └── migrations/
+├── .github/workflows/       # CI/CD
+│   └── build-windows.yml
+└── Documents/               # Documentation
+```
+
+## License
+
+MIT — see LICENSE for details.
