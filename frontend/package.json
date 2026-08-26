@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:electron": "node -e \"const fs=require('fs');const path=require('path');const buildDir=path.resolve(__dirname,'dist-electron-build');fs.rmSync(buildDir,{recursive:true,force:true});fs.mkdirSync(buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'dist'),buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'../electron/main.js'),path.resolve(buildDir,'main.js'));fs.cpSync(path.resolve(__dirname,'../electron/preload.js'),path.resolve(buildDir,'preload.js'));fs.cpSync(path.resolve(__dirname,'../electron/icons'),path.resolve(buildDir,'icons'),{recursive:true});const pkg=JSON.parse(fs.readFileSync(path.resolve(__dirname,'package.json'),'utf8'));delete pkg.scripts;delete pkg.devDependencies;delete pkg.build;pkg.main='main.js';pkg.devDependencies={...pkg.devDependencies,'electron':'43.4.1'};fs.writeFileSync(path.resolve(buildDir,'package.json'),JSON.stringify(pkg,null,2));console.log('Created build directory at',buildDir)\"",
+    "build:electron": "node -e \"const fs=require('fs');const path=require('path');const buildDir=path.resolve(__dirname,'dist-electron-build');fs.rmSync(buildDir,{recursive:true,force:true});fs.mkdirSync(buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'dist'),buildDir,{recursive:true});fs.cpSync(path.resolve(__dirname,'../electron/main.js'),path.resolve(buildDir,'main.js'));fs.cpSync(path.resolve(__dirname,'../electron/preload.js'),path.resolve(buildDir,'preload.js'));fs.cpSync(path.resolve(__dirname,'../electron/icons'),path.resolve(buildDir,'icons'),{recursive:true});fs.copyFileSync(path.resolve(__dirname,'electron-builder.config.yml'),path.resolve(buildDir,'electron-builder.config.yml'));const pkg=JSON.parse(fs.readFileSync(path.resolve(__dirname,'package.json'),'utf8'));delete pkg.scripts;delete pkg.devDependencies;delete pkg.build;pkg.main='main.js';pkg.devDependencies={...pkg.devDependencies,'electron':'43.4.1'};fs.writeFileSync(path.resolve(buildDir,'package.json'),JSON.stringify(pkg,null,2));console.log('Created build directory at',buildDir)\"",
     "build:all": "npm run build && npm run build:electron",
     "lint": "oxlint",
     "preview": "vite preview",
     "electron": "electron",
     "electron:dev": "concurrently \"npm run dev\" \"electron ../electron/\"",
-    "electron:build": "npm run build:electron && electron-builder --projectDir=dist-electron-build --config=./package.json",
+    "electron:build": "npm run build:electron && electron-builder --projectDir=dist-electron-build --config electron-builder.config.yml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
