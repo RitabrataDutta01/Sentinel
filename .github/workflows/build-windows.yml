@@ -3,10 +3,9 @@ name: Build Windows Installer
 on:
   push:
     tags:
-      - 'v*'           # Trigger on version tags (v1.0.0, v1.0.1, etc.)
-  workflow_dispatch:    # Manual trigger from Actions tab
-  push:
-    branches: [main]    # Build on main for artifact testing (no release)
+      - 'v*'
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write       # For creating releases and uploading assets
