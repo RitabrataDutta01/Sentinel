@@ -11,7 +11,7 @@ permissions:
   contents: write       # For creating releases and uploading assets
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   FRONTEND_DIR: './frontend'
 
 jobs:
