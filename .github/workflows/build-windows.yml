@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build frontend
         working-directory: ${{ env.FRONTEND_DIR }}
@@ -75,7 +75,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ${{ env.FRONTEND_DIR }}
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build Electron Windows installer
         working-directory: ${{ env.FRONTEND_DIR }}
