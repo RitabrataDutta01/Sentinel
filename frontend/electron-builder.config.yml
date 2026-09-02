@@ -22,7 +22,7 @@ win:
     - target: nsis
       arch:
         - x64
-  icon: "electron/icons/icon.ico"
+  icon: "icons/icon.ico"
 
 nsis:
   oneClick: false
@@ -32,6 +32,6 @@ nsis:
   createStartMenuShortcut: true
   shortcutName: Sentinel
   uninstallDisplayName: Sentinel HR Simulator
-  installerIcon: "electron/icons/icon.ico"
-  uninstallerIcon: "electron/icons/icon.ico"
-  installerHeaderIcon: "electron/icons/icon.ico"
+  installerIcon: "icons/icon.ico"
+  uninstallerIcon: "icons/icon.ico"
+  installerHeaderIcon: "icons/icon.ico"
