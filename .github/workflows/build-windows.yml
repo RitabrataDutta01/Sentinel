@@ -1,4 +1,4 @@
-name: Build Multi-Platform Electron App
+name: Build Windows and Linux Electron App
 
 on:
   push:
@@ -42,44 +42,9 @@ jobs:
           path: frontend/dist-electron/*.exe
           retention-days: 7
 
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
-      - name: Build Electron app (macOS)
-        working-directory: ./frontend
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: npm run electron:build -- --mac --x64 --arm64
-
-      - name: Upload macOS artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: sentinel-macos
-          path: |
-            frontend/dist-electron/*.dmg
-            frontend/dist-electron/*.zip
-          retention-days: 7
-
   build-linux:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -94,7 +59,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libnotify-dev libnss3-dev libxss-dev libxtst-dev xdg-utils libatspi2.0-dev libuuid-devel libsecret-1-dev rpm fakeroot dpkg
+          sudo apt-get install -y libgtk-3-dev libnotify-dev libnss3-dev libxss-dev libxtst-dev xdg-utils libatspi2.0-dev uuid-dev libsecret-1-dev rpm fakeroot dpkg-dev fuse libfuse2
 
       - name: Install dependencies
         working-directory: ./frontend
@@ -119,7 +84,7 @@ jobs:
           retention-days: 7
 
   release:
-    needs: [build-windows, build-macos, build-linux]
+    needs: [build-windows, build-linux]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -128,12 +93,6 @@ jobs:
         with:
           name: sentinel-windows
           path: ./dist-electron/windows
-
-      - name: Download macOS artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: sentinel-macos
-          path: ./dist-electron/macos
 
       - name: Download Linux artifacts
         uses: actions/download-artifact@v4
@@ -151,15 +110,10 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Sentinel ${{ steps.version.outputs.VERSION }}
           body: |
-            ## Sentinel HR Simulator - Multi-Platform Release
+            ## Sentinel HR Simulator - Windows & Linux Release
 
             ### Windows
             - `Sentinel-Setup-${{ steps.version.outputs.VERSION }}.exe` - NSIS Installer (x64)
-
-            ### macOS
-            - `Sentinel-${{ steps.version.outputs.VERSION }}.dmg` - Universal (x64 + arm64)
-            - `Sentinel-${{ steps.version.outputs.VERSION }}-arm64.dmg` - Apple Silicon
-            - `Sentinel-${{ steps.version.outputs.VERSION }}.zip` - Universal Archive
 
             ### Linux
             - `Sentinel-${{ steps.version.outputs.VERSION }}.AppImage` - Portable (x64)
@@ -168,8 +122,7 @@ jobs:
 
             ### Installation
             **Windows:** Run the `.exe` installer
-            **macOS:** Open the `.dmg` and drag to Applications
-            **Linux:** Use `.deb` (Ubuntu/Debian), `.rpm` (Fedora/RHEL), or run `.AppImage` directly
+            **Linux:** Use `.deb` (Ubuntu/Debian), `.rpm` (Fedora/RHEL), or run `.AppImage` directly (make executable with `chmod +x`)
 
             ### Changes
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
@@ -177,8 +130,6 @@ jobs:
           prerelease: false
           files: |
             ./dist-electron/windows/*.exe
-            ./dist-electron/macos/*.dmg
-            ./dist-electron/macos/*.zip
             ./dist-electron/linux/*.AppImage
             ./dist-electron/linux/*.deb
             ./dist-electron/linux/*.rpm

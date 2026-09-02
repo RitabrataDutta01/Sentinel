@@ -37,39 +37,6 @@ nsis:
   uninstallerIcon: "electron/icons/icon.ico"
   installerHeaderIcon: "electron/icons/icon.ico"
 
-mac:
-  target:
-    - target: dmg
-      arch:
-        - x64
-        - arm64
-    - target: zip
-      arch:
-        - x64
-        - arm64
-  icon: "electron/icons/icon.icns"
-  hardenedRuntime: true
-  gatekeeperAssess: false
-  entitlements: "build/entitlements.mac.plist"
-  entitlementsInherit: "build/entitlements.mac.plist"
-  category: "public.app-category.utilities"
-  darkModeSupport: true
-
-dmg:
-  contents:
-    - x: 130
-      y: 220
-      type: link
-      path: /Applications
-    - x: 410
-      y: 220
-      type: file
-  window:
-    width: 540
-    height: 380
-  icon: "electron/icons/icon.icns"
-  iconSize: 100
-
 linux:
   target:
     - target: AppImage
@@ -89,9 +56,6 @@ linux:
     Comment: "HR training and simulation platform"
     Categories: "Office;Education;"
   executableName: "sentinel"
-
-appImage:
-  runtime: "fuse"
 
 deb:
   depends:
