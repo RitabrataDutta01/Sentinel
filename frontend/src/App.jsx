@@ -93,6 +93,8 @@ function AnimatedRoutes() {
         <Route path="/interview/:sessionId" element={<ErrorBoundary fallbackMessage="Failed to load interview. Please try again."><Interview /></ErrorBoundary>} />
         <Route path="/interview" element={<Navigate to="/scenarios" replace />} />
         <Route path="/report/:sessionId" element={<ErrorBoundary fallbackMessage="Failed to load report. Please try again."><Report /></ErrorBoundary>} />
+        {/* Catch-all: redirect unknown paths */}
+        <Route path="*" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/auth" replace />} />
       </Routes>
     </Suspense>
   )
