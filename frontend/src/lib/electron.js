@@ -2,13 +2,12 @@
 // Provides a consistent API whether running in Electron or browser
 
 // Detect if running in Electron renderer process
+// The preload script exposes `window.electronAPI` via contextBridge,
+// so we check for that instead of `window.process` (which is unavailable
+// when contextIsolation is true and nodeIntegration is false).
 const isElectronRenderer = () => {
   try {
-    return (
-      typeof window !== 'undefined' &&
-      window.process &&
-      window.process.type === 'renderer'
-    );
+    return typeof window !== 'undefined' && !!window.electronAPI;
   } catch {
     return false;
   }
