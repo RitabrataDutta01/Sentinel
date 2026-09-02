@@ -4,7 +4,6 @@ copyright: "Copyright © 2025 Sentinel"
 
 directories:
   output: "../dist-electron"
-  buildResources: "build"
 
 files:
   - "**/*"
@@ -36,43 +35,3 @@ nsis:
   installerIcon: "electron/icons/icon.ico"
   uninstallerIcon: "electron/icons/icon.ico"
   installerHeaderIcon: "electron/icons/icon.ico"
-
-linux:
-  target:
-    - target: AppImage
-      arch:
-        - x64
-    - target: deb
-      arch:
-        - x64
-    - target: rpm
-      arch:
-        - x64
-  icon: "electron/icons/icon.png"
-  category: "Utility"
-  maintainer: "Sentinel Team <sentinel@example.com>"
-  executableName: "sentinel"
-
-deb:
-  depends:
-    - libgtk-3-0
-    - libnotify4
-    - libnss3
-    - libxss1
-    - libxtst6
-    - xdg-utils
-    - libatspi2.0-0
-    - libuuid1
-    - libsecret-1-0
-
-rpm:
-  depends:
-    - gtk3
-    - libnotify
-    - nss
-    - libXScrnSaver
-    - libxtst
-    - xdg-utils
-    - at-spi2-core
-    - libuuid
-    - libsecret

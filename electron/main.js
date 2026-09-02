@@ -383,10 +383,10 @@ app.whenReady().then(async () => {
       url = devUrl;
     } else {
       console.warn('Could not connect to Vite dev server, falling back to built version');
-      url = path.join(__dirname, '../frontend/dist/index.html');
+      url = `file://${path.join(__dirname, 'dist/index.html')}`;
     }
   } else {
-    url = path.join(__dirname, '../frontend/dist/index.html');
+    url = `file://${path.join(__dirname, 'dist/index.html')}`;
   }
   mainWindow = createWindow(url);
   // Native menu removed - using custom titlebar instead
