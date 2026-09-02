@@ -326,10 +326,25 @@ def calc_mood_shift(client, user_message, scenario, context):
             )
 
         score_text = response.choices[0].message.content.strip()
-        score = int(score_text.replace('+', ''))
-
-        return max(MOOD_SHIFT_MIN, min(MOOD_SHIFT_MAX, score))
-    
+        
+        # DEBUG: Log what model actually returns
+        print(f"[DEBUG] Mood shift raw response: '{score_text}'")
+        
+        # Handle empty response
+        if not score_text:
+            print("[DEBUG] Empty mood shift response, defaulting to 0")
+            return 0
+            
+        # Extract first integer from response (handles "+1", " -2 ", "Score: 1", etc.)
+        import re
+        match = re.search(r'[-+]?\d+', score_text)
+        if match:
+            score = int(match.group())
+            return max(MOOD_SHIFT_MIN, min(MOOD_SHIFT_MAX, score))
+        
+        print(f"[DEBUG] No integer found in mood shift response: '{score_text}'")
+        return 0
+        
     except Exception as e:
         print(f"Mood shift calculation failed: {e}")
         return 0
