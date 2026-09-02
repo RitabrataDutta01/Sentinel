@@ -1,0 +1,23 @@
+
+> frontend@1.0.0 electron:dev
+> concurrently "npm run dev" "electron ../electron/"
+
+[0] 
+[0] > frontend@1.0.0 dev
+[0] > vite
+[0] 
+[1] Gtk-Message: 12:45:41.514: Failed to load module "colorreload-gtk-module"
+[1] Gtk-Message: 12:45:41.514: Failed to load module "window-decorations-gtk-module"
+[0] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[0]   - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+[0] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[0] Port 5173 is in use, trying another one...
+[0] Port 5174 is in use, trying another one...
+[0] 
+[0]   VITE v8.2.2  ready in 198 ms
+[0] 
+[0]   ➜  Local:   http://localhost:5175/
+[0]   ➜  Network: use --host to expose
+[1] /home/ritabrata/projects/Sentinel/frontend/node_modules/electron/dist/electron exited with signal SIGTERM
+[1] electron ../electron/ exited with code 1
+[0] npm run dev exited with code 143

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=Source+Serif+4:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#ffacea",
+                    "outline": "#a18a99",
+                    "secondary-fixed-dim": "#ffb4a3",
+                    "on-background": "#f0dcf5",
+                    "surface-container-highest": "#3d3043",
+                    "on-secondary-container": "#ffa08a",
+                    "inverse-on-surface": "#392c3e",
+                    "surface": "#1a0f20",
+                    "error-container": "#93000a",
+                    "primary-container": "#c238b0",
+                    "tertiary-fixed": "#71face",
+                    "surface-container-lowest": "#150a1b",
+                    "primary": "#ffacea",
+                    "secondary": "#ffb4a3",
+                    "secondary-fixed": "#ffdad2",
+                    "inverse-surface": "#f0dcf5",
+                    "on-error": "#690005",
+                    "secondary-container": "#8f1b01",
+                    "on-primary-fixed-variant": "#840078",
+                    "inverse-primary": "#a71b98",
+                    "on-primary-fixed": "#390034",
+                    "on-primary-container": "#fffaff",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#00382a",
+                    "outline-variant": "#54414e",
+                    "surface-container": "#271b2d",
+                    "tertiary": "#51ddb3",
+                    "tertiary-fixed-dim": "#51ddb3",
+                    "on-surface": "#f0dcf5",
+                    "on-secondary-fixed": "#3d0600",
+                    "surface-dim": "#1a0f20",
+                    "on-secondary": "#630f00",
+                    "surface-bright": "#423447",
+                    "tertiary-container": "#008466",
+                    "on-secondary-fixed-variant": "#8c1900",
+                    "on-tertiary-container": "#f2fff7",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#3d3043",
+                    "surface-container-high": "#322538",
+                    "surface-container-low": "#231729",
+                    "primary-fixed": "#ffd7f1",
+                    "on-surface-variant": "#d9c0cf",
+                    "background": "#1a0f20",
+                    "on-tertiary-fixed-variant": "#00513e",
+                    "on-primary": "#5d0055",
+                    "on-tertiary-fixed": "#002117",
+                    "primary-fixed-dim": "#ffacea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-page": "2rem",
+                    "sidebar-width": "260px",
+                    "gutter": "1rem",
+                    "stack-compact": "0.5rem",
+                    "stack-default": "1.5rem"
+            },
+            "fontFamily": {
+                    "body-sm": [
+                            "Hanken Grotesk"
+                    ],
+                    "label-caps": [
+                            "Hanken Grotesk"
+                    ],
+                    "display-lg": [
+                            "\"Source Serif 4\""
+                    ],
+                    "body-md": [
+                            "Hanken Grotesk"
+                    ],
+                    "headline-sm": [
+                            "Hanken Grotesk"
+                    ],
+                    "verdict-md": [
+                            "\"Source Serif 4\""
+                    ]
+            },
+            "fontSize": {
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "42px",
+                            {
+                                    "lineHeight": "52px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "verdict-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #150a1b; /* surface-container-lowest mapping to background base */
+            color: #f0dcf5;
+            overflow-x: hidden;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden md:flex flex-col h-full py-4 border-r border-outline-variant bg-surface dark:bg-surface text-primary dark:text-primary font-body-sm text-body-sm fixed left-0 top-0 w-sidebar-width transition-all duration-200 z-40">
+<!-- Brand / Header -->
+<div class="px-margin-page mb-8">
+<h1 class="font-headline-sm text-headline-sm text-on-surface dark:text-on-surface mb-1">Sentinel</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Workplace conversation simulator</p>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1 px-4 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+<span>Scenarios</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span>Interview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span>Report</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span>Sessions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest hover:text-on-surface dark:hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>People</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-primary dark:text-primary font-bold bg-surface-container-highest/20" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<!-- Footer -->
+<div class="mt-auto px-4 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-3 px-2 py-2 text-on-surface-variant">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">corporate_fare</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-sm text-body-sm text-on-surface truncate">Account Name</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant truncate">Organization Name</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-[260px] h-screen bg-surface-container-lowest overflow-y-auto">
+<!-- Custom Top Bar -->
+<header class="h-12 w-full flex items-center justify-between px-margin-page border-b border-outline-variant bg-surface-container-lowest sticky top-0 z-30">
+<div class="flex gap-2 items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">
+                Settings Configuration
+            </div>
+<div class="w-10"></div> <!-- Spacer for center alignment -->
+</header>
+<!-- Settings Content -->
+<div class="p-margin-page max-w-4xl w-full mx-auto pb-32">
+<div class="mb-stack-default flex justify-between items-end border-b border-outline-variant pb-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">System Preferences</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure environment variables and simulation parameters.</p>
+</div>
+<button class="bg-tertiary-container hover:bg-tertiary text-on-tertiary-container font-body-sm text-body-sm px-6 py-2 rounded-sm transition-colors border border-transparent">
+                    Save changes
+                </button>
+</div>
+<!-- Setting Rows Section 1 -->
+<section class="mb-stack-default">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 px-2">Simulation Engine</h3>
+<div class="border border-outline-variant rounded-sm bg-surface overflow-hidden">
+<!-- Row 1 -->
+<div class="flex items-center justify-between p-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<div class="flex-1 pr-4">
+<label class="block font-body-md text-body-md text-on-surface mb-1">Latency injection</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Introduce artificial delay to simulate real-world API responses.</p>
+</div>
+<div class="w-48">
+<select class="w-full bg-surface-container-lowest border-0 border-b border-outline-variant text-on-surface font-body-sm text-body-sm focus:ring-0 focus:border-primary py-2 px-0 cursor-pointer">
+<option>Disabled (0ms)</option>
+<option>Low (200ms)</option>
+<option selected="">Moderate (500ms)</option>
+<option>High (1200ms)</option>
+</select>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between p-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<div class="flex-1 pr-4">
+<label class="block font-body-md text-body-md text-on-surface mb-1">Sentiment analysis threshold</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Confidence level required to flag volatile emotional shifts.</p>
+</div>
+<div class="w-48 flex items-center gap-3">
+<input class="w-full accent-primary h-1 bg-surface-container-highest rounded-full appearance-none cursor-pointer" max="100" min="0" type="range" value="75"/>
+<span class="font-body-sm text-body-sm text-on-surface w-8 text-right">0.75</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex-1 pr-4">
+<label class="block font-body-md text-body-md text-on-surface mb-1">Auto-save transcript</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automatically persist conversation logs to secure storage.</p>
+</div>
+<div class="flex items-center">
+<!-- Custom Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Setting Rows Section 2 -->
+<section>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 px-2">Data Management</h3>
+<div class="border border-outline-variant rounded-sm bg-surface overflow-hidden">
+<!-- Row 1 -->
+<div class="flex items-center justify-between p-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors">
+<div class="flex-1 pr-4">
+<label class="block font-body-md text-body-md text-on-surface mb-1">Export format default</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Select the primary format for generated verdict reports.</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-lowest border border-primary text-primary font-body-sm text-body-sm px-3 py-1 rounded-sm">JSON</button>
+<button class="bg-surface-container-highest border border-outline-variant text-on-surface-variant font-body-sm text-body-sm px-3 py-1 rounded-sm hover:text-on-surface hover:border-outline transition-colors">CSV</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex-1 pr-4">
+<label class="block font-body-md text-body-md text-error mb-1">Purge scenario history</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Permanently delete all simulated session data for this environment.</p>
+</div>
+<div>
+<button class="border border-error text-error font-body-sm text-body-sm px-4 py-2 rounded-sm hover:bg-error/10 transition-colors">
+                                Execute purge
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

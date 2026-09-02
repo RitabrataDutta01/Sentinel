@@ -183,7 +183,7 @@ export default function Interview() {
         <div className="text-center max-w-sm">
           <h1 className="text-lg font-semibold mb-2">No active session</h1>
           <p className="text-muted text-sm mb-6">This interview link isn't tied to a session in progress.</p>
-          <button onClick={() => navigate('/scenarios')} className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-light transition-colors">
+          <button onClick={() => navigate('/scenarios')} className="rounded-[var(--radius)] bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground hover:opacity-90 transition-opacity">
             Start a session
           </button>
         </div>
@@ -195,11 +195,10 @@ export default function Interview() {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Ambient mood bar */}
-      <motion.div
-        className="h-[2px] w-full shrink-0"
-        animate={{ backgroundColor: glow, boxShadow: `0 0 16px ${glow}` }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
+      {/* Ambient mood bar — flat, no shadow/glow */}
+      <div
+        className="h-[2px] w-full shrink-0 transition-colors duration-800"
+        style={{ backgroundColor: glow }}
       />
 
       {/* Chat messages */}
@@ -208,10 +207,10 @@ export default function Interview() {
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                className={`max-w-[80%] rounded-[var(--radius)] px-4 py-2.5 text-sm leading-relaxed ${
                   m.role === 'user'
-                    ? 'bg-elevated text-foreground rounded-br-sm'
-                    : 'bg-surface text-secondary border border-border rounded-bl-sm'
+                    ? 'bg-elevated text-foreground rounded-br-[calc(var(--radius)+2px)]'
+                    : 'bg-surface text-secondary border border-border rounded-bl-[calc(var(--radius)+2px)]'
                 }`}
               >
                 {m.content}
@@ -221,7 +220,7 @@ export default function Interview() {
 
           {isStreaming && (
             <div className="flex justify-start">
-              <div className="max-w-[80%] rounded-2xl rounded-bl-sm border border-border bg-surface">
+              <div className="max-w-[80%] rounded-[var(--radius)] rounded-bl-[calc(var(--radius)+2px)] border border-border bg-surface">
                 {streamingText ? (
                   <p className="px-4 py-2.5 text-sm leading-relaxed text-secondary">{streamingText}</p>
                 ) : (
@@ -231,7 +230,7 @@ export default function Interview() {
             </div>
           )}
 
-          {error && <p className="text-center text-sm text-red-400">{error}</p>}
+          {error && <p className="text-center text-sm text-destructive">{error}</p>}
         </div>
       </div>
 
@@ -243,9 +242,9 @@ export default function Interview() {
             type="button"
             onClick={() => { if (recording) stopRecording(); else startRecording() }}
             disabled={isStreaming}
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors ${
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius)] border transition-colors ${
               recording
-                ? 'border-red-400/40 bg-red-400/10 text-red-400 animate-pulse'
+                ? 'border-destructive/40 bg-destructive/10 text-destructive animate-pulse'
                 : 'border-border-light bg-surface text-muted hover:text-foreground'
             }`}
             title={recording ? 'Stop recording' : 'Record voice'}
@@ -261,15 +260,15 @@ export default function Interview() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isStreaming}
-            placeholder="Type your response..."
-            className="flex-1 rounded-xl border border-border-light bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-accent transition-colors disabled:opacity-40"
+            placeholder="Type your response…"
+            className="flex-1 rounded-[var(--radius)] border border-border-light bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-dim focus:outline-none focus:border-accent transition-colors disabled:opacity-40"
           />
 
           {/* Send button */}
           <button
             onClick={handleSend}
             disabled={!input.trim() || isStreaming}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-elevated text-muted transition-colors hover:bg-accent/20 hover:text-accent disabled:opacity-30 disabled:cursor-not-allowed"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius)] bg-accent text-accent-foreground transition-colors hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ArrowUp className="h-4 w-4" />
           </button>

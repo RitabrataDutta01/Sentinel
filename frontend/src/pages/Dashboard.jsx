@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { fetchSessions } from '../lib/supabase'
 import { useSessionStore } from '../store/sessionStore'
 import { PlayCircle, TrendingUp, Clock, Activity, Zap } from 'lucide-react'
+import { verdictStyle } from '../lib/verdict'
+import { moodColor } from '../lib/mood'
 
 function computeStreak(sessions) {
   if (!sessions.length) return 0
@@ -27,7 +29,7 @@ function computeStreak(sessions) {
 
 function StatCard({ icon: Icon, label, value, sub }) {
   return (
-    <div className="rounded-xl border border-border bg-surface p-4">
+    <div className="rounded-[var(--radius)] border border-border bg-surface px-4 py-4">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2 text-muted text-sm">
           <Icon className="h-3.5 w-3.5" />
@@ -96,7 +98,7 @@ export default function Dashboard() {
         <p className="text-sm text-muted mb-4">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-accent-light transition-colors"
+          className="rounded-[var(--radius)] bg-accent px-4 py-2 text-xs font-semibold text-accent-foreground hover:opacity-90 transition-colors"
         >
           Retry
         </button>
@@ -114,38 +116,43 @@ export default function Dashboard() {
         </div>
         <button
           onClick={() => sessionId ? navigate(`/interview/${sessionId}`) : navigate('/scenarios')}
-          className="flex items-center gap-2 rounded-lg bg-elevated px-4 py-2 text-sm font-medium text-secondary transition-colors hover:bg-surface-raised hover:text-foreground"
+          className="flex items-center gap-2 rounded-[var(--radius)] bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
         >
           <PlayCircle className="h-4 w-4" />
-          {sessionId ? 'Resume Session' : 'Start New Session'}
+          {sessionId ? 'Resume session' : 'Start new session'}
         </button>
       </div>
 
       {/* Stats grid */}
       <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon={Activity} label="Sessions" value={totalSessions} sub={`${completedSessions} completed`} />
-        <StatCard icon={TrendingUp} label="Avg Score" value={`${avgScore}/10`} sub={completedSessions > 0 ? `from ${completedSessions} sessions` : 'No sessions yet'} />
-        <StatCard icon={Clock} label="Time Practiced" value={`${totalMinutes} mins`} sub="Total simulation time" />
+        <StatCard icon={TrendingUp} label="Avg score" value={`${avgScore}/10`} sub={completedSessions > 0 ? `from ${completedSessions} sessions` : 'No sessions yet'} />
+        <StatCard icon={Clock} label="Time practiced" value={`${totalMinutes} mins`} sub="Total simulation time" />
         <StatCard icon={Zap} label="Streak" value={streak} sub="Days in a row" />
       </div>
 
-      {/* Recent sessions */}
+      {/* Recent sessions — bordered rows, not cards */}
       <div className="mb-8">
-        <h2 className="mb-3 text-sm font-semibold tracking-wide">Recent Sessions</h2>
+        <h2 className="mb-3 text-sm font-semibold tracking-wide">Recent sessions</h2>
         {recentSessions.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-border-light py-10 text-center text-sm text-dim">
-            No sessions recorded yet. Start your first simulation to see progress here.
-          </p>
+          <div className="rounded-[var(--radius)] border border-dashed border-border-light py-10 text-center">
+            <p className="text-sm text-dim">No sessions recorded yet. Start your first simulation to see progress here.</p>
+          </div>
         ) : (
-          <div className="space-y-2">
-            {recentSessions.map((session) => {
+          <div className="flex flex-col">
+            {recentSessions.map((session, i) => {
               const report = session.evaluation_report
+              const score = report?.overall_score
+              const mins = report?.duration_sec ? Math.round(report.duration_sec / 60) : null
+              const verdict = report?.verdict
               return (
                 <div
                   key={session.id}
-                  className="flex items-center gap-4 rounded-xl border border-border bg-surface px-4 py-3 transition-colors hover:bg-elevated"
+                  className={`flex items-center gap-4 px-4 py-3 transition-colors hover:bg-elevated ${
+                    i > 0 ? 'border-t border-border' : ''
+                  }`}
                 >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/20 text-sm font-bold text-accent">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius)] bg-accent/15 text-sm font-bold text-accent">
                     {session.scenario?.charAt(0).toUpperCase() ?? 'S'}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -155,13 +162,18 @@ export default function Dashboard() {
                   <div className="flex shrink-0 items-center gap-3 text-xs text-muted">
                     {report ? (
                       <>
-                        <span className="flex items-center gap-1">
+                        {verdict && (
+                          <span className={`inline-flex items-center rounded-[var(--radius)] border px-2 py-0.5 text-[10px] font-semibold ${verdictStyle(verdict, report)}`}>
+                            {verdict}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1 font-mono tabular-nums">
                           <TrendingUp className="h-3 w-3" />
-                          {report.overall_score ?? 'N/A'}/10
+                          {score ?? 'N/A'}/100
                         </span>
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1 font-mono tabular-nums">
                           <Clock className="h-3 w-3" />
-                          {report.duration_sec ? Math.round(report.duration_sec / 60) : '?'}m
+                          {mins ?? '?'}m
                         </span>
                       </>
                     ) : (
@@ -183,10 +195,10 @@ export default function Dashboard() {
           </p>
           <button
             onClick={() => navigate('/scenarios')}
-            className="flex items-center gap-2 mx-auto rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-light"
+            className="flex items-center gap-2 mx-auto rounded-[var(--radius)] bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90"
           >
             <PlayCircle className="h-4 w-4" />
-            Browse Scenarios
+            Browse scenarios
           </button>
         </div>
       )}

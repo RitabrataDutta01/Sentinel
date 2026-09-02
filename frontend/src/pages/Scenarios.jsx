@@ -59,7 +59,7 @@ export default function Scenarios() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const [selected, setSelected] = useState(null) // scenario key of open config
+  const [selected, setSelected] = useState(null)
   const [personality, setPersonality] = useState(PERSONAS[0])
   const [context, setContext] = useState('')
   const [brutal, setBrutal] = useState(false)
@@ -122,155 +122,164 @@ export default function Scenarios() {
     }
   }
 
-return (
+  return (
     <div className="px-6 py-12">
+      <PageHero
+        eyebrow="Scenarios"
+        title="Scenario library"
+        subtitle={scenarios.length > 0
+          ? `${scenarios.length} scenario${scenarios.length !== 1 ? 's' : ''} across ${grouped.length} categories.`
+          : 'Choose a scenario and start a simulated interview.'}
+      />
+
       {error && (
-          <div className="mb-8 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
-            {error}
-          </div>
-        )}
+        <div className="mb-8 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+          {error}
+        </div>
+      )}
 
-        {loading ? (
-          <div className="flex items-center gap-2 text-sm text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            Loading scenarios…
-          </div>
-        ) : (
-          <div className="flex flex-col gap-12">
-            {grouped.map(([category, items]) => (
-              <section key={category}>
-                <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-dim mb-4">
-                  {category}
-                </h2>
-                <div className="relative rounded-2xl p-4 -m-4">
-                  <div
-                    className="absolute inset-0 rounded-2xl pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--color-accent-dim) 0%, transparent 60%)', opacity: 0.12 }}
-                  />
-                  <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {items.map((s, i) => {
-                      const runs = runCounts[s.key] ?? 0
-                      return (
-                        <motion.button
-                          key={s.key}
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.25, delay: 0.04 * i }}
-                          onClick={() => {
-                            setSelected(s.key)
-                            setContext('')
-                            setBrutal(false)
-                            setStartError(null)
-                          }}
-                          className={`text-left rounded-2xl border bg-surface p-5 transition-colors ${
-                            selected === s.key
-                              ? 'border-accent ring-1 ring-accent/40'
-                              : 'border-border hover:border-border-light'
-                          }`}
-                        >
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-sm font-semibold text-primary">{s.label}</span>
+      {loading ? (
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+          Loading scenarios…
+        </div>
+      ) : (
+        <div className="flex flex-col gap-10">
+          {grouped.map(([category, items]) => (
+            <section key={category}>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-dim mb-4">
+                {category}
+              </h2>
+              <div className="flex flex-col">
+                {items.map((s, i) => {
+                  const runs = runCounts[s.key] ?? 0
+                  const isSelected = selected === s.key
+                  return (
+                    <motion.button
+                      key={s.key}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: 0.03 * i }}
+                      onClick={() => {
+                        setSelected(s.key)
+                        setContext('')
+                        setBrutal(false)
+                        setStartError(null)
+                      }}
+                      className={`text-left px-4 py-3 transition-colors ${
+                        i > 0 ? 'border-t border-border' : ''
+                      } ${
+                        isSelected
+                          ? 'bg-accent/10 border-l-2 border-l-accent'
+                          : 'hover:bg-elevated'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius)] bg-accent/15 text-sm font-bold text-accent">
+                            {s.label?.charAt(0).toUpperCase() ?? 'S'}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-primary truncate">{s.label}</p>
+                            <p className="text-xs text-muted truncate">
+                              {runs > 0 ? `${runs} run${runs > 1 ? 's' : ''} so far` : 'Not attempted yet'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
                           <IntensityDots level={INTENSITY[s.category] ?? 1} />
-                        </div>
-                        <p className="text-xs text-muted leading-relaxed line-clamp-2">
-                          {s.label} — pushback you can expect: realistic, in-character resistance.
-                        </p>
-                        <div className="flex items-center justify-between mt-4">
-                          <span className="text-[11px] text-dim">
-                            {runs > 0 ? `${runs} run${runs > 1 ? 's' : ''} so far` : 'Not attempted yet'}
-                          </span>
                           <span className="text-[11px] font-semibold text-accent">
-                            {selected === s.key ? 'Configure →' : 'Start'}
+                            {isSelected ? 'Configure →' : 'Start'}
                           </span>
                         </div>
-                      </motion.button>
-                    )
-                  })}
-                  </div>
-                </div>
-              </section>
-            ))}
-          </div>
-        )}
+                      </div>
+                    </motion.button>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
 
-        {/* Config overlay */}
-        {selected && (
+      {/* Config overlay */}
+      {selected && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setSelected(null)}
+        >
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-            onClick={() => setSelected(null)}
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-md rounded-[var(--radius)] border border-border bg-elevated p-6"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.18 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-2xl border border-border bg-elevated p-6"
-            >
-              <div className="mb-5">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1">
-                  Configure session
-                </p>
-                <h2 className="text-lg font-semibold text-primary">{selected}</h2>
+            <div className="mb-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent mb-1">
+                Configure session
+              </p>
+              <h2 className="text-lg font-semibold text-primary">{selected}</h2>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="persona">Interviewer persona</Label>
+                <select
+                  id="persona"
+                  value={personality}
+                  onChange={(e) => setPersonality(e.target.value)}
+                  className="rounded-[var(--radius)] border border-border bg-surface px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
+                >
+                  {PERSONAS.map((p) => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="persona">Interviewer persona</Label>
-                  <select
-                    id="persona"
-                    value={personality}
-                    onChange={(e) => setPersonality(e.target.value)}
-                    className="rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
-                  >
-                    {PERSONAS.map((p) => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="context">Context (optional)</Label>
-                  <Textarea
-                    id="context"
-                    value={context}
-                    onChange={(e) => setContext(e.target.value)}
-                    placeholder="e.g. Caught violating data policies during a layoff audit…"
-                    rows={3}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between rounded-lg border border-border bg-surface px-4 py-3">
-                  <div>
-                    <p className="text-sm font-medium text-primary">Brutal honesty mode</p>
-                    <p className="text-xs text-muted">The counterpart calls out vagueness aggressively.</p>
-                  </div>
-                  <Switch checked={brutal} onCheckedChange={setBrutal} />
-                </div>
-
-                {startError && (
-                  <p className="text-sm text-mood-cold">{startError}</p>
-                )}
-
-                <div className="flex gap-3 mt-1">
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => setSelected(null)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button className="flex-1" onClick={handleStart} disabled={starting}>
-                    {starting ? 'Starting…' : 'Begin'}
-                  </Button>
-                </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="context">Context (optional)</Label>
+                <Textarea
+                  id="context"
+                  value={context}
+                  onChange={(e) => setContext(e.target.value)}
+                  placeholder="e.g. Caught violating data policies during a layoff audit…"
+                  rows={3}
+                />
               </div>
-            </motion.div>
-</motion.div>
-        )}
+
+              <div className="flex items-center justify-between rounded-[var(--radius)] border border-border bg-surface px-4 py-3">
+                <div>
+                  <p className="text-sm font-medium text-primary">Brutal honesty mode</p>
+                  <p className="text-xs text-muted">The counterpart calls out vagueness aggressively.</p>
+                </div>
+                <Switch checked={brutal} onCheckedChange={setBrutal} />
+              </div>
+
+              {startError && (
+                <p className="text-sm text-mood-cold">{startError}</p>
+              )}
+
+              <div className="flex gap-3 mt-1">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setSelected(null)}
+                >
+                  Cancel
+                </Button>
+                <Button className="flex-1" onClick={handleStart} disabled={starting}>
+                  {starting ? 'Starting…' : 'Begin'}
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   )
 }

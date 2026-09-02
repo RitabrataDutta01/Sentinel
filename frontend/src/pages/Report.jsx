@@ -18,7 +18,7 @@ function Eyebrow({ children }) {
 function MoodTimeline({ points }) {
   if (!points || points.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border px-5 py-8 text-center text-sm text-dim">
+      <div className="rounded-[var(--radius)] border border-dashed border-border px-5 py-8 text-center text-sm text-dim">
         No mood data recorded for this session.
       </div>
     )
@@ -35,7 +35,7 @@ function MoodTimeline({ points }) {
   const path = coords.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x},${y}`).join(' ')
 
   return (
-    <div className="rounded-xl border border-border bg-surface px-5 py-6">
+    <div className="rounded-[var(--radius)] border border-border bg-surface px-5 py-6">
       <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="none">
         <path d={path} fill="none" stroke="var(--border-light)" strokeWidth="2" />
         {coords.map(([x, y], i) => (
@@ -55,17 +55,17 @@ function SkillBars({ skills }) {
   const entries = Object.entries(skills)
   return (
     <section className="mb-10">
-      <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Skill Breakdown</h2>
-      <div className="rounded-xl border border-border bg-surface p-6 flex flex-col gap-4">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Skill breakdown</h2>
+      <div className="rounded-[var(--radius)] border border-border bg-surface p-6 flex flex-col gap-4">
         {entries.map(([skill, value]) => (
           <div key={skill}>
             <div className="flex justify-between items-center mb-1.5">
               <span className="text-sm capitalize text-primary">{skill}</span>
               <span className="text-xs font-mono text-muted tabular-nums">{value}/100</span>
             </div>
-            <div className="h-2 rounded-full bg-background overflow-hidden">
+            <div className="h-2 rounded-[var(--radius)] bg-background overflow-hidden">
               <motion.div
-                className="h-full rounded-full bg-accent"
+                className="h-full rounded-[var(--radius)] bg-accent"
                 initial={{ width: 0 }}
                 animate={{ width: `${value}%` }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -85,8 +85,6 @@ export default function Report() {
   const storeSessionId = useSessionStore((s) => s.sessionId)
   const storeDurationSec = useSessionStore((s) => s.durationSec)
 
-  // Only trust the store's elapsed time when the store is for THIS session —
-  // otherwise an unrelated (still-open) session would stamp the wrong duration.
   const durationSec = storeSessionId === sessionId ? storeDurationSec : null
 
   const [report, setReport] = useState(null)
@@ -143,7 +141,7 @@ export default function Report() {
           <p className="text-muted text-sm mb-6">{error}</p>
           <button
             onClick={() => navigate('/dashboard')}
-            className="px-5 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-accent-light transition-colors"
+            className="px-5 py-2.5 rounded-[var(--radius)] bg-accent text-accent-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             Back to dashboard
           </button>
@@ -160,29 +158,26 @@ export default function Report() {
         transition={{ duration: 0.3 }}
         className="w-full"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-surface px-7 py-8 mb-8">
-          <div
-            className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-[520px] pointer-events-none"
-            style={{ background: 'radial-gradient(circle, var(--color-accent-dim) 0%, transparent 65%)', opacity: 0.28 }}
-          />
-          <div className="relative flex items-center justify-between gap-4 flex-wrap">
+        {/* Hero */}
+        <div className="rounded-[var(--radius)] border border-border bg-surface px-7 py-8 mb-8">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
               <Eyebrow>Evaluation report</Eyebrow>
-              <h1 className="text-2xl font-semibold tracking-tight">Performance Summary</h1>
+              <h1 className="text-2xl font-semibold tracking-tight">Performance summary</h1>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-2.5 rounded-lg border border-border text-sm text-muted hover:border-border-light hover:text-primary transition-colors"
+                className="px-4 py-2.5 rounded-[var(--radius)] border border-border text-sm text-muted hover:border-border-light hover:text-primary transition-colors"
               >
                 Dashboard
               </button>
               <button
                 onClick={handleExport}
                 disabled={exporting}
-                className="px-4 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold disabled:opacity-40 hover:bg-accent-light transition-colors"
+                className="px-4 py-2.5 rounded-[var(--radius)] bg-accent text-accent-foreground text-sm font-semibold disabled:opacity-40 hover:opacity-90 transition-opacity"
               >
-                {exporting ? 'Exporting PDF…' : 'Download PDF'}
+                {exporting ? 'Exporting PDF…' : 'Export PDF'}
               </button>
             </div>
           </div>
@@ -190,25 +185,22 @@ export default function Report() {
 
         {/* Score, Confidence & Verdict Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          <div className="rounded-xl border border-border bg-surface p-6 flex flex-col items-center justify-center gap-2">
-            <span className="text-xs text-muted uppercase tracking-wider">Overall Score</span>
+          <div className="rounded-[var(--radius)] border border-border bg-surface p-6 flex flex-col items-center justify-center gap-2">
+            <span className="text-xs text-muted uppercase tracking-wider">Overall score</span>
             <ScoreRing score={report?.overall_score ?? 0} size={120} />
           </div>
-          <div className="relative overflow-hidden rounded-xl border border-border bg-surface p-6 flex flex-col justify-center items-center text-center">
-            <div
-              className="absolute -top-10 -right-10 w-24 h-24 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, var(--color-mood-neutral) 0%, transparent 70%)', opacity: 0.14 }}
-            />
+          <div className="rounded-[var(--radius)] border border-border bg-surface p-6 flex flex-col justify-center items-center text-center">
             <span className="text-xs text-muted uppercase tracking-wider mb-1">Confidence</span>
             <span className="text-4xl font-bold tracking-tight text-primary">
               {report?.confidence_score ?? '—'}<span className="text-lg text-dim">/100</span>
             </span>
           </div>
-          <div className="rounded-xl border border-border bg-surface p-6 flex flex-col justify-center">
-            <span className="text-xs text-muted uppercase tracking-wider mb-2">Final Verdict</span>
+          <div className="rounded-[var(--radius)] border border-border bg-surface p-6 flex flex-col justify-center">
+            <span className="text-xs text-muted uppercase tracking-wider mb-2">Final verdict</span>
             <div>
-              <span className={`inline-block px-3 py-1.5 rounded-lg border text-sm font-bold tracking-wide ${verdictStyle(report?.verdict, report)}`}>
-                {report?.verdict ?? 'PENDING'}
+              {/* Verdict text uses Source Serif 4 (font-serif) */}
+              <span className={`inline-block px-3 py-1.5 rounded-[var(--radius)] border text-sm font-bold tracking-wide font-serif ${verdictStyle(report?.verdict, report)}`}>
+                {report?.verdict ?? 'Pending'}
               </span>
             </div>
           </div>
@@ -216,8 +208,8 @@ export default function Report() {
 
         {/* Executive Summary */}
         {report?.executive_summary && (
-          <section className="mb-10 rounded-xl border border-border bg-surface p-6">
-            <h2 className="text-sm font-medium text-muted mb-2 uppercase tracking-wider">Executive Summary</h2>
+          <section className="mb-10 rounded-[var(--radius)] border border-border bg-surface p-6">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-2">Executive summary</h2>
             <p className="text-sm text-primary leading-relaxed max-w-prose">{report.executive_summary}</p>
           </section>
         )}
@@ -227,23 +219,23 @@ export default function Report() {
 
         {/* Mood Timeline */}
         <section className="mb-10">
-          <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Mood Timeline (1–10)</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Mood timeline (1–10)</h2>
           <MoodTimeline points={timelinePoints} />
         </section>
 
-        {/* Flagged Weak Moments */}
+        {/* Flagged Weak Moments — bordered rows with left accent bar */}
         {report?.weak_moments && report.weak_moments.length > 0 && (
           <section className="mb-10">
-            <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Flagged Weak Moments</h2>
-            <div className="flex flex-col gap-4">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Flagged weak moments</h2>
+            <div className="flex flex-col border border-border rounded-[var(--radius)] bg-surface">
               {report.weak_moments.map((m, i) => (
-                <div key={i} className="rounded-xl border border-border bg-surface p-5">
+                <div key={i} className={`p-5 ${i > 0 ? 'border-t border-border' : ''} border-l-2 border-l-mood-cold`}>
                   <p className="text-xs text-dim font-semibold uppercase tracking-wider mb-2">Turn {m.turn_index} — {m.issue}</p>
-                  <div className="mb-3 p-3 rounded-lg bg-mood-cold/5 border border-mood-cold/20">
+                  <div className="mb-3 p-3 rounded-[var(--radius)] bg-mood-cold/5 border border-mood-cold/20">
                     <p className="text-xs text-mood-cold font-semibold mb-1">You said:</p>
                     <p className="text-sm text-primary">{m.user_answer}</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-mood-warm/5 border border-mood-warm/20">
+                  <div className="p-3 rounded-[var(--radius)] bg-mood-warm/5 border border-mood-warm/20">
                     <p className="text-xs text-mood-warm font-semibold mb-1">Ideal rewrite:</p>
                     <p className="text-sm text-primary">{m.ideal_rewrite}</p>
                   </div>
@@ -256,8 +248,8 @@ export default function Report() {
         {/* Ideal Answer Rewrites */}
         {report?.ideal_rewrites && report.ideal_rewrites.length > 0 && (
           <section className="mb-10">
-            <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Ideal Answer Rewrites</h2>
-            <div className="rounded-xl border border-border bg-surface p-5">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Ideal answer rewrites</h2>
+            <div className="rounded-[var(--radius)] border border-border bg-surface p-5">
               <ol className="flex flex-col gap-3 list-decimal pl-5">
                 {report.ideal_rewrites.map((r, i) => (
                   <li key={i} className="text-sm text-primary leading-relaxed pl-1">{r}</li>
@@ -269,7 +261,7 @@ export default function Report() {
 
         {/* Strengths & Weaknesses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <section className="rounded-xl border border-border bg-surface p-6">
+          <section className="rounded-[var(--radius)] border border-border bg-surface p-6">
             <h2 className="text-sm font-medium text-mood-warm mb-3 uppercase tracking-wider flex items-center gap-2">
               <span>✓</span> Strengths
             </h2>
@@ -287,9 +279,9 @@ export default function Report() {
             )}
           </section>
 
-          <section className="rounded-xl border border-border bg-surface p-6">
+          <section className="rounded-[var(--radius)] border border-border bg-surface p-6">
             <h2 className="text-sm font-medium text-mood-cold mb-3 uppercase tracking-wider flex items-center gap-2">
-              <span>⚠</span> Critical Weaknesses
+              <span>⚠</span> Critical weaknesses
             </h2>
             {report?.critical_weaknesses && report.critical_weaknesses.length > 0 ? (
               <ul className="flex flex-col gap-2.5">

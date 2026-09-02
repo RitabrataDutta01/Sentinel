@@ -1,28 +1,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* ── Sentinel design tokens ──────────────────────────────────────
-   Warm earthy palette — bark, terracotta, brass, paper.
-   Dark mode is default; light mode via [data-theme="light"]. */
-:root {
-  --radius: 0.625rem;
+/* ── Sentinel — Chromatic duality theme ───────────────────────────
+   Dark: deep navy + amber gold
+   Light: warm cream + deep slate-indigo
+   No black, no white, no orange, no teal. Complementary pairs only. */
 
-  /* Dark palette */
-  --bg-app:        #17140F;
-  --bg-sidebar:    #1D1913;
-  --bg-surface:    #26201A;
-  --bg-surface-raised: #302921;
-  --border-hairline: #3D3428;
-  --border-strong: #4E4335;
-  --text-primary:  #E8DDCF;
-  --text-secondary:#9C8F7D;
-  --text-muted:    #695E4F;
-  --accent-base:   #C97C4F;
-  --accent-hover-base: #D6905F;
-  --accent-muted-base: #3A2B20;
-  --success-base:  #7EBF8E;
-  --warning-base:  #B8935B;
-  --danger-base:   #A85042;
+/* ── Dark Mode — Deep navy + amber gold ────────────────────────── */
+:root {
+  --radius: 0px;
+
+  /* Surfaces — rich navy hierarchy */
+  --bg-app:        #0f1724;
+  --bg-sidebar:    #151e30;
+  --bg-surface:    #1c2740;
+  --bg-surface-raised: #253250;
+  --border-hairline: #2e3d58;
+  --border-strong: #4a5e80;
+
+  /* Text — warm cream, not stark white */
+  --text-primary:  #f0e8d8;
+  --text-secondary:#b8ad98;
+  --text-muted:    #6e6858;
+
+  /* Accent — amber gold */
+  --accent-base:   #d4a24a;
+  --accent-hover-base: #e0b860;
+  --accent-muted-base: rgba(212,162,74,0.15);
+  --success-base:  #7a9e6a;
+  --warning-base:  #d4a24a;
+  --danger-base:   #c45a3a;
+  --info-base:     #6a8ab0;
 
   /* Semantic aliases */
   --background: var(--bg-app);
@@ -42,14 +50,14 @@
   --accent: var(--accent-base);
   --accent-light: var(--accent-hover-base);
   --accent-dim: var(--accent-muted-base);
-  --accent-foreground: var(--text-primary);
+  --accent-foreground: #0f1724;
   --secondary: var(--warning-base);
-  --secondary-foreground: var(--text-primary);
+  --secondary-foreground: #0f1724;
   --muted: var(--text-secondary);
   --muted-foreground: var(--text-secondary);
   --dim: var(--text-muted);
   --destructive: var(--danger-base);
-  --destructive-foreground: var(--text-primary);
+  --destructive-foreground: #f0e8d8;
   --mood-warm: var(--success-base);
   --mood-cold: var(--danger-base);
   --mood-neutral: var(--text-muted);
@@ -59,16 +67,78 @@
   --ring: var(--accent-base);
 }
 
-/* Tailwind v4 @theme — real CSS custom properties that cascade at runtime */
+/* ── Light Mode — Warm cream + deep slate-indigo ───────────────── */
+:root[data-theme="light"] {
+  --radius: 0.125rem;
+
+  /* Surfaces — warm cream hierarchy */
+  --bg-app:        #f5f0e6;
+  --bg-sidebar:    #ebe5d8;
+  --bg-surface:    #fefbf5;
+  --bg-surface-raised: #e8e2d4;
+  --border-hairline: #c4b8a4;
+  --border-strong: #968a78;
+
+  /* Text — deep slate-indigo */
+  --text-primary:  #1e2a3a;
+  --text-secondary:#4a5568;
+  --text-muted:    #8a8078;
+
+  /* Accent — deep slate-indigo */
+  --accent-base:   #3a4a6a;
+  --accent-hover-base: #4a5e80;
+  --accent-muted-base: rgba(58,74,106,0.10);
+  --success-base:  #3a6a4a;
+  --warning-base:  #a07828;
+  --danger-base:   #9a3a2a;
+  --info-base:     #3a5a80;
+
+  /* Semantic aliases */
+  --background: var(--bg-app);
+  --foreground: var(--text-primary);
+  --sidebar: var(--bg-sidebar);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-border: var(--border-hairline);
+  --surface: var(--bg-surface);
+  --elevated: var(--bg-surface-raised);
+  --hover-surface: var(--bg-surface-raised);
+  --card: var(--bg-surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-surface-raised);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--text-primary);
+  --primary-foreground: var(--accent-base);
+  --accent: var(--accent-base);
+  --accent-light: var(--accent-hover-base);
+  --accent-dim: var(--accent-muted-base);
+  --accent-foreground: #f5f0e6;
+  --secondary: var(--warning-base);
+  --secondary-foreground: #f5f0e6;
+  --muted: var(--text-secondary);
+  --muted-foreground: var(--text-secondary);
+  --dim: var(--text-muted);
+  --destructive: var(--danger-base);
+  --destructive-foreground: #f5f0e6;
+  --mood-warm: var(--success-base);
+  --mood-cold: var(--danger-base);
+  --mood-neutral: var(--text-muted);
+  --border: var(--border-hairline);
+  --border-light: var(--border-strong);
+  --input: var(--bg-surface);
+  --ring: var(--accent-base);
+}
+
+/* Tailwind v4 @theme */
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: 0px;
+  --radius-md: 0px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -104,29 +174,12 @@
   --color-sidebar-border: var(--sidebar-border);
 }
 
-/* ── Light theme ─────────────────────────────────────────────────
-   Warm paper palette. Cascade: --bg-* → --surface → --color-surface → bg-surface etc. */
-:root[data-theme="light"] {
-  --bg-app:        #F2EAD9;
-  --bg-sidebar:    #EBE0CB;
-  --bg-surface:    #FBF6EC;
-  --bg-surface-raised: #E5D8BE;
-  --border-hairline: #D4C9B0;
-  --border-strong: #C4B89C;
-  --text-primary:  #2B241B;
-  --text-secondary:#5E5343;
-  --text-muted:    #8D8172;
-  --accent-base:   #B25E36;
-  --accent-hover-base: #9E5030;
-  --accent-muted-base: #E9D2BC;
-  --success-base:  #4A8C5C;
-  --warning-base:  #8C6A34;
-  --danger-base:   #8C4335;
+/* Light mode font override */
+:root[data-theme="light"] body {
+  font-family: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* ── Smooth theme transition ─────────────────────────────────────
-   Transition only background-color, color, and border-color so the
-   switch feels fluid without being sluggish. */
+/* ── Smooth theme transition ───────────────────────────────────── */
 html.theme-transitioning,
 html.theme-transitioning *,
 html.theme-transitioning *::before,
@@ -134,8 +187,7 @@ html.theme-transitioning *::after {
   transition:
     background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 @layer base {
@@ -152,18 +204,5 @@ html.theme-transitioning *::after {
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-  }
-}
-
-/* Ambient film-grain texture shared by every screen. */
-@utility sentinel-noise {
-  &::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   }
 }

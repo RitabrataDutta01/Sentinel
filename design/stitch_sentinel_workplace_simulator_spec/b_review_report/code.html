@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#5d0055",
+                      "surface-bright": "#fff7fb",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#feebff",
+                      "primary-fixed": "#ffd7f1",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "primary-container": "#7a1f6e",
+                      "outline": "#84727d",
+                      "secondary-container": "#ff7255",
+                      "on-tertiary-fixed-variant": "#00513a",
+                      "surface": "#fff7fb",
+                      "secondary-fixed": "#ffdad3",
+                      "inverse-surface": "#3a2b3f",
+                      "on-secondary-container": "#6d0f00",
+                      "secondary-fixed-dim": "#ffb4a4",
+                      "inverse-primary": "#ffacea",
+                      "on-secondary-fixed-variant": "#891d07",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#fde7ff",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#d6c1cd",
+                      "surface-container-high": "#f9e0fc",
+                      "secondary": "#ab351d",
+                      "tertiary-fixed-dim": "#82d7b3",
+                      "surface-tint": "#973988",
+                      "tertiary-fixed": "#9ef4cf",
+                      "error": "#ba1a1a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#241629",
+                      "on-tertiary-container": "#71c5a2",
+                      "surface-dim": "#ead2ed",
+                      "on-secondary-fixed": "#3e0500",
+                      "tertiary-container": "#00513a",
+                      "on-background": "#241629",
+                      "on-primary-fixed": "#390034",
+                      "surface-variant": "#f3dbf6",
+                      "surface-container-highest": "#f3dbf6",
+                      "background": "#fff7fb",
+                      "on-surface-variant": "#51424c",
+                      "on-primary-fixed-variant": "#7a1f6e",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed": "#002115",
+                      "primary-fixed-dim": "#ffacea",
+                      "tertiary": "#003827",
+                      "surface-container-low": "#ffefff",
+                      "on-primary-container": "#fc90e4",
+                      
+                      // Explicitly adding base color from prompt for background
+                      "base-archival": "#EEEAF2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sidebar-width": "260px",
+                      "unit": "4px",
+                      "gutter": "16px",
+                      "margin-page": "32px"
+              },
+              "fontFamily": {
+                      "display-title": [
+                              "\"Source Serif 4\""
+                      ],
+                      "body-md": [
+                              "Work Sans"
+                      ],
+                      "body-lg": [
+                              "Work Sans"
+                      ],
+                      "label-sm": [
+                              "Work Sans"
+                      ],
+                      "headline-md": [
+                              "\"Source Serif 4\""
+                      ],
+                      "verdict-text": [
+                              "\"Source Serif 4\""
+                      ]
+              },
+              "fontSize": {
+                      "display-title": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "verdict-text": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Base styles */
+        body {
+            background-color: #EEEAF2; /* Base color specified in prompt */
+        }
+        
+        /* Thin chart line */
+        .chart-line {
+            stroke: #7A1F6E;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .chart-baseline {
+            stroke: #84727d; /* outline */
+            stroke-width: 1;
+        }
+        
+        /* Custom scrollbar to maintain minimal aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6c1cd; /* outline-variant */
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #84727d; /* outline */
+        }
+    </style>
+</head>
+<body class="h-full flex font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Fixed Sidebar Nav -->
+<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-lowest border-r border-outline-variant py-margin-page z-50">
+<!-- Header -->
+<div class="px-6 mb-8">
+<h1 class="font-display-title text-display-title text-primary tracking-tight">Sentinel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Workplace investigation simulator</p>
+</div>
+<!-- Main Navigation Links -->
+<div class="flex-1 overflow-y-auto">
+<ul class="flex flex-col">
+<!-- Inactive: Dashboard -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+</li>
+<!-- Inactive: Scenarios -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="psychology">psychology</span>
+<span class="font-label-sm text-label-sm">Scenarios</span>
+</a>
+</li>
+<!-- Inactive: Interview -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Interview</span>
+</a>
+</li>
+<!-- ACTIVE: Report -->
+<li>
+<a class="flex items-center px-6 py-3 text-primary font-bold border-l-2 border-primary bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="description" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-sm text-label-sm">Report</span>
+</a>
+</li>
+<!-- Inactive: Sessions -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+</li>
+<!-- Inactive: Insights -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+</li>
+<!-- Inactive: People -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm">People</span>
+</a>
+</li>
+<!-- Inactive: Settings -->
+<li>
+<a class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px] group-hover:text-primary transition-colors" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Footer Footer -->
+<div class="px-6 pt-4 border-t border-outline-variant mt-auto">
+<ul class="flex flex-col gap-2">
+<li>
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-2 text-[16px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Account identity</span>
+</div>
+</li>
+<li>
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-2 text-[16px]" data-icon="business">business</span>
+<span class="font-label-sm text-label-sm">Organization</span>
+</div>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Top App Bar (Mobile Only) -->
+<header class="md:hidden flex items-center justify-center px-4 w-full h-12 bg-surface-container-lowest border-b border-outline-variant fixed top-0 z-40">
+<h1 class="font-label-sm text-label-sm text-on-surface-variant tracking-tight">Sentinel</h1>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[260px] pt-12 md:pt-0 min-h-screen pb-16">
+<!-- Document Canvas -->
+<div class="max-w-4xl mx-auto md:my-12 bg-surface-container-lowest min-h-screen md:min-h-0 md:shadow-sm border-x md:border border-outline-variant flex flex-col relative overflow-hidden">
+<!-- Document Header -->
+<div class="px-8 py-10 border-b border-outline-variant flex justify-between items-start">
+<div>
+<h2 class="font-display-title text-display-title text-on-surface mb-2">Investigation report: Case #8824-B</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Prepared on October 24, 2023</p>
+</div>
+<div>
+<!-- Primary Button - Export PDF -->
+<button class="bg-primary-container text-on-primary hover:bg-primary transition-colors px-4 py-2 font-label-sm text-label-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                        Export PDF
+                    </button>
+</div>
+</div>
+<!-- Inline Stats Strip -->
+<div class="flex border-b border-outline-variant bg-surface-bright">
+<div class="flex-1 px-8 py-4 border-r border-outline-variant last:border-r-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Duration</p>
+<p class="font-body-md text-body-md text-on-surface">45 minutes</p>
+</div>
+<div class="flex-1 px-8 py-4 border-r border-outline-variant last:border-r-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Participants</p>
+<p class="font-body-md text-body-md text-on-surface">2</p>
+</div>
+<div class="flex-1 px-8 py-4 border-r border-outline-variant last:border-r-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Status</p>
+<!-- Chip -->
+<span class="inline-flex items-center px-2 py-0.5 bg-tertiary-fixed-dim bg-opacity-20 text-tertiary-container font-label-sm text-label-sm border border-tertiary-fixed-dim">
+                        Concluded
+                    </span>
+</div>
+</div>
+<!-- Content Body -->
+<div class="p-8 flex-1">
+<!-- Verdict Section -->
+<section class="mb-12">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Executive summary &amp; verdict</h3>
+<div class="border-l-2 border-primary pl-6 py-2">
+<p class="font-verdict-text text-verdict-text text-on-surface-variant leading-relaxed">
+                            Based on the simulated interview progression, the subject demonstrated inconsistent recall regarding the events of September 14th. The emotional baseline fluctuated significantly when pressed on timeline specifics. The system recommends further corroboration of physical access logs before proceeding with formal allegations.
+                        </p>
+</div>
+</section>
+<!-- Bordered Row List (Topics Covered) -->
+<section class="mb-12">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Topics covered</h3>
+<div class="border-t border-outline-variant">
+<!-- Row 1 -->
+<div class="flex py-4 border-b border-outline-variant hover:bg-surface-bright transition-colors group">
+<div class="w-1/4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">00:00 - 12:30</span>
+</div>
+<div class="w-2/4">
+<p class="font-body-md text-body-md text-on-surface">Initial baseline establishment and rapport building.</p>
+</div>
+<div class="w-1/4 flex justify-end">
+<span class="inline-flex items-center px-2 py-0.5 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Low stress</span>
+</div>
+</div>
+<!-- Row 2 (Active/Highlighted) -->
+<div class="flex py-4 border-b border-outline-variant bg-surface-container-low relative group">
+<!-- Accent bar indicating active/focus item -->
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary"></div>
+<div class="w-1/4 pl-4">
+<span class="font-label-sm text-label-sm text-primary font-medium">12:30 - 28:15</span>
+</div>
+<div class="w-2/4">
+<p class="font-body-md text-body-md text-on-surface font-medium">Timeline review for evening of Sept 14th.</p>
+</div>
+<div class="w-1/4 flex justify-end">
+<span class="inline-flex items-center px-2 py-0.5 bg-error-container bg-opacity-30 text-on-error-container border border-error-container font-label-sm text-label-sm">High stress</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex py-4 border-b border-outline-variant hover:bg-surface-bright transition-colors group">
+<div class="w-1/4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">28:15 - 45:00</span>
+</div>
+<div class="w-2/4">
+<p class="font-body-md text-body-md text-on-surface">Review of email correspondence and conclusion.</p>
+</div>
+<div class="w-1/4 flex justify-end">
+<span class="inline-flex items-center px-2 py-0.5 bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Moderate stress</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Minimalist Chart Section -->
+<section class="mb-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Stress level indicator</h3>
+<div class="h-48 w-full relative">
+<!-- Y-axis labels (minimal) -->
+<div class="absolute left-0 h-full flex flex-col justify-between py-2 text-on-surface-variant font-label-sm text-[10px]">
+<span>High</span>
+<span>Low</span>
+</div>
+<!-- Chart Area -->
+<div class="ml-10 h-full relative border-b border-outline">
+<!-- Single Solid Baseline -->
+<!-- SVG Line Chart (No grid, no fill) -->
+<svg class="w-full h-full absolute inset-0 pt-2 pb-[1px]" preserveaspectratio="none" viewbox="0 0 1000 200">
+<path class="chart-line" d="M 0,180 C 100,180 150,170 200,150 C 250,130 280,40 300,30 C 350,10 400,90 450,100 C 500,110 550,150 600,140 C 650,130 700,50 750,40 C 800,30 850,160 900,170 C 950,180 980,180 1000,180"></path>
+</svg>
+<!-- X-axis markers -->
+<div class="absolute -bottom-6 w-full flex justify-between text-on-surface-variant font-label-sm text-[10px]">
+<span>00:00</span>
+<span>15:00</span>
+<span>30:00</span>
+<span>45:00</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Document Footer -->
+<div class="px-8 py-6 border-t border-outline-variant bg-surface-bright mt-auto">
+<p class="font-label-sm text-label-sm text-on-surface-variant text-center">END OF REPORT RECORD</p>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full h-16 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-around z-40 pb-safe">
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] mt-1 font-medium">Dashboard</span>
+</a>
+<!-- ACTIVE: Report -->
+<a class="flex flex-col items-center justify-center w-full h-full text-primary" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="description" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-[10px] mt-1 font-bold">Report</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined text-[24px]" data-icon="history">history</span>
+<span class="text-[10px] mt-1 font-medium">Sessions</span>
+</a>
+</nav>
+</body></html>

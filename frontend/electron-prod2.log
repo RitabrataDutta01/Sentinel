@@ -1,0 +1,3 @@
+Gtk-Message: 12:23:53.363: Failed to load module "colorreload-gtk-module"
+Gtk-Message: 12:23:53.363: Failed to load module "window-decorations-gtk-module"
+/home/ritabrata/projects/Sentinel/frontend/node_modules/electron/dist/electron exited with signal SIGTERM

@@ -3,11 +3,12 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard,
   History,
-  LineChart,
   Swords,
   Settings as SettingsIcon,
   Users,
   FileText,
+  Sun,
+  Moon,
 } from 'lucide-react'
 import { useOrg } from '../../lib/useOrg'
 import { joinOrg } from '../../lib/api'
@@ -17,7 +18,6 @@ import { electronEvents, electron } from '../../lib/electron.js'
 import { useSessionStore } from '../../store/sessionStore'
 import { fetchSessions } from '../../lib/supabase'
 import { useTheme } from '../../lib/useTheme'
-import { Sun, Moon } from 'lucide-react'
 
 /* ── Navigation groups ─────────────────────────────────────────── */
 
@@ -36,11 +36,11 @@ const bottomNav = [
 /* ── Mood helpers ──────────────────────────────────────────────── */
 
 function moodColor(mood) {
-  if (mood <= 3) return '#A85042'
-  if (mood <= 5) return '#B8935B'
-  if (mood <= 7) return '#9C8F7D'
-  if (mood <= 9) return '#C97C4F'
-  return '#7EBF8E'
+  if (mood <= 3) return 'var(--mood-cold)'
+  if (mood <= 5) return 'var(--mood-neutral)'
+  if (mood <= 7) return 'var(--mood-neutral)'
+  if (mood <= 9) return 'var(--accent)'
+  return 'var(--mood-warm)'
 }
 
 function moodLabel(mood) {
@@ -51,7 +51,7 @@ function moodLabel(mood) {
   return 'impressed'
 }
 
-/* ── Sidebar ───────────────────────────────────────────────────── */
+/* ── Sidebar link ──────────────────────────────────────────────── */
 
 function SidebarLink({ to, label, icon: Icon, isActive }) {
   return (
@@ -59,7 +59,7 @@ function SidebarLink({ to, label, icon: Icon, isActive }) {
       to={to}
       className={({ isActive: navActive }) =>
         cn(
-          'group flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-150',
+          'group flex items-center gap-2.5 rounded-[var(--radius)] px-2.5 py-1.5 text-sm transition-colors duration-150',
           (navActive || isActive)
             ? 'bg-accent/15 text-foreground'
             : 'text-muted hover:text-foreground hover:bg-elevated',
@@ -72,10 +72,12 @@ function SidebarLink({ to, label, icon: Icon, isActive }) {
   )
 }
 
+/* ── Sidebar ───────────────────────────────────────────────────── */
+
 function Sidebar({ collapsed }) {
   const location = useLocation()
-  const navigate = useNavigate()
   const { theme, toggle } = useTheme()
+  const { org } = useOrg()
   const isSessionsActive = location.pathname.startsWith('/sessions')
   const isReportsActive = location.pathname.startsWith('/report')
 
@@ -83,23 +85,18 @@ function Sidebar({ collapsed }) {
     <aside
       className={cn(
         'flex flex-col border-r border-sidebar-border bg-sidebar transition-all duration-200 shrink-0 h-full',
-        collapsed ? 'w-14' : 'w-52',
+        collapsed ? 'w-14' : 'w-60',
       )}
     >
-      {/* App mark */}
-      <div className={cn('flex items-center gap-2 px-3 pt-4 pb-2', collapsed && 'justify-center')}>
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-[11px] font-bold text-white">
-          S
+      {/* App name — no logo */}
+      {!collapsed && (
+        <div className="px-3 pt-4 pb-3">
+          <span className="text-[13px] font-semibold text-foreground">Sentinel</span>
         </div>
-        {!collapsed && (
-          <div className="leading-none">
-            <p className="text-[13px] font-semibold text-foreground">Sentinel</p>
-          </div>
-        )}
-      </div>
+      )}
 
       {/* Workspace section */}
-      <div className="mt-4 flex-1 px-2 min-h-0">
+      <div className="flex-1 px-2 min-h-0">
         {!collapsed && (
           <p className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
             workspace
@@ -117,12 +114,11 @@ function Sidebar({ collapsed }) {
               }
             />
           ))}
-
         </nav>
       </div>
 
       {/* Bottom section */}
-      <div className="px-2 pb-4 mt-auto">
+      <div className="px-2 pb-2 mt-auto">
         {!collapsed && (
           <p className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
             general
@@ -135,7 +131,7 @@ function Sidebar({ collapsed }) {
           <button
             onClick={toggle}
             className={cn(
-              'group flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-150',
+              'group flex items-center gap-2.5 rounded-[var(--radius)] px-2.5 py-1.5 text-sm transition-colors duration-150',
               'text-muted hover:text-foreground hover:bg-elevated',
             )}
           >
@@ -148,6 +144,18 @@ function Sidebar({ collapsed }) {
           </button>
         </nav>
       </div>
+
+      {/* Sidebar footer — account / org identity */}
+      {!collapsed && (
+        <div className="border-t border-sidebar-border px-3 py-3">
+          <p className="text-[12px] font-medium text-foreground truncate">
+            {org?.name ?? 'Personal workspace'}
+          </p>
+          <p className="text-[11px] text-muted truncate mt-0.5">
+            workplace conversation simulator
+          </p>
+        </div>
+      )}
     </aside>
   )
 }
@@ -188,18 +196,47 @@ function Titlebar({ setup, currentMood, sessionId }) {
 
   return (
     <div
-      className="flex h-9 items-center border-b border-sidebar-border bg-sidebar px-4 text-muted select-none"
+      className="flex h-10 items-center border-b border-sidebar-border bg-sidebar px-4 text-muted select-none shrink-0"
       style={{ WebkitAppRegion: 'drag' }}
     >
-      {/* Left spacer for macOS traffic light area */}
-      <div className="w-16 shrink-0" />
+      {/* Left: traffic light dots (macOS style) */}
+      <div className="flex shrink-0 items-center gap-1.5" style={{ WebkitAppRegion: 'no-drag' }}>
+        {isElectron() && (
+          <>
+            <button
+              onClick={() => closeWindow()}
+              className="h-3 w-3 rounded-full bg-mood-cold/80 hover:bg-mood-cold transition-colors"
+              title="Close"
+            />
+            <button
+              onClick={() => minimizeWindow()}
+              className="h-3 w-3 rounded-full bg-secondary/80 hover:bg-secondary transition-colors"
+              title="Minimize"
+            />
+            <button
+              onClick={() => maximizeWindow()}
+              className="h-3 w-3 rounded-full bg-mood-warm/80 hover:bg-mood-warm transition-colors"
+              title="Maximize"
+            />
+          </>
+        )}
+        {!isElectron() && (
+          <>
+            <span className="h-3 w-3 rounded-full bg-mood-cold/60" />
+            <span className="h-3 w-3 rounded-full bg-secondary/60" />
+            <span className="h-3 w-3 rounded-full bg-mood-warm/60" />
+          </>
+        )}
+      </div>
 
-      {/* Center: title + mood chip */}
+      {/* Center: subtitle + mood chip */}
       <div className="flex flex-1 items-center justify-center gap-3">
-        <span className="text-[12px] font-medium tracking-wide text-muted">{title}</span>
+        <span className="text-[12px] font-medium tracking-wide text-muted">
+          workplace conversation simulator
+        </span>
         {label && (
           <span
-            className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
+            className="rounded-[var(--radius)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
             style={{ backgroundColor: `${color}20`, color }}
           >
             {label}
@@ -207,8 +244,8 @@ function Titlebar({ setup, currentMood, sessionId }) {
         )}
       </div>
 
-      {/* Right: window controls (non-macOS) */}
-      <div className="flex shrink-0 items-center gap-0.5" style={{ WebkitAppRegion: 'no-drag' }}>
+      {/* Right: window controls (non-macOS Electron) */}
+      <div className="flex shrink-0 items-center gap-0.5 w-16" style={{ WebkitAppRegion: 'no-drag' }}>
         {isElectron() && (
           <>
             <button
@@ -326,7 +363,7 @@ export default function DesktopAppShell({ children }) {
         <main className="flex min-w-0 flex-1 flex-col overflow-y-auto">
           {/* Org prompt */}
           {showOrgPrompt && (
-            <div className="mx-6 mt-6 flex items-center justify-between gap-4 rounded-xl border border-accent/30 bg-accent/[0.06] px-5 py-3.5">
+            <div className="mx-6 mt-6 flex items-center justify-between gap-4 rounded-[var(--radius)] border border-accent/30 bg-accent/[0.06] px-5 py-3.5">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-foreground">
                   {pending ? `You've been invited to ${pending.org.name}` : "You're not part of a team yet"}
@@ -334,21 +371,21 @@ export default function DesktopAppShell({ children }) {
                 <p className="truncate text-xs text-muted">
                   {pending
                     ? 'Accept the invitation to unlock team features.'
-                    : 'Create an organization or join one to unlock team features.'}
+                    : 'Create an organisation or join one to unlock team features.'}
                 </p>
               </div>
               {pending ? (
                 <button
                   onClick={handleAcceptInvite}
                   disabled={acceptingId !== null}
-                  className="shrink-0 rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-accent-light"
+                  className="shrink-0 rounded-[var(--radius)] bg-accent px-4 py-2 text-xs font-semibold text-accent-foreground transition-colors hover:opacity-90"
                 >
                   {acceptingId ? 'Accepting…' : 'Accept invite'}
                 </button>
               ) : (
                 <NavLink
                   to="/people"
-                  className="shrink-0 rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-accent-light"
+                  className="shrink-0 rounded-[var(--radius)] bg-accent px-4 py-2 text-xs font-semibold text-accent-foreground transition-colors hover:opacity-90"
                 >
                   Get started
                 </NavLink>

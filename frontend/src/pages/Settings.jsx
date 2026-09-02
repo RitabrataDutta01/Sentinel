@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Switch } from '../components/ui/switch'
-import { Shield, User, Mail, Settings as SettingsIcon, LogOut, Sun, Moon, Monitor } from 'lucide-react'
+import { Shield, User, Settings as SettingsIcon, LogOut, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../lib/useTheme'
 import { cn } from '../lib/utils'
 
@@ -104,7 +104,7 @@ export default function Settings() {
                 id="firstName"
                 value={profile?.first_name ?? ''}
                 onChange={(e) => update('first_name', e.target.value)}
-                className="border border-border bg-surface px-3 py-2.5 rounded-lg text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+                className="border border-border bg-surface px-3 py-2.5 rounded-[var(--radius)] text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
               />
             </FormField>
             <FormField label="Last name" htmlFor="lastName">
@@ -112,7 +112,7 @@ export default function Settings() {
                 id="lastName"
                 value={profile?.last_name ?? ''}
                 onChange={(e) => update('last_name', e.target.value)}
-                className="border border-border bg-surface px-3 py-2.5 rounded-lg text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+                className="border border-border bg-surface px-3 py-2.5 rounded-[var(--radius)] text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
               />
             </FormField>
             <FormField label="Experience level" htmlFor="role">
@@ -120,7 +120,7 @@ export default function Settings() {
                 id="role"
                 value={profile?.role ?? 'Student'}
                 onChange={(e) => update('role', e.target.value)}
-                className="border border-border bg-surface px-3 py-2.5 rounded-lg text-sm text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+                className="border border-border bg-surface px-3 py-2.5 rounded-[var(--radius)] text-sm text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
               >
                 {ROLES.map((r) => (
                   <option key={r} value={r}>
@@ -135,7 +135,7 @@ export default function Settings() {
                 type="email"
                 value={profile?.email ?? ''}
                 disabled
-                className="border border-border/50 bg-surface/50 px-3 py-2.5 rounded-lg text-sm text-muted"
+                className="border border-border/50 bg-surface/50 px-3 py-2.5 rounded-[var(--radius)] text-sm text-muted"
               />
             </FormField>
           </div>
@@ -152,7 +152,7 @@ export default function Settings() {
                 id="persona"
                 value={profile?.default_archetype || PERSONAS[0]}
                 onChange={(e) => update('default_archetype', e.target.value)}
-                className="border border-border bg-surface px-3 py-2.5 rounded-lg text-sm text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+                className="border border-border bg-surface px-3 py-2.5 rounded-[var(--radius)] text-sm text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
               >
                 {PERSONAS.map((p) => (
                   <option key={p} value={p}>
@@ -193,7 +193,7 @@ export default function Settings() {
                   key={value}
                   onClick={() => setTheme(value)}
                   className={cn(
-                    'flex items-center gap-2.5 px-4 py-3 rounded-lg border text-sm font-medium transition-all',
+                    'flex items-center gap-2.5 px-4 py-3 rounded-[var(--radius)] border text-sm font-medium transition-all',
                     theme === value
                       ? 'border-accent bg-accent/10 text-accent'
                       : 'border-border bg-surface hover:bg-surface-raised text-muted hover:text-foreground'

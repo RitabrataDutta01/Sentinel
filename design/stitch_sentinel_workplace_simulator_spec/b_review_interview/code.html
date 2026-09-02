@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interview - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#fff7fb",
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "display-title": [
+                            "\"Source Serif 4\""
+                        ],
+                        "body-md": [
+                            "Work Sans"
+                        ],
+                        "body-lg": [
+                            "Work Sans"
+                        ],
+                        "label-sm": [
+                            "Work Sans"
+                        ],
+                        "headline-md": [
+                            "\"Source Serif 4\""
+                        ],
+                        "verdict-text": [
+                            "\"Source Serif 4\""
+                        ]
+                    },
+                    "fontSize": {
+                        "display-title": [
+                            "32px",
+                            {
+                                "lineHeight": "40px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "body-md": [
+                            "14px",
+                            {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "body-lg": [
+                            "16px",
+                            {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "verdict-text": [
+                            "18px",
+                            {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #EEEAF2; /* Custom background as requested */
+            color: #241629;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface font-headline-md text-headline-md flex items-center justify-center px-4 w-full relative docked full-width top-0 h-8 border-b border-outline-variant dark:border-outline flat no shadows transition-colors duration-150 z-50">
+<!-- Window dots -->
+<div class="absolute left-4 flex gap-1.5 items-center h-full">
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-outline-variant"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant tracking-tight text-center">Sentinel — Workplace investigation simulator</span>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline flat no shadows w-sidebar-width flex-col h-full py-margin-page transition-all duration-200 ease-in-out shrink-0 z-40">
+<div class="px-gutter mb-8">
+<h1 class="font-display-title text-display-title text-primary dark:text-primary">Sentinel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Workplace investigation simulator</p>
+</div>
+<div class="flex-1 overflow-y-auto font-label-sm text-label-sm">
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">psychology</span>
+                    Scenarios
+                </a>
+<a class="text-primary dark:text-primary font-bold border-l-2 border-primary bg-surface-container-low flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+                    Interview
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">description</span>
+                    Report
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">history</span>
+                    Sessions
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">analytics</span>
+                    Insights
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">group</span>
+                    People
+                </a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined mr-3 text-xl">settings</span>
+                    Settings
+                </a>
+</div>
+<div class="mt-auto border-t border-outline-variant px-gutter pt-4 pb-4">
+<div class="flex items-center gap-2 mb-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                    Account identity
+                </div>
+<div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">business</span>
+                    Organization
+                </div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-margin-page bg-[#EEEAF2] flex justify-center">
+<!-- Document Canvas -->
+<div class="bg-surface w-full max-w-4xl border border-outline-variant p-8 flex flex-col h-full min-h-[800px]">
+<!-- Interview Header -->
+<div class="border-b border-outline-variant pb-6 mb-6">
+<div class="flex justify-between items-end">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2 block">Case File 492-B</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Interview: Subject A</h2>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Date: 2023-10-24</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Status: In Progress</span>
+</div>
+</div>
+</div>
+<!-- Interview Transcript Area -->
+<div class="flex-1 overflow-y-auto pr-4 mb-6 space-y-6">
+<!-- System Message -->
+<div class="pl-4 border-l border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Investigator (You)</p>
+<p class="font-body-md text-body-md text-on-surface">Please state your name and position for the record.</p>
+</div>
+<!-- Subject Message -->
+<div class="pl-4 border-l-2 border-primary bg-surface-container-low py-2 px-3">
+<p class="font-label-sm text-label-sm text-primary mb-1 font-bold">Subject A</p>
+<p class="font-body-md text-body-md text-on-surface">Jane Doe. I'm a senior analyst in the finance department.</p>
+</div>
+<!-- System Message -->
+<div class="pl-4 border-l border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Investigator (You)</p>
+<p class="font-body-md text-body-md text-on-surface">Thank you, Jane. Can you walk me through the events of last Tuesday afternoon, specifically regarding the discrepancy in the Q3 report?</p>
+</div>
+<!-- Subject Message -->
+<div class="pl-4 border-l-2 border-primary bg-surface-container-low py-2 px-3">
+<p class="font-label-sm text-label-sm text-primary mb-1 font-bold">Subject A</p>
+<p class="font-body-md text-body-md text-on-surface">I was at my desk most of the afternoon. I compiled the data exactly as it was given to me by the regional managers. If there's a discrepancy, it was in the source files.</p>
+</div>
+</div>
+<!-- Input Area -->
+<div class="mt-auto border-t border-outline-variant pt-6">
+<div class="flex gap-4">
+<textarea class="flex-1 bg-surface border border-outline-variant p-3 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:border-2 resize-none h-24" placeholder="Enter your next question or statement..."></textarea>
+<div class="flex flex-col justify-end">
+<button class="bg-primary-container text-on-primary font-label-sm text-label-sm px-6 py-2 hover:bg-surface-tint transition-colors">
+                                Submit
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

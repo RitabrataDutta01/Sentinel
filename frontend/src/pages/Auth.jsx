@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { signUp } from '../lib/api'
 import { signIn } from '../lib/supabase'
 import { Mail, Lock, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react'
+import { useTheme } from '../lib/useTheme'
 
 export default function Auth() {
   const navigate = useNavigate()
+  const { theme, toggle } = useTheme()
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -46,18 +48,17 @@ export default function Auth() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[--bg-app] px-4">
       <div className="w-full max-w-md">
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-sm font-bold text-accent-foreground">
-              S
-            </div>
+          <div className="mb-4">
             <span className="text-xl font-semibold text-foreground">Sentinel</span>
           </div>
-          <p className="text-muted text-sm">AI Workplace Simulator</p>
+          <p className="text-muted text-sm">workplace conversation simulator</p>
         </div>
 
-        <div className="rounded-xl border border-[--border-hairline] bg-[--bg-surface] p-6">
-          <h2 className="text-lg font-medium text-foreground mb-2">
+        {/* Card */}
+        <div className="rounded-[var(--radius)] border border-[--border-hairline] bg-[--bg-surface] p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-2">
             {isLogin ? 'Welcome back' : 'Create an account'}
           </h2>
           <p className="text-muted text-sm mb-6">
@@ -67,7 +68,7 @@ export default function Auth() {
           </p>
 
           {error && (
-            <div className="mb-4 flex items-center gap-2 rounded-lg bg-[--danger]/10 p-3 text-sm text-[--danger]">
+            <div className="mb-4 flex items-center gap-2 rounded-[var(--radius)] bg-destructive/10 p-3 text-sm text-destructive">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -85,7 +86,7 @@ export default function Auth() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-[var(--radius)] border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-[--accent] focus:border-[--accent]"
                   placeholder="you@company.com"
                   autoComplete="email"
                   disabled={loading}
@@ -104,7 +105,7 @@ export default function Auth() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-2.5 rounded-lg border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-2.5 rounded-[var(--radius)] border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-[--accent] focus:border-[--accent]"
                   placeholder="••••••••"
                   autoComplete={isLogin ? 'current-password' : 'new-password'}
                   disabled={loading}
@@ -123,7 +124,7 @@ export default function Auth() {
             {!isLogin && (
               <div>
                 <label htmlFor="confirmPassword" className="block text-xs font-medium text-muted mb-1.5">
-                  Confirm Password
+                  Confirm password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
@@ -132,7 +133,7 @@ export default function Auth() {
                     type={showPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-[var(--radius)] border border-[--border-hairline] bg-[--bg-surface-raised] text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-[--accent] focus:border-[--accent]"
                     placeholder="••••••••"
                     autoComplete="new-password"
                     disabled={loading}
@@ -144,12 +145,12 @@ export default function Auth() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full mt-2 rounded-[var(--radius)] bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>{isLogin ? 'Signing in...' : 'Creating account...'}</span>
+                  <span>{isLogin ? 'Signing in…' : 'Creating account…'}</span>
                 </>
               ) : (
                 isLogin ? 'Sign in' : 'Create account'
@@ -158,7 +159,7 @@ export default function Auth() {
           </form>
 
           <p className="mt-6 text-center text-xs text-muted">
-            {isLogin ? "Don't have an account?" : 'Already have an account?'} {' '}
+            {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
             <button
               onClick={() => {
                 setIsLogin(!isLogin)
@@ -171,7 +172,17 @@ export default function Auth() {
           </p>
         </div>
 
-        <p className="mt-6 text-center text-xs text-muted">
+        {/* Theme toggle */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={toggle}
+            className="text-xs text-muted hover:text-foreground transition-colors"
+          >
+            {theme === 'dark' ? 'switch to light mode' : 'switch to dark mode'}
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-xs text-muted">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>

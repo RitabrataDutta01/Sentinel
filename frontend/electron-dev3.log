@@ -1,0 +1,27 @@
+
+> frontend@1.0.0 electron:dev
+> concurrently "npm run dev" "electron ../electron/"
+
+[0] 
+[0] > frontend@1.0.0 dev
+[0] > vite
+[0] 
+[1] Gtk-Message: 12:08:29.514: Failed to load module "colorreload-gtk-module"
+[1] Gtk-Message: 12:08:29.514: Failed to load module "window-decorations-gtk-module"
+[0] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[0]   - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+[0] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[0] 12:08:29 PM [vite] (client) Re-optimizing dependencies because lockfile has changed
+[0] 
+[0]   VITE v8.2.2  ready in 208 ms
+[0] 
+[0]   ➜  Local:   http://localhost:5173/
+[0]   ➜  Network: use --host to expose
+[1] (node:247045) electron: Failed to load URL: http://localhost:5173/ with error: ERR_CONNECTION_REFUSED
+[1] (Use `electron --trace-warnings ...` to show where the warning was created)
+[1] [247045:0825/120829.714677:ERROR:mojo/public/cpp/bindings/lib/interface_endpoint_client.cc:748] Message 2 rejected by interface blink.mojom.Widget
+[1] [247045:0825/120851.538716:ERROR:ui/gfx/x/atom_cache.cc:234] Add application/vnd.portal.filetransfer to kAtomsToCache
+[1] [247045:0825/120851.538804:ERROR:ui/gfx/x/atom_cache.cc:234] Add application/vnd.portal.files to kAtomsToCache
+[1] /home/ritabrata/projects/Sentinel/frontend/node_modules/electron/dist/electron exited with signal SIGTERM
+[1] electron ../electron/ exited with code 1
+[0] npm run dev exited with code 143

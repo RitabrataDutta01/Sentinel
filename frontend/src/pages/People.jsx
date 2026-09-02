@@ -38,7 +38,7 @@ function RoleBadge({ role }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-lg border px-2 py-0.5 text-[11px] font-semibold capitalize',
+        'inline-flex items-center gap-1 rounded-[var(--radius)] border px-2 py-0.5 text-[11px] font-semibold capitalize',
         roleBadge[role] ?? roleBadge.member,
       )}
     >
@@ -55,19 +55,19 @@ function MemberSessions({ sessions }) {
   return (
     <div>
       <div className="mb-4 grid grid-cols-3 gap-3">
-        <div className="rounded-xl border border-border bg-elevated px-4 py-3">
+        <div className="rounded-[var(--radius)] border border-border bg-elevated px-4 py-3">
           <p className="text-[11px] text-muted">Sessions</p>
           <p className="mt-0.5 text-lg font-semibold font-mono text-primary">
             {analytics.sessionsCompleted}
           </p>
         </div>
-        <div className="rounded-xl border border-border bg-elevated px-4 py-3">
+        <div className="rounded-[var(--radius)] border border-border bg-elevated px-4 py-3">
           <p className="text-[11px] text-muted">Avg score</p>
           <p className="mt-0.5 text-lg font-semibold font-mono text-primary">
             {analytics.averageScore ?? '—'}
           </p>
         </div>
-        <div className="rounded-xl border border-border bg-elevated px-4 py-3">
+        <div className="rounded-[var(--radius)] border border-border bg-elevated px-4 py-3">
           <p className="text-[11px] text-muted">Best score</p>
           <p className="mt-0.5 text-lg font-semibold font-mono text-primary">
             {analytics.bestScore ?? '—'}
@@ -75,15 +75,17 @@ function MemberSessions({ sessions }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {ordered.map((s) => {
+      <div className="flex flex-col">
+        {ordered.map((s, i) => {
           const rep = reportOf(s)
           const score = sessionScore(s)
           const minutes = sessionMinutes(s)
           return (
             <div
               key={s.id}
-              className="flex items-center justify-between gap-3 rounded-xl border border-border bg-elevated px-4 py-3"
+              className={`flex items-center justify-between gap-3 px-4 py-3 hover:bg-elevated transition-colors ${
+                i > 0 ? 'border-t border-border' : ''
+              }`}
             >
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold text-primary">{s.scenario}</p>
@@ -108,7 +110,7 @@ function MemberSessions({ sessions }) {
                 {rep?.verdict && (
                   <span
                     className={cn(
-                      'inline-block rounded-lg border px-2.5 py-1 text-[11px] font-bold tracking-wide',
+                      'inline-block rounded-[var(--radius)] border px-2.5 py-1 text-[11px] font-bold tracking-wide',
                       verdictStyle(rep.verdict, rep),
                     )}
                   >
@@ -117,7 +119,7 @@ function MemberSessions({ sessions }) {
                 )}
                 <Link
                   to={`/report/${s.id}`}
-                  className="shrink-0 text-sm font-semibold text-accent hover:text-accent-light transition-colors"
+                  className="shrink-0 text-sm font-semibold text-accent hover:opacity-80 transition-opacity"
                 >
                   Report →
                 </Link>
@@ -242,10 +244,10 @@ export default function People() {
     setBusy(true)
     try {
       await createOrg(orgName.trim())
-      toast.success('Organization created')
+      toast.success('Organisation created')
       reload()
     } catch (err) {
-      toast.error(err.message || 'Could not create organization.')
+      toast.error(err.message || 'Could not create organisation.')
     } finally {
       setBusy(false)
     }
@@ -257,10 +259,10 @@ export default function People() {
     setBusy(true)
     try {
       await joinOrg(joinCode.trim())
-      toast.success('Joined organization')
+      toast.success('Joined organisation')
       reload()
     } catch (err) {
-      toast.error(err.message || 'Could not join organization.')
+      toast.error(err.message || 'Could not join organisation.')
     } finally {
       setBusy(false)
     }
@@ -322,30 +324,26 @@ export default function People() {
     return (
       <div className="px-6 py-12">
         <div className="mx-auto max-w-md">
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface px-6 py-10 mb-8">
-            <div
-              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[480px] h-[480px] pointer-events-none"
-              style={{ background: 'radial-gradient(circle, var(--color-accent-dim) 0%, transparent 65%)', opacity: 0.35 }}
-            />
+          <div className="relative overflow-hidden rounded-[var(--radius)] border border-border bg-surface px-6 py-10 mb-8">
             <div className="relative text-center">
-              <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-accent/10 text-accent">
+              <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-[var(--radius)] bg-accent/10 text-accent">
                 <Users className="h-6 w-6" />
               </span>
               <h1 className="text-3xl font-semibold tracking-tight">Your team workspace</h1>
               <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
-                You're not part of an organization yet. Create one for your team, or join with an
+                You're not part of an organisation yet. Create one for your team, or join with an
                 invite code.
               </p>
             </div>
           </div>
 
           {pending && (
-            <div className="mb-6 rounded-2xl border border-accent/40 bg-accent/10 p-6">
+            <div className="mb-6 rounded-[var(--radius)] border border-accent/40 bg-accent/10 p-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">
                 Pending invitation
               </p>
               <div className="mt-2 flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent/15 text-accent">
+                <span className="grid h-10 w-10 place-items-center rounded-[var(--radius)] bg-accent/15 text-accent">
                   <Building2 className="h-5 w-5" />
                 </span>
                 <div className="min-w-0">
@@ -366,7 +364,7 @@ export default function People() {
             </div>
           )}
 
-          <div className="mb-6 flex rounded-xl border border-border bg-surface p-1">
+          <div className="mb-6 flex rounded-[var(--radius)] border border-border bg-surface p-1">
             {[
               { key: 'create', label: 'Create', icon: Building2 },
               { key: 'join', label: 'Join', icon: LogIn },
@@ -375,7 +373,7 @@ export default function People() {
                 key={key}
                 onClick={() => setTab(key)}
                 className={cn(
-                  'flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
+                  'flex flex-1 items-center justify-center gap-2 rounded-[var(--radius)] px-3 py-2 text-sm font-semibold transition-colors',
                   tab === key
                     ? 'bg-accent text-accent-foreground'
                     : 'text-muted-foreground hover:text-foreground',
@@ -390,9 +388,9 @@ export default function People() {
           {tab === 'create' ? (
             <form
               onSubmit={handleCreate}
-              className="rounded-2xl border border-border bg-surface p-6"
+              className="rounded-[var(--radius)] border border-border bg-surface p-6"
             >
-              <Label htmlFor="orgName">Organization name</Label>
+              <Label htmlFor="orgName">Organisation name</Label>
               <Input
                 id="orgName"
                 className="mt-2"
@@ -401,7 +399,7 @@ export default function People() {
                 onChange={(e) => setOrgName(e.target.value)}
               />
               <Button type="submit" className="mt-4 w-full" disabled={busy || !orgName.trim()}>
-                {busy ? 'Creating…' : 'Create organization'}
+                {busy ? 'Creating…' : 'Create organisation'}
               </Button>
               <p className="mt-3 text-center text-xs text-dim">
                 You'll become the admin and can invite your team.
@@ -410,18 +408,18 @@ export default function People() {
           ) : (
             <form
               onSubmit={handleJoin}
-              className="rounded-2xl border border-border bg-surface p-6"
+              className="rounded-[var(--radius)] border border-border bg-surface p-6"
             >
               <Label htmlFor="joinCode">Invite code</Label>
               <Input
                 id="joinCode"
                 className="mt-2 font-mono"
-                placeholder="Organization ID"
+                placeholder="Organisation ID"
                 value={joinCode}
                 onChange={(e) => setJoinCode(e.target.value)}
               />
               <Button type="submit" className="mt-4 w-full" disabled={busy || !joinCode.trim()}>
-                {busy ? 'Joining…' : 'Join organization'}
+                {busy ? 'Joining…' : 'Join organisation'}
               </Button>
               <p className="mt-3 text-center text-xs text-dim">
                 Ask your admin for the invite code.
@@ -440,7 +438,7 @@ export default function People() {
     <div className="px-6 py-12">
       <div className="w-full">
         <PageHero
-          eyebrow="Organization"
+          eyebrow="Organisation"
           title={org.name}
           subtitle={`${members.length} member${members.length === 1 ? '' : 's'} · ${
             membership?.system_role === 'admin'
@@ -451,7 +449,7 @@ export default function People() {
           }`}
         >
           {isStaff && (
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-elevated px-3 py-2">
+            <div className="flex items-center gap-2 rounded-[var(--radius)] border border-border bg-elevated px-3 py-2">
               <p className="text-xs text-muted">Invite code</p>
               <code className="font-mono text-xs text-primary">{org.id}</code>
               <button
@@ -475,9 +473,9 @@ export default function People() {
         {isStaff && (
           <form
             onSubmit={handleInvite}
-            className="mb-8 rounded-2xl border border-border bg-surface p-6"
+            className="mb-8 rounded-[var(--radius)] border border-border bg-surface p-6"
           >
-            <h2 className="mb-4 text-sm font-medium uppercase tracking-wider text-muted">
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-muted">
               Invite a member
             </h2>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -492,7 +490,7 @@ export default function People() {
               <select
                 value={inviteRole}
                 onChange={(e) => setInviteRole(e.target.value)}
-                className="rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
+                className="rounded-[var(--radius)] border border-border bg-surface px-3 py-2.5 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
               >
                 {ROLE_OPTIONS.map((r) => (
                   <option key={r.value} value={r.value}>
@@ -512,7 +510,7 @@ export default function People() {
         )}
 
         {membersError && (
-          <div className="mb-6 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+          <div className="mb-6 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
             {membersError}
           </div>
         )}
@@ -523,11 +521,7 @@ export default function People() {
             Loading members…
           </div>
         ) : soloMember ? (
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface px-6 py-8">
-            <div
-              className="absolute -top-16 -right-16 w-52 h-52 rounded-full pointer-events-none"
-              style={{ background: 'radial-gradient(circle, var(--color-accent-dim) 0%, transparent 70%)', opacity: 0.5 }}
-            />
+          <div className="relative overflow-hidden rounded-[var(--radius)] border border-border bg-surface px-6 py-8">
             <h3 className="text-base font-semibold">Invite your team</h3>
             <p className="mt-1.5 text-sm text-muted max-w-md">
               You're the only member right now. Share your invite code above so HR and teammates
@@ -535,7 +529,7 @@ export default function People() {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col border border-border rounded-[var(--radius)] bg-surface">
             {members.map((m, i) => {
               const isYou = m.user_id === yourUserId
               const displayName = [m.first_name, m.last_name].filter(Boolean).join(' ') || 'Member'
@@ -546,12 +540,10 @@ export default function People() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, delay: 0.05 * i }}
-                  className={cn(
-                    'overflow-hidden rounded-2xl border bg-surface transition-colors hover:border-border-light',
-                    isOpen ? 'border-accent/50' : 'border-border',
-                  )}
                 >
-                  <div className="flex items-center justify-between gap-3 px-5 py-4">
+                  <div className={`flex items-center justify-between gap-3 px-5 py-4 transition-colors hover:bg-elevated ${
+                    i > 0 ? 'border-t border-border' : ''
+                  } ${isOpen ? 'bg-accent/5' : ''}`}>
                     <div className="flex min-w-0 items-center gap-3">
                       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-elevated text-xs font-bold text-muted-foreground">
                         {(displayName.charAt(0) || '?').toUpperCase()}
@@ -566,7 +558,7 @@ export default function People() {
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
                       {m.status === 'invited' && (
-                        <span className="rounded-lg border border-mood-neutral/30 bg-mood-neutral/10 px-2 py-0.5 text-[11px] font-semibold text-mood-neutral">
+                        <span className="rounded-[var(--radius)] border border-mood-neutral/30 bg-mood-neutral/10 px-2 py-0.5 text-[11px] font-semibold text-mood-neutral">
                           Invited
                         </span>
                       )}
@@ -574,7 +566,7 @@ export default function People() {
                         <select
                           value={m.system_role}
                           onChange={(e) => handleRole(m.user_id, e.target.value)}
-                          className="rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-primary focus:outline-none focus:border-accent transition-colors"
+                          className="rounded-[var(--radius)] border border-border bg-surface px-2 py-1.5 text-xs text-primary focus:outline-none focus:border-accent transition-colors"
                           title="Change role"
                         >
                           {ROLE_OPTIONS.map((r) => (
@@ -591,7 +583,7 @@ export default function People() {
                           onClick={() => handleRemove(m.user_id)}
                           aria-label={`Remove ${displayName}`}
                           title="Remove member"
-                          className="rounded-lg border border-border p-1.5 text-muted-foreground transition-colors hover:text-mood-cold"
+                          className="rounded-[var(--radius)] border border-border p-1.5 text-muted-foreground transition-colors hover:text-mood-cold"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -601,7 +593,7 @@ export default function People() {
                           onClick={() => toggleMember(m)}
                           aria-label={`View ${displayName}'s sessions`}
                           title="View sessions"
-                          className="rounded-lg border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                          className="rounded-[var(--radius)] border border-border p-1.5 text-muted-foreground transition-colors hover:text-foreground"
                         >
                           <ChevronDown
                             className={cn('h-4 w-4 transition-transform', isOpen && 'rotate-180')}
@@ -619,7 +611,7 @@ export default function People() {
                           Loading sessions…
                         </div>
                       ) : memberSessionsError ? (
-                        <div className="rounded-lg border border-mood-cold/30 bg-mood-cold/5 px-4 py-3 text-sm text-mood-cold">
+                        <div className="rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-4 py-3 text-sm text-mood-cold">
                           {memberSessionsError}
                         </div>
                       ) : memberSessions.length === 0 ? (

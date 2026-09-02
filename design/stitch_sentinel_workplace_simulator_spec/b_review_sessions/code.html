@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Sessions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#EEEAF2", 
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "display-title": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-sm": ["Work Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "verdict-text": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "display-title": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "verdict-text": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-full flex flex-col md:flex-row antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Top App Bar -->
+<header class="md:hidden flex items-center justify-center px-4 w-full relative docked full-width top-0 h-8 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline flat no shadows transition-colors duration-150 z-50">
+<div class="absolute left-4 flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full border border-outline"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline"></div>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant tracking-tight uppercase flex items-center gap-2">
+            Sentinel
+        </div>
+</header>
+<!-- Desktop Sidebar -->
+<aside class="hidden md:flex flex-col h-full py-margin-page fixed left-0 top-0 w-sidebar-width bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline flat no shadows transition-all duration-200 ease-in-out z-40">
+<div class="px-6 mb-8 flex flex-col gap-2">
+<h1 class="font-display-title text-display-title text-primary dark:text-primary">Sentinel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Workplace investigation simulator</p>
+</div>
+<nav class="flex-1 overflow-y-auto w-full">
+<ul class="flex flex-col w-full">
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                        Scenarios
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+                        Interview
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                        Report
+                    </a>
+</li>
+<li>
+<a class="text-primary dark:text-primary font-bold border-l-2 border-primary bg-surface-container-low flex items-center px-4 py-3 font-label-sm text-label-sm gap-4" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                        Sessions
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                        Insights
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                        People
+                    </a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high dark:hover:bg-surface-container-high font-label-sm text-label-sm gap-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</nav>
+<div class="mt-auto px-4 pt-4 border-t border-outline-variant w-full">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="person">person</span>
+                    Account identity
+                </div>
+<div class="flex items-center gap-3 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="business">business</span>
+                    Organization
+                </div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-[260px] p-4 md:p-8 lg:p-12 h-full overflow-y-auto">
+<div class="max-w-5xl mx-auto w-full bg-surface-container-lowest border border-outline-variant shadow-sm min-h-full flex flex-col relative">
+<!-- Window Decoration (Desktop only for content area) -->
+<div class="hidden md:flex h-8 border-b border-outline-variant items-center px-4 gap-2 bg-surface">
+<div class="w-2.5 h-2.5 rounded-full border border-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline-variant"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline-variant"></div>
+<div class="mx-auto font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Case Files</div>
+</div>
+<!-- Page Header -->
+<header class="px-8 py-10 border-b border-outline-variant bg-surface">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Sessions record</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Archival listing of completed and ongoing simulated investigation interviews. Review transcripts, analysis, and final reports.</p>
+<div class="mt-6 flex gap-4">
+<div class="relative flex-1 max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Search records by participant, scenario, or ID..." type="text"/>
+</div>
+<button class="px-4 py-2 border border-outline-variant text-on-surface hover:bg-surface-container font-label-sm text-label-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+                        Filter
+                    </button>
+</div>
+</header>
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-8 py-3 bg-surface-container-low border-b border-outline-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<div class="col-span-2">Session ID</div>
+<div class="col-span-3">Participant</div>
+<div class="col-span-4">Scenario context</div>
+<div class="col-span-1 text-center">Status</div>
+<div class="col-span-2 text-right">Actions</div>
+</div>
+<!-- List Body -->
+<div class="flex-1 flex flex-col divide-y divide-outline-variant bg-surface-container-lowest">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 px-8 py-4 items-center hover:bg-surface transition-colors group">
+<div class="col-span-2 font-body-md text-body-md text-on-surface font-medium">#INV-8402</div>
+<div class="col-span-3 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Eleanor Vance</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Director of Operations</span>
+</div>
+<div class="col-span-4 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Alleged vendor kickbacks</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Q3 Procurement Audit</span>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-2 py-1 bg-[#00513a]/10 text-tertiary-container font-label-sm text-[10px] uppercase border border-[#00513a]/20">Completed</span>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="px-4 py-1.5 border border-primary text-primary hover:bg-primary-container/10 font-label-sm text-label-sm transition-colors">View</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 px-8 py-4 items-center hover:bg-surface transition-colors group bg-surface-container-low relative">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary"></div>
+<div class="col-span-2 font-body-md text-body-md text-on-surface font-medium">#INV-8401</div>
+<div class="col-span-3 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Marcus Thorne</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Senior Engineer</span>
+</div>
+<div class="col-span-4 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Hostile work environment complaint</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Team Alpha standup</span>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-2 py-1 bg-[#ba1a1a]/10 text-error font-label-sm text-[10px] uppercase border border-[#ba1a1a]/20">Active</span>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="px-4 py-1.5 bg-primary text-on-primary hover:bg-primary/90 font-label-sm text-label-sm transition-colors">Resume</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-4 px-8 py-4 items-center hover:bg-surface transition-colors group">
+<div class="col-span-2 font-body-md text-body-md text-on-surface font-medium">#INV-8399</div>
+<div class="col-span-3 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Sarah Jenkins</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sales Associate</span>
+</div>
+<div class="col-span-4 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Expense policy violation</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Regional travel</span>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-2 py-1 bg-[#00513a]/10 text-tertiary-container font-label-sm text-[10px] uppercase border border-[#00513a]/20">Completed</span>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="px-4 py-1.5 border border-primary text-primary hover:bg-primary-container/10 font-label-sm text-label-sm transition-colors">View</button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-4 px-8 py-4 items-center hover:bg-surface transition-colors group opacity-70">
+<div class="col-span-2 font-body-md text-body-md text-on-surface font-medium">#INV-8398</div>
+<div class="col-span-3 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">David Chen</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Marketing Lead</span>
+</div>
+<div class="col-span-4 flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Data mishandling inquiry</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Campaign brief leak</span>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-2 py-1 bg-outline/10 text-on-surface-variant font-label-sm text-[10px] uppercase border border-outline/20">Archived</span>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="px-4 py-1.5 border border-primary text-primary hover:bg-primary-container/10 font-label-sm text-label-sm transition-colors">View</button>
+</div>
+</div>
+</div>
+<!-- Pagination Footer -->
+<footer class="px-8 py-4 border-t border-outline-variant bg-surface flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Showing 1-4 of 142 records</span>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="p-2 border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</footer>
+</div>
+</main>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface-container border-t border-outline-variant flex justify-around items-center h-16 px-2 pb-safe z-50">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-[10px] mt-1">Dash</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-sm text-[10px] mt-1">Scenario</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-primary font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-sm text-[10px] mt-1">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-sm text-[10px] mt-1">People</span>
+</a>
+</nav>
+</body></html>

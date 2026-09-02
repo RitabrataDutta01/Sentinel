@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#fff7fb",
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4",
+                        "app-background": "#EEEAF2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "display-title": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-sm": ["Work Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "verdict-text": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "display-title": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "verdict-text": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.app-background'); }
+        .border-subtle { border-color: theme('colors.outline-variant'); }
+    </style>
+</head>
+<body class="h-full flex flex-col font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- Top Window Dots / Title Bar -->
+<header class="h-8 flex items-center justify-between px-4 w-full relative border-b border-subtle bg-surface flex-shrink-0">
+<div class="flex gap-1.5 items-center">
+<div class="w-3 h-3 rounded-full border border-subtle"></div>
+<div class="w-3 h-3 rounded-full border border-subtle"></div>
+<div class="w-3 h-3 rounded-full border border-subtle"></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-on-surface-variant tracking-tight">
+            Workplace investigation simulator
+        </div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-margin-page bg-surface-container-lowest border-r border-subtle fixed left-0 top-8 bottom-0 w-sidebar-width z-10">
+<div class="px-6 mb-8">
+<h1 class="font-display-title text-display-title text-primary">Sentinel</h1>
+</div>
+<div class="flex-1 overflow-y-auto w-full">
+<ul class="flex flex-col w-full">
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="psychology">psychology</span>
+<span class="font-label-sm text-label-sm">Scenarios</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Interview</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Report</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-6 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm">People</span>
+</a>
+</li>
+<li>
+<a class="text-primary font-bold border-l-2 border-primary bg-surface-container-low flex items-center px-6 py-3 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-4 text-[20px]" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto pt-4 px-6 border-t border-subtle">
+<div class="flex flex-col gap-3">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm truncate">Account identity</span>
+</div>
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]" data-icon="business">business</span>
+<span class="font-label-sm text-label-sm truncate">Organization</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-[260px] h-full overflow-y-auto bg-surface relative">
+<div class="max-w-4xl mx-auto px-6 py-margin-page">
+<div class="mb-12">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Settings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your account preferences and simulator configurations.</p>
+</div>
+<!-- Profile Section -->
+<section class="mb-12">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">Profile information</h3>
+<div class="border-t border-subtle">
+<div class="py-4 border-b border-subtle flex flex-col sm:flex-row sm:items-center gap-4">
+<div class="w-full sm:w-1/3">
+<label class="font-label-sm text-label-sm text-on-surface" for="fullName">Full name</label>
+</div>
+<div class="w-full sm:w-2/3">
+<input class="w-full bg-transparent border border-subtle rounded-none px-3 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:border-l-2 focus:-ml-[1px] transition-all" id="fullName" type="text" value="Jane Doe"/>
+</div>
+</div>
+<div class="py-4 border-b border-subtle flex flex-col sm:flex-row sm:items-center gap-4">
+<div class="w-full sm:w-1/3">
+<label class="font-label-sm text-label-sm text-on-surface" for="emailAddr">Email address</label>
+</div>
+<div class="w-full sm:w-2/3">
+<input class="w-full bg-transparent border border-subtle rounded-none px-3 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:border-l-2 focus:-ml-[1px] transition-all" id="emailAddr" type="email" value="jane.doe@organization.com"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Simulator Preferences -->
+<section class="mb-12">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">Simulator preferences</h3>
+<div class="border-t border-subtle">
+<div class="py-4 border-b border-subtle flex items-center justify-between gap-4">
+<div>
+<h4 class="font-body-md text-body-md text-on-surface mb-1">Strict mode</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Enforce stricter evaluation criteria during interviews.</p>
+</div>
+<div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-fixed rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="py-4 border-b border-subtle flex items-center justify-between gap-4">
+<div>
+<h4 class="font-body-md text-body-md text-on-surface mb-1">Auto-save sessions</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Automatically save progress every 5 minutes.</p>
+</div>
+<div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-fixed rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Actions -->
+<div class="flex justify-end pt-6">
+<button class="bg-primary-container text-on-primary font-label-sm text-label-sm px-6 py-2.5 hover:bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="button">
+                        Save changes
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

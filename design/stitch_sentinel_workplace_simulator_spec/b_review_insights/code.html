@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#fff7fb",
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    fontFamily: {
+                        "display-title": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-sm": ["Work Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "verdict-text": ["\"Source Serif 4\""]
+                    },
+                    fontSize: {
+                        "display-title": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "verdict-text": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #EEEAF2; }
+        .window-dots {
+            display: flex; gap: 6px; padding-left: 12px;
+        }
+        .window-dot {
+            width: 10px; height: 10px; border-radius: 50%; border: 1px solid #d6c1cd; background-color: transparent;
+        }
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface antialiased h-screen flex flex-col overflow-hidden">
+<!-- Title Bar -->
+<div class="h-8 w-full flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest shrink-0 px-2 relative z-50">
+<div class="window-dots shrink-0">
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Workplace investigation simulator</span>
+</div>
+<div class="w-[48px]"></div> <!-- Spacer to center text -->
+</div>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<nav class="fixed left-0 top-8 h-[calc(100vh-32px)] w-sidebar-width bg-surface-container-lowest border-r border-outline-variant flex flex-col py-margin-page shrink-0 z-40 hidden md:flex">
+<div class="px-gutter mb-8">
+<h1 class="font-display-title text-display-title text-primary">Sentinel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Workplace investigation simulator</p>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="flex flex-col gap-1">
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">psychology</span>
+<span class="font-label-sm text-label-sm">Scenarios</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Interview</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">description</span>
+<span class="font-label-sm text-label-sm">Report</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">history</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+</li>
+<li>
+<a class="text-primary font-bold border-l-2 border-primary bg-surface-container-low flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+<span class="font-label-sm text-label-sm">People</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="px-gutter pt-4 border-t border-outline-variant mt-auto">
+<ul class="flex flex-col gap-2">
+<li class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]">person</span>
+<span class="font-label-sm text-label-sm">Account identity</span>
+</li>
+<li class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]">business</span>
+<span class="font-label-sm text-label-sm">Organization</span>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[260px] p-margin-page overflow-y-auto w-full max-w-5xl mx-auto flex flex-col gap-8">
+<header class="border-b border-outline-variant pb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Performance insights</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Aggregate analysis of interview techniques and bias detection over the last 90 days.</p>
+</header>
+<!-- Stats Inline Strip -->
+<section class="flex flex-wrap gap-x-12 gap-y-6 border-b border-outline-variant pb-6">
+<div>
+<span class="font-label-sm text-label-sm text-outline block mb-1">Total sessions</span>
+<span class="font-display-title text-display-title text-on-surface">142</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline block mb-1">Avg. confidence score</span>
+<span class="font-display-title text-display-title text-on-surface">87%</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline block mb-1">Bias incidents flagged</span>
+<span class="font-display-title text-display-title text-on-surface">12</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline block mb-1">Completion rate</span>
+<span class="font-display-title text-display-title text-on-surface">94%</span>
+</div>
+</section>
+<!-- Charts Area -->
+<section class="flex flex-col gap-12 mt-4">
+<!-- Chart 1: Interview efficacy -->
+<div class="flex flex-col gap-4 relative">
+<div class="flex justify-between items-end mb-2">
+<h3 class="font-body-lg text-body-lg font-bold">Interview efficacy trend</h3>
+<span class="font-label-sm text-label-sm text-outline">Mar - May</span>
+</div>
+<!-- Minimalist Chart Container -->
+<div class="h-48 w-full relative border-b border-on-surface">
+<!-- Y-axis labels -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between font-label-sm text-label-sm text-outline pb-1">
+<span>100</span>
+<span>50</span>
+</div>
+<!-- SVG Chart Line (No grid, no fill) -->
+<div class="absolute left-8 right-0 h-full">
+<svg class="overflow-visible" height="100%" preserveaspectratio="none" viewbox="0 0 100 100" width="100%">
+<path d="M0,70 L20,40 L40,45 L60,20 L80,30 L100,10" fill="none" stroke="#7A1F6E" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<!-- Data points -->
+<circle cx="0" cy="70" fill="#7A1F6E" r="3"></circle>
+<circle cx="20" cy="40" fill="#7A1F6E" r="3"></circle>
+<circle cx="40" cy="45" fill="#7A1F6E" r="3"></circle>
+<circle cx="60" cy="20" fill="#7A1F6E" r="3"></circle>
+<circle cx="80" cy="30" fill="#7A1F6E" r="3"></circle>
+<circle cx="100" cy="10" fill="#7A1F6E" r="3"></circle>
+</svg>
+</div>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-between w-full pl-8 pr-1 font-label-sm text-label-sm text-outline mt-1">
+<span>W1</span>
+<span>W2</span>
+<span>W3</span>
+<span>W4</span>
+<span>W5</span>
+<span>W6</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

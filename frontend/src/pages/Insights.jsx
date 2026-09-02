@@ -8,7 +8,7 @@ import StatTile from '../components/ui/StatTile'
 function AreaChart({ points }) {
   if (points.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border px-5 py-10 text-center text-sm text-dim">
+      <div className="rounded-[var(--radius)] border border-dashed border-border px-5 py-10 text-center text-sm text-dim">
         No mood history yet.
       </div>
     )
@@ -21,17 +21,10 @@ function AreaChart({ points }) {
   const yFor = (m) => h - pad - ((m - 1) / 9) * (h - pad * 2)
   const coords = points.map((p, i) => [pad + i * step, yFor(p.endMood)])
   const line = coords.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x},${y}`).join(' ')
-  const area = `${line} L${coords[coords.length - 1][0]},${h - pad} L${coords[0][0]},${h - pad} Z`
 
   return (
-    <div className="rounded-xl border border-border bg-surface px-5 py-6">
+    <div className="rounded-[var(--radius)] border border-border bg-surface px-5 py-6">
       <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="none" style={{ height: 180 }}>
-        <defs>
-          <linearGradient id="moodArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.02" />
-          </linearGradient>
-        </defs>
         {[2, 4, 6, 8, 10].map((g) => (
           <line
             key={g}
@@ -39,15 +32,14 @@ function AreaChart({ points }) {
             x2={w - pad}
             y1={yFor(g)}
             y2={yFor(g)}
-            stroke="var(--border-light)"
+            stroke="var(--border)"
             strokeWidth="1"
             strokeDasharray="3 3"
           />
         ))}
-        <path d={area} fill="url(#moodArea)" />
         <path d={line} fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" />
         {coords.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="4" fill={moodColor(points[i].endMood)} stroke="var(--bg-surface)" strokeWidth="1.5" />
+          <circle key={i} cx={x} cy={y} r="4" fill={moodColor(points[i].endMood)} stroke="var(--surface)" strokeWidth="1.5" />
         ))}
       </svg>
       <div className="flex justify-between mt-2 text-xs text-dim font-mono">
@@ -69,7 +61,7 @@ function InsightsContent({ analytics, maxSkill }) {
       </div>
 
       <section className="mb-10">
-        <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Mood trend over sessions</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Mood trend over sessions</h2>
         <AreaChart points={analytics.moodTrend} />
         <p className="text-xs text-dim mt-2">
           A rising line means your counterparts end warmer and more impressed than they started.
@@ -77,18 +69,18 @@ function InsightsContent({ analytics, maxSkill }) {
       </section>
 
       <section className="mb-10">
-        <h2 className="text-sm font-medium text-muted mb-3 uppercase tracking-wider">Skill breakdown</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-muted mb-3">Skill breakdown</h2>
         {analytics.skillBreakdown.length ? (
-          <div className="rounded-xl border border-border bg-surface p-6 flex flex-col gap-5">
+          <div className="rounded-[var(--radius)] border border-border bg-surface p-6 flex flex-col gap-5">
             {analytics.skillBreakdown.map((s, i) => (
               <div key={s.skill}>
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="text-sm text-primary">{s.skill}</span>
                   <span className="text-xs font-mono text-muted tabular-nums">{s.score}/100</span>
                 </div>
-                <div className="h-2.5 rounded-full bg-background overflow-hidden">
+                <div className="h-2.5 rounded-[var(--radius)] bg-background overflow-hidden">
                   <motion.div
-                    className={`h-full rounded-full ${s.score === maxSkill ? 'bg-mood-warm' : 'bg-accent'}`}
+                    className={`h-full rounded-[var(--radius)] ${s.score === maxSkill ? 'bg-mood-warm' : 'bg-accent'}`}
                     initial={{ width: 0 }}
                     animate={{ width: `${s.score}%` }}
                     transition={{ duration: 0.5, delay: i * 0.06, ease: 'easeOut' }}
@@ -103,7 +95,7 @@ function InsightsContent({ analytics, maxSkill }) {
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <section className="rounded-2xl border border-border bg-surface p-6">
+        <section className="rounded-[var(--radius)] border border-border bg-surface p-6">
           <h2 className="text-sm font-medium text-mood-warm mb-4 uppercase tracking-wider">
             ✓ Signature strengths
           </h2>
@@ -122,7 +114,7 @@ function InsightsContent({ analytics, maxSkill }) {
           )}
         </section>
 
-        <section className="rounded-2xl border border-border bg-surface p-6">
+        <section className="rounded-[var(--radius)] border border-border bg-surface p-6">
           <h2 className="text-sm font-medium text-mood-cold mb-4 uppercase tracking-wider">
             ⚠ Recurring feedback
           </h2>
@@ -189,7 +181,7 @@ export default function Insights() {
           title="Your growth signal"
           subtitle="Error loading insights"
         />
-        <div className="mb-8 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+        <div className="mb-8 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
           {error}
         </div>
       </div>
@@ -204,7 +196,7 @@ export default function Insights() {
           title="Your growth signal"
           subtitle="Run a few sessions and your trends will show up here."
         />
-        <div className="rounded-xl border border-dashed border-border px-5 py-12 text-center">
+        <div className="rounded-[var(--radius)] border border-dashed border-border px-5 py-12 text-center">
           <p className="text-sm text-muted">Run a few sessions and your trends will show up here.</p>
         </div>
       </div>
@@ -220,7 +212,7 @@ export default function Insights() {
       />
 
       {error && (
-        <div className="mb-8 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+        <div className="mb-8 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
           {error}
         </div>
       )}

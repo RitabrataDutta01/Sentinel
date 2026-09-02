@@ -1,0 +1,341 @@
+/**
+ * Initialize global keyboard shortcuts for the desktop application
+ */
+export async function initializeShortcuts() {
+  // Check if we're running under Tauri
+  if (!window.__TAURI__) {
+    console.warn('Shortcut initialization skipped: Not running under Tauri')
+    return
+  }
+
+  // Dynamically import Tauri modules
+  let GlobalShortcut, appWindow, notification
+  try {
+    const gsModule = await import('@tauri-apps/plugin-global-shortcut')
+    GlobalShortcut = gsModule.GlobalShortcut
+    const winModule = await import('@tauri-apps/api/window')
+    appWindow = winModule.appWindow
+    const notifyModule = await import('@tauri-apps/api/notification')
+    notification = notifyModule.notification
+  } catch (importError) {
+    console.error('Failed to import Tauri modules for shortcuts:', importError)
+    return
+  }
+
+  try {
+    // Unregister any existing shortcuts first (clean slate)
+    await GlobalShortcut.unregisterAll()
+
+    // Define shortcuts
+    const shortcuts = [
+      {
+        // New Session
+        shortcut: 'CmdOrCtrl+N',
+        callback: async () => {
+          console.log('New Session shortcut triggered')
+          await notification('New Session', { body: 'Starting a new simulation session...' })
+          // TODO: Implement actual new session logic
+        }
+      },
+      {
+        // Open Recent (placeholder)
+        shortcut: 'CmdOrCtrl+O',
+        callback: async () => {
+          console.log('Open Recent shortcut triggered')
+          await notification('Open Recent', { body: 'Opening recent sessions...' })
+        }
+      },
+      {
+        // Export Report
+        shortcut: 'CmdOrCtrl+S',
+        callback: async () => {
+          console.log('Export Report shortcut triggered')
+          // TODO: Implement actual export logic
+          await notification('Export Report', { body: 'Exporting current session report...' })
+        }
+      },
+      {
+        // Settings
+        shortcut: 'CmdOrCtrl+,',
+        callback: async () => {
+          console.log('Settings shortcut triggered')
+          const window = appWindow()
+          await window.show()
+          await window.focus()
+          // TODO: Navigate to settings page
+        }
+      },
+      {
+        // Quit Application
+        shortcut: 'CmdOrCtrl+Q',
+        callback: async () => {
+          console.log('Quit shortcut triggered')
+          await appWindow().close()
+        }
+      },
+      {
+        // Help / Documentation
+        shortcut: 'F1',
+        callback: async () => {
+          console.log('Help shortcut triggered')
+          await notification('Documentation', { body: 'Opening Sentinel documentation...' })
+          // TODO: Open actual documentation
+        }
+      },
+      {
+        // Toggle Developer Tools
+        shortcut: 'CmdOrCtrl+Alt+I',
+        callback: async () => {
+          console.log('DevTools shortcut triggered')
+          const window = appWindow()
+          await window.openDevtools()
+        }
+      },
+      {
+        // Undo
+        shortcut: 'CmdOrCtrl+Z',
+        callback: async () => {
+          console.log('Undo shortcut triggered')
+          // TODO: Implement undo logic based on current context
+          await notification('Undo', { body: 'Undo action performed' })
+        }
+      },
+      {
+        // Redo
+        shortcut: 'CmdOrCtrl+Y',
+        callback: async () => {
+          console.log('Redo shortcut triggered')
+          // TODO: Implement redo logic based on current context
+          await notification('Redo', { body: 'Redo action performed' })
+        }
+      },
+      {
+        // Find/Search
+        shortcut: 'CmdOrCtrl+F',
+        callback: async () => {
+          console.log('Find shortcut triggered')
+          // TODO: Implement find/search functionality
+          await notification('Find', { body: 'Opening search dialog...' })
+        }
+      },
+      {
+        // Select All
+        shortcut: 'CmdOrCtrl+A',
+        callback: async () => {
+          console.log('Select All shortcut triggered')
+          // TODO: Implement select all based on current context
+          await notification('Select All', { body: 'All items selected' })
+        }
+      },
+      {
+        // Zoom In
+        shortcut: 'CmdOrCtrl+=',
+        callback: async () => {
+          console.log('Zoom In shortcut triggered')
+          // TODO: Implement zoom functionality
+          await notification('Zoom In', { body: 'Zoom level increased' })
+        }
+      },
+      {
+        // Zoom Out
+        shortcut: 'CmdOrCtrl+-',
+        callback: async () => {
+          console.log('Zoom Out shortcut triggered')
+          // TODO: Implement zoom functionality
+          await notification('Zoom Out', { body: 'Zoom level decreased' })
+        }
+      },
+      {
+        // Actual Size
+        shortcut: 'CmdOrCtrl+0',
+        callback: async () => {
+          console.log('Actual Size shortcut triggered')
+          // TODO: Implement actual size reset
+          await notification('Actual Size', { body: 'Zoom reset to 100%' })
+        }
+      },
+      {
+        // Toggle Sidebar
+        shortcut: 'CmdOrCtrl+\\',
+        callback: async () => {
+          console.log('Toggle Sidebar shortcut triggered')
+          // TODO: Implement sidebar toggle
+          await notification('Toggle Sidebar', { body: 'Sidebar visibility toggled' })
+        }
+      },
+      {
+        // Fullscreen
+        shortcut: 'CmdOrCtrl+F',
+        callback: async () => {
+          console.log('Fullscreen shortcut triggered')
+          const window = appWindow()
+          const isFullscreen = await window.isFullscreen()
+          await window.setFullscreen(!isFullscreen)
+          await notification('Fullscreen', { body: `Fullscreen ${!isFullscreen ? 'enabled' : 'disabled'}` })
+        }
+      },
+      {
+        // New Simulation (Shift variant)
+        shortcut: 'CmdOrCtrl+Shift+N',
+        callback: async () => {
+          console.log('New Simulation shortcut triggered')
+          await notification('New Simulation', { body: 'Creating a new HR simulation scenario...' })
+          // TODO: Implement new simulation logic
+        }
+      },
+      {
+        // Pause/Resume Simulation
+        shortcut: 'CmdOrCtrl+Shift+P',
+        callback: async () => {
+          console.log('Pause/Resume shortcut triggered')
+          // TODO: Implement pause/resume logic
+          await notification('Pause/Resume', { body: 'Simulation paused/resumed' })
+        }
+      },
+      {
+        // Stop Current Simulation
+        shortcut: 'CmdOrCtrl+Shift+X',
+        callback: async () => {
+          console.log('Stop Simulation shortcut triggered')
+          // TODO: Implement stop logic
+          await notification('Stop Simulation', { body: 'Current simulation stopped' })
+        }
+      },
+      {
+        // Export Transcript
+        shortcut: 'CmdOrCtrl+Shift+E',
+        callback: async () => {
+          console.log('Export Transcript shortcut triggered')
+          // TODO: Implement transcript export
+          await notification('Export Transcript', { body: 'Exporting session transcript...' })
+        }
+      }
+    ]
+
+    // Register all shortcuts
+    for (const { shortcut, callback } of shortcuts) {
+      try {
+        const result = await GlobalShortcut.register(shortcut, callback)
+        if (result) {
+          console.log(`Registered shortcut: ${shortcut}`)
+        } else {
+          console.warn(`Failed to register shortcut: ${shortcut} (may already be in use)`)
+        }
+      } catch (error) {
+        console.error(`Error registering shortcut ${shortcut}:`, error)
+      }
+    }
+
+    console.log('Global keyboard shortcuts initialized successfully')
+  } catch (error) {
+    console.error('Failed to initialize global shortcuts:', error)
+  }
+}
+
+/**
+ * Clean up shortcuts when application is closing or when needed
+ */
+export async function cleanupShortcuts() {
+  // Check if we're running under Tauri
+  if (!window.__TAURI__) {
+    console.warn('Shortcut cleanup skipped: Not running under Tauri')
+    return
+  }
+
+  // Dynamically import GlobalShortcut module
+  let GlobalShortcut
+  try {
+    const gsModule = await import('@tauri-apps/plugin-global-shortcut')
+    GlobalShortcut = gsModule.GlobalShortcut
+  } catch (importError) {
+    console.error('Failed to import Tauri GlobalShortcut module:', importError)
+    return
+  }
+
+  try {
+    await GlobalShortcut.unregisterAll()
+    console.log('Global shortcuts cleaned up')
+  } catch (error) {
+    console.error('Error cleaning up shortcuts:', error)
+  }
+}
+
+/**
+ * Context-aware shortcut enabler/disabler
+ * These functions can be called to enable/disable shortcuts based on application state
+ */
+export class ShortcutManager {
+  constructor() {
+    this.enabledShortcuts = new Set()
+  }
+
+  /**
+   * Enable a specific shortcut
+   * @param {string} shortcut - The shortcut identifier (e.g., 'edit-undo')
+   */
+  enable(shortcut) {
+    this.enabledShortcuts.add(shortcut)
+    // TODO: Implement actual enabling logic based on shortcut mapping
+  }
+
+  /**
+   * Disable a specific shortcut
+   * @param {string} shortcut - The shortcut identifier
+   */
+  disable(shortcut) {
+    this.enabledShortcuts.delete(shortcut)
+    // TODO: Implement actual disabling logic based on shortcut mapping
+  }
+
+  /**
+   * Check if a shortcut is enabled
+   * @param {string} shortcut - The shortcut identifier
+   * @returns {boolean}
+   */
+  isEnabled(shortcut) {
+    return this.enabledShortcuts.has(shortcut)
+  }
+
+  /**
+   * Enable editing shortcuts (undo, redo, cut, copy, paste, select all)
+   */
+  enableEditingShortcuts() {
+    const editingShortcuts = [
+      'edit-undo', 'edit-redo', 'edit-cut', 'edit-copy', 'edit-paste', 'edit-select-all'
+    ]
+    editingShortcuts.forEach(shortcut => this.enable(shortcut))
+  }
+
+  /**
+   * Disable editing shortcuts
+   */
+  disableEditingShortcuts() {
+    const editingShortcuts = [
+      'edit-undo', 'edit-redo', 'edit-cut', 'edit-copy', 'edit-paste', 'edit-select-all'
+    ]
+    editingShortcuts.forEach(shortcut => this.disable(shortcut))
+  }
+
+  /**
+   * Enable session control shortcuts (pause, resume, stop)
+   */
+  enableSessionControlShortcuts() {
+    const sessionShortcuts = [
+      'session-pause-resume', 'session-stop-current'
+    ]
+    sessionShortcuts.forEach(shortcut => this.enable(shortcut))
+  }
+
+  /**
+   * Disable session control shortcuts
+   */
+  disableSessionControlShortcuts() {
+    const sessionShortcuts = [
+      'session-pause-resume', 'session-stop-current'
+    ]
+    sessionShortcuts.forEach(shortcut => this.disable(shortcut))
+  }
+}
+
+// Export a singleton instance
+export const shortcutManager = new ShortcutManager()

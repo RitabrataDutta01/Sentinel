@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Scenarios</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#fff7fb",
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "display-title": [
+                            "\"Source Serif 4\""
+                        ],
+                        "body-md": [
+                            "Work Sans"
+                        ],
+                        "body-lg": [
+                            "Work Sans"
+                        ],
+                        "label-sm": [
+                            "Work Sans"
+                        ],
+                        "headline-md": [
+                            "\"Source Serif 4\""
+                        ],
+                        "verdict-text": [
+                            "\"Source Serif 4\""
+                        ]
+                    },
+                    "fontSize": {
+                        "display-title": [
+                            "32px",
+                            {
+                                "lineHeight": "40px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "body-md": [
+                            "14px",
+                            {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "body-lg": [
+                            "16px",
+                            {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "verdict-text": [
+                            "18px",
+                            {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #EEEAF2; /* Custom desk background */
+        }
+        .window-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .window-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #d6c1cd;
+        }
+        .paper-canvas {
+            background-color: #ffffff;
+            min-height: 100vh;
+        }
+        /* Hairline border using rgba as requested in prompt, overriding theme temporarily for this specific visual requirement if outline-variant isn't exact */
+        .border-hairline {
+            border-color: rgba(122, 31, 110, 0.18);
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md antialiased overflow-hidden">
+<!-- Top Window Bar (Global) -->
+<div class="fixed top-0 left-0 w-full h-8 bg-surface-container-lowest border-b border-outline-variant z-50 flex items-center justify-between px-4">
+<div class="window-dots">
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-on-surface-variant tracking-tight">
+            Workplace investigation simulator
+        </div>
+<div></div>
+</div>
+<!-- Main Layout Container -->
+<div class="flex h-screen pt-8">
+<!-- SideNav (Shared Component logic) -->
+<aside class="hidden md:flex flex-col h-full py-margin-page bg-surface-container-lowest border-r border-outline-variant w-sidebar-width shrink-0 z-40">
+<!-- Header -->
+<div class="px-6 mb-8">
+<h1 class="font-display-title text-display-title text-primary">Sentinel</h1>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1 px-2">
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="text-primary font-bold border-l-2 border-primary bg-surface-container-low flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="psychology" data-weight="fill" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-sm text-label-sm">Scenarios</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Interview</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Report</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm">People</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high transition-all duration-200 ease-in-out rounded" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<!-- Footer -->
+<div class="px-6 mt-auto border-t border-hairline pt-4">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Account identity</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="business">business</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Organization</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas (Paper) -->
+<main class="flex-1 paper-canvas overflow-y-auto">
+<div class="max-w-5xl mx-auto px-8 py-12">
+<!-- Page Header -->
+<header class="mb-12">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Available scenarios</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Select an active investigation case file to begin your simulation session.</p>
+</header>
+<!-- Scenarios List (Bordered Rows) -->
+<div class="border-t border-hairline">
+<!-- Row 1: Flagged with Accent 2 -->
+<div class="border-b border-hairline py-6 flex items-center justify-between relative group hover:bg-surface-bright transition-colors">
+<!-- Flag Accent Bar -->
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-[#B23A22]"></div>
+<div class="pl-6 flex-1 pr-4">
+<div class="flex items-center gap-3 mb-1">
+<h3 class="font-label-sm text-label-sm text-on-surface font-semibold">Case 092-A: Harassment allegation</h3>
+<span class="bg-[#B23A22]/10 text-[#B23A22] px-2 py-0.5 font-label-sm text-[10px] uppercase tracking-wider rounded">High Priority</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Sales department. Complainant alleges repeated inappropriate comments during team meetings.</p>
+</div>
+<div class="flex items-center gap-4 shrink-0 pr-4">
+<div class="text-right hidden sm:block">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Est. duration</div>
+<div class="font-body-md text-body-md text-on-surface">45 mins</div>
+</div>
+<button class="bg-primary-container text-on-primary px-6 py-2 rounded font-label-sm text-label-sm hover:bg-primary transition-colors">
+                                Start
+                            </button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="border-b border-hairline py-6 flex items-center justify-between relative group hover:bg-surface-bright transition-colors">
+<div class="pl-6 flex-1 pr-4">
+<div class="flex items-center gap-3 mb-1">
+<h3 class="font-label-sm text-label-sm text-on-surface font-semibold">Case 088-B: Misuse of company funds</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Operations team. Irregularities found in recent expense reports submitted by mid-level management.</p>
+</div>
+<div class="flex items-center gap-4 shrink-0 pr-4">
+<div class="text-right hidden sm:block">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Est. duration</div>
+<div class="font-body-md text-body-md text-on-surface">60 mins</div>
+</div>
+<button class="bg-transparent border border-primary-container text-primary-container px-6 py-2 rounded font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+                                Review
+                            </button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="border-b border-hairline py-6 flex items-center justify-between relative group hover:bg-surface-bright transition-colors">
+<div class="pl-6 flex-1 pr-4">
+<div class="flex items-center gap-3 mb-1">
+<h3 class="font-label-sm text-label-sm text-on-surface font-semibold">Case 104-C: Retaliation claim</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 font-label-sm text-[10px] uppercase tracking-wider rounded">Draft</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Engineering division. Employee claims passed over for promotion after reporting safety violation.</p>
+</div>
+<div class="flex items-center gap-4 shrink-0 pr-4">
+<div class="text-right hidden sm:block">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Est. duration</div>
+<div class="font-body-md text-body-md text-on-surface">30 mins</div>
+</div>
+<button class="bg-primary-container text-on-primary px-6 py-2 rounded font-label-sm text-label-sm hover:bg-primary transition-colors">
+                                Start
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

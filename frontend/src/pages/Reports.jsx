@@ -48,14 +48,14 @@ function ReportCard({ report }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="group rounded-xl border border-border bg-surface transition-colors hover:bg-elevated hover:border-border-light"
+      className="group transition-colors hover:bg-elevated"
     >
       <div
         className="flex items-center gap-4 px-5 py-4 cursor-pointer"
         onClick={() => navigate(`/report/${report.id}`)}
       >
         {/* Icon */}
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/15 text-accent">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius)] bg-accent/15 text-accent">
           <FileText className="h-5 w-5" />
         </div>
 
@@ -82,7 +82,7 @@ function ReportCard({ report }) {
             </span>
           )}
           {verdict && (
-            <span className={`inline-block rounded-md border px-2 py-0.5 text-[10px] font-semibold tracking-wide ${verdictStyle(verdict, report)}`}>
+            <span className={`inline-block rounded-[var(--radius)] border px-2 py-0.5 text-[10px] font-semibold tracking-wide ${verdictStyle(verdict, report)}`}>
               {verdict}
             </span>
           )}
@@ -93,7 +93,7 @@ function ReportCard({ report }) {
           <button
             onClick={handleDownloadPdf}
             disabled={downloading}
-            className="rounded-lg border border-border-light bg-elevated p-2 text-muted transition-colors hover:bg-accent/10 hover:text-accent"
+            className="rounded-[var(--radius)] border border-border-light bg-elevated p-2 text-muted transition-colors hover:bg-accent/10 hover:text-accent"
             title="Download PDF"
           >
             <Download className={`h-4 w-4 ${downloading ? 'animate-pulse' : ''}`} />
@@ -146,7 +146,7 @@ export default function Reports() {
     return (
       <div className="px-6 py-12">
         <PageHero eyebrow="Reports" title="Session reports" subtitle="Error loading reports" />
-        <div className="mb-6 rounded-xl border border-red-400/20 bg-red-400/5 px-5 py-4 text-sm text-red-400">
+        <div className="mb-6 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
           {error}
         </div>
       </div>
@@ -175,17 +175,19 @@ export default function Reports() {
         </div>
       )}
 
-      {/* Reports list */}
+      {/* Reports list — bordered rows */}
       {reports.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border-light py-12 text-center">
+        <div className="rounded-[var(--radius)] border border-dashed border-border-light py-12 text-center">
           <FileText className="mx-auto mb-3 h-8 w-8 text-dim" />
           <p className="text-sm text-dim">No completed reports yet.</p>
           <p className="text-xs text-dim mt-1">Finish an interview and evaluate it to generate a report.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-2">
-          {reports.map((report) => (
-            <ReportCard key={report.id} report={report} />
+        <div className="flex flex-col border border-border rounded-[var(--radius)] bg-surface">
+          {reports.map((report, i) => (
+            <div key={report.id} className={i > 0 ? 'border-t border-border' : ''}>
+              <ReportCard report={report} />
+            </div>
           ))}
         </div>
       )}

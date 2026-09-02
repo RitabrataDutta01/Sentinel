@@ -1,0 +1,23 @@
+/home/ritabrata/projects/Sentinel/backend/.venv/lib/python3.10/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ritabrata/projects/Sentinel/backend/.venv/lib/python3.10/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ritabrata/projects/Sentinel/backend/.venv/lib/python3.10/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator MultinomialNB from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ritabrata/projects/Sentinel/backend/.venv/lib/python3.10/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator Pipeline from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+✅ ML Toxicity Model loaded into memory successfully!
+📂 FRONTEND_DIST: /home/ritabrata/projects/Sentinel/backend/static
+📄 index.html exists: False
+ * Serving Flask app 'app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [25/Aug/2026 11:12:06] "GET /api/v1/health HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2026 11:51:16] "GET /api/v1/health HTTP/1.1" 200 -
+127.0.0.1 - - [25/Aug/2026 12:05:27] "GET /api/v1/health HTTP/1.1" 200 -

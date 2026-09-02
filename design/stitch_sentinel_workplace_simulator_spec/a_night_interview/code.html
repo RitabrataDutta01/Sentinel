@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Interview Simulation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#ffacea",
+                        "outline": "#a18a99",
+                        "secondary-fixed-dim": "#ffb4a3",
+                        "on-background": "#f0dcf5",
+                        "surface-container-highest": "#3d3043",
+                        "on-secondary-container": "#ffa08a",
+                        "inverse-on-surface": "#392c3e",
+                        "surface": "#1a0f20",
+                        "error-container": "#93000a",
+                        "primary-container": "#c238b0",
+                        "tertiary-fixed": "#71face",
+                        "surface-container-lowest": "#150a1b",
+                        "primary": "#ffacea",
+                        "secondary": "#ffb4a3",
+                        "secondary-fixed": "#ffdad2",
+                        "inverse-surface": "#f0dcf5",
+                        "on-error": "#690005",
+                        "secondary-container": "#8f1b01",
+                        "on-primary-fixed-variant": "#840078",
+                        "inverse-primary": "#a71b98",
+                        "on-primary-fixed": "#390034",
+                        "on-primary-container": "#fffaff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#00382a",
+                        "outline-variant": "#54414e",
+                        "surface-container": "#271b2d",
+                        "tertiary": "#51ddb3",
+                        "tertiary-fixed-dim": "#51ddb3",
+                        "on-surface": "#f0dcf5",
+                        "on-secondary-fixed": "#3d0600",
+                        "surface-dim": "#1a0f20",
+                        "on-secondary": "#630f00",
+                        "surface-bright": "#423447",
+                        "tertiary-container": "#008466",
+                        "on-secondary-fixed-variant": "#8c1900",
+                        "on-tertiary-container": "#f2fff7",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#3d3043",
+                        "surface-container-high": "#322538",
+                        "surface-container-low": "#231729",
+                        "primary-fixed": "#ffd7f1",
+                        "on-surface-variant": "#d9c0cf",
+                        "background": "#1a0f20",
+                        "on-tertiary-fixed-variant": "#00513e",
+                        "on-primary": "#5d0055",
+                        "on-tertiary-fixed": "#002117",
+                        "primary-fixed-dim": "#ffacea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "2rem",
+                        "sidebar-width": "260px",
+                        "gutter": "1rem",
+                        "stack-compact": "0.5rem",
+                        "stack-default": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "verdict-md": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["42px", { "lineHeight": "52px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "verdict-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .window-dots { display: flex; gap: 6px; }
+        .window-dot { width: 10px; height: 10px; border-radius: 50%; background-color: #54414e; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a0f20; }
+        ::-webkit-scrollbar-thumb { background: #3d3043; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen overflow-hidden flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Window Title Bar -->
+<header class="flex items-center justify-between px-margin-page h-12 w-full bg-surface-container-lowest border-b border-outline-variant shrink-0">
+<div class="window-dots w-24">
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+<div class="window-dot"></div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant flex-1 text-center">Workplace conversation simulator</div>
+<div class="w-24 text-right">
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Sentinel</span>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full w-sidebar-width bg-surface border-r border-outline-variant py-4 shrink-0 transition-all duration-200">
+<div class="flex-1 overflow-y-auto px-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_circle">play_circle</span>
+<span class="font-body-sm text-body-sm">Scenarios</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group bg-surface-container-highest text-primary font-bold transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat_bubble" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-body-sm text-body-sm">Interview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="font-body-sm text-body-sm">Report</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+<span class="font-body-sm text-body-sm">Sessions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-body-sm text-body-sm">Insights</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span class="font-body-sm text-body-sm">People</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT mb-1 group hover:bg-surface-container-highest hover:text-on-surface text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-4 px-4">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="person">person</span>
+<span class="font-body-sm text-body-sm text-on-surface">Account Name</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="corporate_fare">corporate_fare</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Organization Name</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-hidden flex flex-col relative">
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: repeating-linear-gradient(45deg, #150a1b 25%, transparent 25%, transparent 75%, #150a1b 75%, #150a1b), repeating-linear-gradient(45deg, #150a1b 25%, #241531 25%, #241531 75%, #150a1b 75%, #150a1b); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+<div class="relative z-10 flex-1 flex flex-col p-gutter lg:p-margin-page h-full max-w-6xl mx-auto w-full">
+<!-- Status Strip -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-4 mb-stack-default">
+<div class="flex gap-4">
+<div class="bg-primary/20 text-primary border border-primary/30 px-2 py-1 font-label-caps text-label-caps uppercase">Session Active</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="timer">timer</span>
+                            00:14:32
+                        </div>
+</div>
+<button class="bg-transparent border border-outline hover:border-primary text-on-surface hover:text-primary transition-colors px-4 py-1.5 font-body-sm text-body-sm rounded-none">
+                        End session
+                    </button>
+</div>
+<!-- Simulation Interface -->
+<div class="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-gutter min-h-0">
+<!-- Subject Profile / Case Details -->
+<div class="lg:col-span-1 border border-outline-variant bg-surface flex flex-col p-stack-default relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]" data-icon="fingerprint">fingerprint</span>
+</div>
+<h2 class="font-verdict-md text-verdict-md text-on-surface mb-6 relative z-10">Case file 892-A</h2>
+<div class="flex flex-col gap-4 relative z-10">
+<div class="border-b border-outline-variant pb-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Subject</div>
+<div class="font-body-md text-body-md text-on-surface">Alex Mercer</div>
+</div>
+<div class="border-b border-outline-variant pb-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Scenario</div>
+<div class="font-body-md text-body-md text-on-surface">Conflict resolution - Escalation phase</div>
+</div>
+<div class="border-b border-outline-variant pb-2">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Objective</div>
+<div class="font-body-md text-body-md text-on-surface">De-escalate immediate tension while maintaining policy boundaries.</div>
+</div>
+</div>
+<div class="mt-auto pt-6">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2 uppercase tracking-widest">Stress indicators</div>
+<div class="w-full bg-surface-container-highest h-1 mb-2">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant uppercase tracking-widest">
+<span>Nominal</span>
+<span>Elevated</span>
+</div>
+</div>
+</div>
+<!-- Conversation Window -->
+<div class="lg:col-span-2 border border-outline-variant bg-surface flex flex-col">
+<!-- Transcript Area -->
+<div class="flex-1 overflow-y-auto p-stack-default flex flex-col gap-6">
+<!-- System Prompt -->
+<div class="self-center bg-surface-container-high border border-outline-variant px-4 py-2 text-center max-w-md">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Simulation started at 14:02 UTC</span>
+</div>
+<!-- Subject Message -->
+<div class="flex flex-col max-w-[85%] self-start">
+<div class="font-label-caps text-label-caps text-outline mb-1 uppercase tracking-widest">Alex Mercer</div>
+<div class="bg-surface-container-high border-l-2 border-outline-variant p-4 font-body-md text-body-md text-on-surface">
+                                    I don't understand why this is suddenly an issue. We've been operating this way for six months and now you're telling me it's a violation?
+                                </div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col max-w-[85%] self-end items-end">
+<div class="font-label-caps text-label-caps text-primary mb-1 uppercase tracking-widest">You</div>
+<div class="bg-[#241531] border border-primary/30 p-4 font-body-md text-body-md text-on-surface text-right">
+                                    The policy was updated last week, Alex. We sent an internal memo detailing the compliance shifts.
+                                </div>
+</div>
+<!-- Subject Message -->
+<div class="flex flex-col max-w-[85%] self-start">
+<div class="font-label-caps text-label-caps text-outline mb-1 uppercase tracking-widest">Alex Mercer</div>
+<div class="bg-surface-container-high border-l-2 border-outline-variant p-4 font-body-md text-body-md text-on-surface">
+                                    A memo? I get hundreds of emails a day. You can't expect a major process change to be communicated via a buried email. This impacts my team's deliverables for the entire quarter.
+                                </div>
+</div>
+<!-- Analysis Indicator (Inline) -->
+<div class="flex items-center gap-2 self-start ml-4 opacity-70">
+<span class="material-symbols-outlined text-[14px] text-tertiary animate-pulse" data-icon="troubleshoot">troubleshoot</span>
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest text-[10px]">Defensive tone detected</span>
+</div>
+</div>
+<!-- Input Area -->
+<div class="border-t border-outline-variant bg-surface-container-lowest p-4">
+<div class="relative">
+<textarea class="w-full bg-[#241531] border-0 border-b border-outline-variant focus:border-primary focus:ring-0 text-on-surface font-body-md text-body-md p-3 resize-none h-24 placeholder:text-on-surface-variant/50 transition-colors" placeholder="Type your response..."></textarea>
+<div class="absolute bottom-3 right-3 flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" title="Use framework">
+<span class="material-symbols-outlined text-[20px]" data-icon="psychology">psychology</span>
+</button>
+<button class="bg-primary text-on-primary-fixed font-body-sm text-body-sm px-4 py-1 flex items-center gap-2 hover:bg-primary-fixed transition-colors rounded-none">
+<span>Send</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

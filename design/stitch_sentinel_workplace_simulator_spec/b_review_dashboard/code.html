@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-surface-dim" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#5d0055",
+                        "surface-bright": "#fff7fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#feebff",
+                        "primary-fixed": "#ffd7f1",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "primary-container": "#7a1f6e",
+                        "outline": "#84727d",
+                        "secondary-container": "#ff7255",
+                        "on-tertiary-fixed-variant": "#00513a",
+                        "surface": "#fff7fb",
+                        "secondary-fixed": "#ffdad3",
+                        "inverse-surface": "#3a2b3f",
+                        "on-secondary-container": "#6d0f00",
+                        "secondary-fixed-dim": "#ffb4a4",
+                        "inverse-primary": "#ffacea",
+                        "on-secondary-fixed-variant": "#891d07",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#fde7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d6c1cd",
+                        "surface-container-high": "#f9e0fc",
+                        "secondary": "#ab351d",
+                        "tertiary-fixed-dim": "#82d7b3",
+                        "surface-tint": "#973988",
+                        "tertiary-fixed": "#9ef4cf",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#241629",
+                        "on-tertiary-container": "#71c5a2",
+                        "surface-dim": "#ead2ed",
+                        "on-secondary-fixed": "#3e0500",
+                        "tertiary-container": "#00513a",
+                        "on-background": "#241629",
+                        "on-primary-fixed": "#390034",
+                        "surface-variant": "#f3dbf6",
+                        "surface-container-highest": "#f3dbf6",
+                        "background": "#fff7fb",
+                        "on-surface-variant": "#51424c",
+                        "on-primary-fixed-variant": "#7a1f6e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "primary-fixed-dim": "#ffacea",
+                        "tertiary": "#003827",
+                        "surface-container-low": "#ffefff",
+                        "on-primary-container": "#fc90e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "display-title": ["\"Source Serif 4\""],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-sm": ["Work Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "verdict-text": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "display-title": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "verdict-text": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Work+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Work Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Source Serif 4', serif; }
+        
+        /* Subtle paper texture overlay */
+        .paper-bg {
+            background-color: #EEEAF2;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+        
+        /* Custom scrollbar to match archival feel */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d6c1cd; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #84727d; }
+    </style>
+</head>
+<body class="h-full flex overflow-hidden paper-bg text-on-surface antialiased">
+<!-- Top App Bar (Title Bar) -->
+<div class="fixed top-0 left-0 w-full z-50 bg-surface h-8 border-b border-outline-variant flex items-center justify-center px-4 relative">
+<div class="absolute left-4 flex space-x-1.5">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant tracking-tight flex items-center gap-2">
+<span>Sentinel</span>
+<span class="text-outline-variant">•</span>
+<span>Workplace investigation simulator</span>
+</div>
+</div>
+<!-- Side Navigation -->
+<nav class="fixed left-0 top-8 h-[calc(100%-2rem)] w-sidebar-width bg-surface-container-lowest border-r border-outline-variant flex flex-col py-margin-page z-40">
+<!-- Brand Header -->
+<div class="px-6 mb-12">
+<h1 class="font-display-title text-display-title text-primary">Sentinel</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">Workplace investigation simulator</p>
+</div>
+<!-- Main Navigation Links -->
+<div class="flex-1 overflow-y-auto px-4 space-y-1">
+<!-- Active Nav Item -->
+<a class="flex items-center px-4 py-3 bg-surface-container-low border-l-2 border-primary text-primary font-bold transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="psychology">psychology</span>
+<span class="font-label-sm text-label-sm">Scenarios</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Interview</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Report</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm">People</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out group rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</div>
+<!-- Sidebar Footer -->
+<div class="px-6 mt-8 pt-4 border-t border-outline-variant">
+<div class="flex flex-col space-y-3">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm truncate">Account identity</span>
+</div>
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined mr-3 text-[18px]" data-icon="business">business</span>
+<span class="font-label-sm text-label-sm truncate">Organization</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-sidebar-width mt-8 overflow-y-auto p-margin-page lg:px-16 xl:px-24 max-w-7xl mx-auto w-full">
+<!-- Large Case File Hero -->
+<section class="bg-surface border border-outline-variant p-8 mb-6 flex flex-col md:flex-row gap-8 relative overflow-hidden">
+<!-- Accent Bar -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-primary/10 text-primary font-label-sm text-label-sm border border-primary/20">Active Case</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Case #8492-A</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Allegations of Retaliation in Engineering Dept.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                        Subject under review: Marcus Vance, Sr. Director. Complainant alleges retaliatory actions following a compliance report submitted in Q2. Reviewing recent communications and performance evaluations.
+                    </p>
+</div>
+<div class="mt-8 flex gap-4">
+<button class="bg-primary-container text-on-primary font-label-sm text-label-sm px-6 py-2.5 hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                        Resume session
+                    </button>
+<button class="border border-primary-container text-primary-container bg-transparent font-label-sm text-label-sm px-6 py-2.5 hover:bg-surface-container-low transition-colors flex items-center gap-2">
+                        View brief
+                    </button>
+</div>
+</div>
+<!-- Hero Image Context -->
+<div class="w-full md:w-1/3 min-h-[200px] bg-surface-container-low border border-outline-variant flex items-center justify-center p-4 relative grayscale opacity-80 mix-blend-multiply">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" data-alt="Close up of a stack of legal documents and files on a wooden desk, lit by a desk lamp, evoking a serious, analytical, and archival mood in a modern corporate setting with deep purples and crisp whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyafQwqghNSvdbNNJWoUL3yuRVugmcGjWFnubeVUV6-NGgCNAmJzeCcYRLrUwt2Hu8RN-v1ZoxT6t-ABp_ipaMqBbGQdOKW42CWw4okoRbjD5Dq9dosLHpRkEoPFTL7eQOZh45qouMgvss2nOzIwWROKft8G_C7fFasB6Mk5984XT8znPOv7GgKiGs72eBd-8PYXiGBVaLd7r6tCQo_Ejh6pOp0js25EFD4Ndwf4jyp_unN8jnJpJU"/>
+<div class="absolute inset-0 bg-surface-container-lowest/40 backdrop-blur-[1px]"></div>
+<div class="z-10 text-center">
+<span class="material-symbols-outlined text-[48px] text-outline mb-2">folder_open</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">42 Documents attached</p>
+</div>
+</div>
+</section>
+<!-- Inline Statistics Strip -->
+<section class="border-y border-outline-variant py-4 mb-10 flex flex-wrap gap-8 items-center justify-between">
+<div class="flex-1 min-w-[200px] flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] text-primary">schedule</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Total time elapsed</p>
+<p class="font-verdict-text text-verdict-text text-on-surface">14h 22m</p>
+</div>
+</div>
+<div class="hidden md:block w-px h-10 bg-outline-variant"></div>
+<div class="flex-1 min-w-[200px] flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] text-primary">psychology</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Scenarios completed</p>
+<p class="font-verdict-text text-verdict-text text-on-surface">3 of 5</p>
+</div>
+</div>
+<div class="hidden md:block w-px h-10 bg-outline-variant"></div>
+<div class="flex-1 min-w-[200px] flex items-center gap-4">
+<span class="material-symbols-outlined text-[24px] text-primary">fact_check</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Risk assessment score</p>
+<p class="font-verdict-text text-verdict-text text-on-surface">High (8.4)</p>
+</div>
+</div>
+</section>
+<!-- Recent Sessions (Bordered Rows Ledger) -->
+<section>
+<div class="flex justify-between items-end mb-4 px-2">
+<h3 class="font-headline-md text-[20px] text-on-surface">Recent sessions</h3>
+<a class="font-label-sm text-label-sm text-primary hover:underline underline-offset-4" href="#">View all records</a>
+</div>
+<div class="bg-surface border-t border-x border-outline-variant">
+<!-- Header Row -->
+<div class="flex px-4 py-3 bg-surface-container-low border-b border-outline-variant font-label-sm text-label-sm text-on-surface-variant">
+<div class="w-1/3">Session Name</div>
+<div class="w-1/4">Date</div>
+<div class="w-1/4">Status</div>
+<div class="w-1/6 text-right">Action</div>
+</div>
+<!-- Data Row 1 -->
+<div class="flex items-center px-4 py-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors group relative">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-primary transition-colors"></div>
+<div class="w-1/3 font-body-md text-body-md text-on-surface font-medium pr-4">Interview: Complainant Initial Statement</div>
+<div class="w-1/4 font-body-md text-body-md text-on-surface-variant">Oct 24, 2023</div>
+<div class="w-1/4">
+<span class="inline-block px-2 py-1 bg-[#00513a]/10 text-[#00513a] font-label-sm text-[10px] border border-[#00513a]/20 uppercase tracking-wider">Completed</span>
+</div>
+<div class="w-1/6 text-right">
+<button class="font-label-sm text-label-sm text-primary hover:underline underline-offset-4">Review</button>
+</div>
+</div>
+<!-- Data Row 2 -->
+<div class="flex items-center px-4 py-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors group relative">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-primary transition-colors"></div>
+<div class="w-1/3 font-body-md text-body-md text-on-surface font-medium pr-4">Document Review: Emails Q2</div>
+<div class="w-1/4 font-body-md text-body-md text-on-surface-variant">Oct 22, 2023</div>
+<div class="w-1/4">
+<span class="inline-block px-2 py-1 bg-[#ab351d]/10 text-[#ab351d] font-label-sm text-[10px] border border-[#ab351d]/20 uppercase tracking-wider">Flagged</span>
+</div>
+<div class="w-1/6 text-right">
+<button class="font-label-sm text-label-sm text-primary hover:underline underline-offset-4">Review</button>
+</div>
+</div>
+<!-- Data Row 3 -->
+<div class="flex items-center px-4 py-4 border-b border-outline-variant hover:bg-surface-container-lowest transition-colors group relative">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-primary transition-colors"></div>
+<div class="w-1/3 font-body-md text-body-md text-on-surface font-medium pr-4">Interview: HR Business Partner</div>
+<div class="w-1/4 font-body-md text-body-md text-on-surface-variant">Oct 20, 2023</div>
+<div class="w-1/4">
+<span class="inline-block px-2 py-1 bg-[#00513a]/10 text-[#00513a] font-label-sm text-[10px] border border-[#00513a]/20 uppercase tracking-wider">Completed</span>
+</div>
+<div class="w-1/6 text-right">
+<button class="font-label-sm text-label-sm text-primary hover:underline underline-offset-4">Review</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Minimalist Chart Section -->
+<section class="mt-12 mb-16">
+<h3 class="font-headline-md text-[20px] text-on-surface mb-6 px-2">Investigation velocity</h3>
+<div class="border border-outline-variant p-6 bg-surface relative h-64 flex flex-col justify-end">
+<!-- Chart content placeholder -->
+<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+<div class="w-full border-b border-outline-variant opacity-30 h-0"></div>
+<div class="w-full border-b border-outline-variant opacity-30 h-0"></div>
+<div class="w-full border-b border-outline-variant opacity-30 h-0"></div>
+<div class="w-full border-b border-outline-variant h-0"></div>
+</div>
+<!-- Abstract minimal line representation -->
+<svg class="w-full h-full preserve-aspect-ratio-none overflow-visible absolute inset-0 p-6" preserveaspectratio="none" viewbox="0 0 100 40">
+<path d="M0 35 L20 30 L40 15 L60 25 L80 10 L100 5" fill="none" stroke="#7a1f6e" stroke-width="0.5" vector-effect="non-scaling-stroke"></path>
+<!-- Data points -->
+<circle cx="20" cy="30" fill="#5d0055" r="1.5"></circle>
+<circle cx="40" cy="15" fill="#5d0055" r="1.5"></circle>
+<circle cx="60" cy="25" fill="#5d0055" r="1.5"></circle>
+<circle cx="80" cy="10" fill="#5d0055" r="1.5"></circle>
+</svg>
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant mt-2 pt-2 border-t border-outline-variant z-10">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4</span>
+<span>Week 5</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

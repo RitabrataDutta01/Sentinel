@@ -97,7 +97,6 @@
       "installerIcon": "electron/icons/icon.ico",
       "uninstallerIcon": "electron/icons/icon.ico",
       "installerHeaderIcon": "electron/icons/icon.ico"
-    },
-
-}
+    }
+  }
 }

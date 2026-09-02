@@ -1,0 +1,5 @@
+Gtk-Message: 12:10:25.615: Failed to load module "colorreload-gtk-module"
+Gtk-Message: 12:10:25.615: Failed to load module "window-decorations-gtk-module"
+[252110:0825/121036.217909:ERROR:ui/gfx/x/atom_cache.cc:234] Add application/vnd.portal.filetransfer to kAtomsToCache
+[252110:0825/121036.217952:ERROR:ui/gfx/x/atom_cache.cc:234] Add application/vnd.portal.files to kAtomsToCache
+/home/ritabrata/projects/Sentinel/frontend/node_modules/electron/dist/electron exited with signal SIGTERM

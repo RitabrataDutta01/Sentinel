@@ -1,0 +1,459 @@
+
+> frontend@1.0.0 dev
+> vite
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+Port 5173 is in use, trying another one...
+
+  VITE v8.2.2  ready in 158 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+12:15:45 PM [vite] (client) Pre-transform error: Cannot apply unknown utility class `bg-background`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+  Plugin: @tailwindcss/vite:generate:serve
+  File: /home/ritabrata/projects/Sentinel/frontend/src/index.css
+12:16:56 PM [vite] Internal server error: Cannot apply unknown utility class `bg-background`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+  Plugin: @tailwindcss/vite:generate:serve
+  File: /home/ritabrata/projects/Sentinel/frontend/src/index.css
+      at onInvalidCandidate (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:1682)
+      at $e (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:16:39796)
+      at file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:711
+      at Hr (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1775)
+      at P (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1377)
+      at Ve (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:172)
+      at pn (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:294)
+      at async Ea (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:631)
+      at async zf (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:1406)
+      at async fu (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/@tailwindcss/node/dist/index.mjs:10:3458)
+12:18:43 PM [vite] vite.config.js changed, restarting server...
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+12:18:43 PM [vite] server restarted.
+12:22:27 PM [vite] (client) [Unhandled error] Error: You cannot render a <Router> inside another <Router>. You should never have more than one in your app.
+ > invariant node_modules/react-router/dist/development/chunk-62JRHF6Z.mjs:207:10
+ > Router node_modules/react-router/dist/development/chunk-62JRHF6Z.mjs:7044:2
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:19
+ > renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:21
+ > updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:18
+ > beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:17
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:21
+ > workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:40
+ > renderRootSync node_modules/react-dom/cjs/react-dom-client.development.js:17450:10
+
+12:22:27 PM [vite] (client) [console.warn] An error occurred in the <Router> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+12:23:34 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+12:27:03 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+12:27:04 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mIdentifier `electronEvents` has already been declared
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/lib/electron.js:5:5 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m 5 │[0m [38;5;249ml[0m[38;5;249me[0m[38;5;249mt[0m[38;5;249m [0melectronEvents[38;5;249m [0m[38;5;249m=[0m[38;5;249m [0m[38;5;249mn[0m[38;5;249mu[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249m;[0m
+ [38;5;240m   │[0m     ───────┬──────  
+ [38;5;240m   │[0m            ╰──────── `electronEvents` has already been declared here
+ [38;5;240m   │[0m 
+ [38;5;246m72 │[0m [38;5;249me[0m[38;5;249mx[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m [0melectronEvents[38;5;249m [0m[38;5;249m=[0m[38;5;249m [0m[38;5;249m{[0m
+ [38;5;240m   │[0m              ───────┬──────  
+ [38;5;240m   │[0m                     ╰──────── It can not be redeclared here
+[38;5;246m────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/lib/electron.js
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+12:27:04 PM [vite] (client) Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mIdentifier `electronEvents` has already been declared
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/lib/electron.js:5:5 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m 5 │[0m [38;5;249ml[0m[38;5;249me[0m[38;5;249mt[0m[38;5;249m [0melectronEvents[38;5;249m [0m[38;5;249m=[0m[38;5;249m [0m[38;5;249mn[0m[38;5;249mu[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249m;[0m
+ [38;5;240m   │[0m     ───────┬──────  
+ [38;5;240m   │[0m            ╰──────── `electronEvents` has already been declared here
+ [38;5;240m   │[0m 
+ [38;5;246m72 │[0m [38;5;249me[0m[38;5;249mx[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m [0melectronEvents[38;5;249m [0m[38;5;249m=[0m[38;5;249m [0m[38;5;249m{[0m
+ [38;5;240m   │[0m              ───────┬──────  
+ [38;5;240m   │[0m                     ╰──────── It can not be redeclared here
+[38;5;246m────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/lib/electron.js
+12:27:04 PM [vite] (client) [console.error] [vite] Failed to reload /src/App.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+12:28:43 PM [vite] (client) hmr update /src/index.css
+12:29:20 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:31:21 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:32:16 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:33:25 PM [vite] (client) hmr update /src/index.css, /src/App.jsx
+12:37:58 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:38:56 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:40:19 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+12:42:11 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+12:43:08 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:43:35 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:47:08 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:47:08 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `,` or `)` but found `{`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:433:41 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m432 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mS[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mb[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mC[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m?[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                                       ┬  
+ [38;5;240m    │[0m                                       ╰── Opened here
+ [38;5;246m433 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249md[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mM[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249m1[0m[38;5;249m2[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m4[0m[38;5;249m"[0m[38;5;249m [0m[38;5;249m/[0m[38;5;249m>[0m[38;5;249m [0m{[38;5;249m/[0m[38;5;249m*[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mv[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m*[0m[38;5;249m/[0m[38;5;249m}[0m
+ [38;5;240m    │[0m                                         ┬  
+ [38;5;240m    │[0m                                         ╰── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+12:47:08 PM [vite] (client) [console.error] [vite] Failed to reload /src/components/layout/DesktopAppShell.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+12:49:51 PM [vite] (client) hmr update /src/index.css
+12:53:05 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:53:05 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `,` or `)` but found `{`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:433:41 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m432 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mS[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mb[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mC[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m?[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                                       ┬  
+ [38;5;240m    │[0m                                       ╰── Opened here
+ [38;5;246m433 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249md[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mM[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249m1[0m[38;5;249m2[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m4[0m[38;5;249m"[0m[38;5;249m [0m[38;5;249m/[0m[38;5;249m>[0m[38;5;249m [0m{[38;5;249m/[0m[38;5;249m*[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mv[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m*[0m[38;5;249m/[0m[38;5;249m}[0m
+ [38;5;240m    │[0m                                         ┬  
+ [38;5;240m    │[0m                                         ╰── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+12:53:05 PM [vite] (client) [console.error] [vite] Failed to reload /src/components/layout/DesktopAppShell.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+12:55:04 PM [vite] (client) hmr update /src/index.css
+12:55:59 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+12:55:59 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `,` or `)` but found `{`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:457:41 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m456 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mS[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mb[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mC[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m?[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                                       ┬  
+ [38;5;240m    │[0m                                       ╰── Opened here
+ [38;5;246m457 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249md[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mM[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249m1[0m[38;5;249m2[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m4[0m[38;5;249m"[0m[38;5;249m [0m[38;5;249m/[0m[38;5;249m>[0m[38;5;249m [0m{[38;5;249m/[0m[38;5;249m*[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mv[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m*[0m[38;5;249m/[0m[38;5;249m}[0m
+ [38;5;240m    │[0m                                         ┬  
+ [38;5;240m    │[0m                                         ╰── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+12:55:59 PM [vite] (client) [console.error] [vite] Failed to reload /src/components/layout/DesktopAppShell.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+1:02:44 PM [vite] (client) Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `,` or `)` but found `{`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:457:41 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m456 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mS[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mb[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mC[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m?[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                                       ┬  
+ [38;5;240m    │[0m                                       ╰── Opened here
+ [38;5;246m457 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249md[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mM[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249m1[0m[38;5;249m2[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m4[0m[38;5;249m"[0m[38;5;249m [0m[38;5;249m/[0m[38;5;249m>[0m[38;5;249m [0m{[38;5;249m/[0m[38;5;249m*[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mv[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m*[0m[38;5;249m/[0m[38;5;249m}[0m
+ [38;5;240m    │[0m                                         ┬  
+ [38;5;240m    │[0m                                         ╰── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+1:02:44 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mExpected `,` or `)` but found `{`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:457:41 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m456 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mS[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mb[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mC[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m?[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                                       ┬  
+ [38;5;240m    │[0m                                       ╰── Opened here
+ [38;5;246m457 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249md[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mM[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249m1[0m[38;5;249m2[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m4[0m[38;5;249m"[0m[38;5;249m [0m[38;5;249m/[0m[38;5;249m>[0m[38;5;249m [0m{[38;5;249m/[0m[38;5;249m*[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mv[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m*[0m[38;5;249m/[0m[38;5;249m}[0m
+ [38;5;240m    │[0m                                         ┬  
+ [38;5;240m    │[0m                                         ╰── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:04:43 PM [vite] (client) hmr update /src/index.css
+1:05:38 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+1:05:38 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:05:38 PM [vite] (client) [console.error] [vite] Failed to reload /src/components/layout/DesktopAppShell.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+1:11:00 PM [vite] (client) Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+1:11:00 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:13:56 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:14:08 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:14:32 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:15:09 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:18:26 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+1:18:26 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:18:26 PM [vite] (client) [console.error] [vite] Failed to reload /src/components/layout/DesktopAppShell.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)
+1:18:26 PM [vite] (client) Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+1:18:26 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:18:26 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:18:50 PM [vite] (client) hmr update /src/index.css
+1:18:50 PM [vite] (client) Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+1:18:50 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:19:14 PM [vite] Internal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] [0mUnexpected token. Did you mean `{'}'}` or `&rbrace;`?
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/layout/DesktopAppShell.jsx:541:13 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m541 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m}[0m
+ [38;5;240m    │[0m             │ 
+ [38;5;240m    │[0m             ╰─ 
+[38;5;246m─────╯[0m
+
+  Plugin: vite:oxc
+  File: /home/ritabrata/projects/Sentinel/frontend/src/components/layout/DesktopAppShell.jsx
+      at transformWithOxc (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4103:19)
+      at TransformPluginContext.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:4174:26)
+      at EnvironmentPluginContainer.transform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:30932:51)
+      at async loadAndTransform (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:20671:26)
+      at async viteTransformMiddleware (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/vite/dist/node/chunks/node.js:25205:20)
+1:23:21 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+1:35:32 PM [vite] (client) hmr update /src/index.css
+1:36:06 PM [vite] (client) hmr update /src/index.css
+1:37:23 PM [vite] (client) hmr update /src/index.css
+1:38:44 PM [vite] (client) hmr update /src/index.css
+1:40:18 PM [vite] (client) hmr update /src/index.css
+1:43:25 PM [vite] vite.config.js changed, restarting server...
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+1:43:25 PM [vite] server restarted.
+2:08:52 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:16:47 PM [vite] (client) hmr update /src/index.css
+2:18:59 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:20:30 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:21:09 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:22:32 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:28:06 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:29:25 PM [vite] (client) hmr update /src/index.css
+2:32:46 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:37:13 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:44:48 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:47:41 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+2:49:16 PM [vite] (client) hmr update /src/index.css
+2:51:19 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+2:52:59 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css

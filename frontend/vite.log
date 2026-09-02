@@ -1,0 +1,75 @@
+
+> frontend@1.0.0 dev
+> vite
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+  VITE v8.2.2  ready in 160 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+12:09:21 PM [vite] (client) Pre-transform error: Cannot apply unknown utility class `bg-background`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+  Plugin: @tailwindcss/vite:generate:serve
+  File: /home/ritabrata/projects/Sentinel/frontend/src/index.css
+12:10:25 PM [vite] Internal server error: Cannot apply unknown utility class `bg-background`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+  Plugin: @tailwindcss/vite:generate:serve
+  File: /home/ritabrata/projects/Sentinel/frontend/src/index.css
+      at onInvalidCandidate (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:1682)
+      at $e (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:16:39796)
+      at file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:711
+      at Hr (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1775)
+      at P (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1377)
+      at Ve (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:172)
+      at pn (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:294)
+      at async Ea (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:631)
+      at async zf (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:1406)
+      at async fu (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/@tailwindcss/node/dist/index.mjs:10:3458)
+12:11:42 PM [vite] Internal server error: Cannot apply unknown utility class `bg-background`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+  Plugin: @tailwindcss/vite:generate:serve
+  File: /home/ritabrata/projects/Sentinel/frontend/src/index.css
+      at onInvalidCandidate (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:1682)
+      at $e (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:16:39796)
+      at file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:711
+      at Hr (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1775)
+      at P (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:5:1377)
+      at Ve (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:21:172)
+      at pn (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:294)
+      at async Ea (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:631)
+      at async zf (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/tailwindcss/dist/lib.mjs:38:1406)
+      at async fu (file:///home/ritabrata/projects/Sentinel/frontend/node_modules/@tailwindcss/node/dist/index.mjs:10:3458)
+12:18:43 PM [vite] vite.config.js changed, restarting server...
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+12:18:43 PM [vite] server restarted.
+1:35:32 PM [vite] (client) hmr update /src/index.css
+1:36:06 PM [vite] (client) hmr update /src/index.css
+1:37:23 PM [vite] (client) hmr update /src/index.css
+1:38:44 PM [vite] (client) hmr update /src/index.css
+1:40:18 PM [vite] (client) hmr update /src/index.css
+1:43:25 PM [vite] vite.config.js changed, restarting server...
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vite.config.js:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+1:43:25 PM [vite] (client) Re-optimizing dependencies because vite config has changed
+1:43:25 PM [vite] server restarted.
+1:46:59 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+1:48:17 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+1:49:18 PM [vite] (client) hmr update /src/pages/Auth.jsx, /src/index.css
+2:08:52 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:16:47 PM [vite] (client) hmr update /src/index.css
+2:18:59 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:20:30 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:21:09 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:22:32 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:28:06 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:29:25 PM [vite] (client) hmr update /src/index.css
+2:32:46 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:37:13 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:44:48 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css
+2:47:41 PM [vite] (client) hmr update /src/App.jsx, /src/index.css
+2:49:16 PM [vite] (client) hmr update /src/pages/Landing.jsx, /src/index.css
+2:51:19 PM [vite] (client) hmr update /src/index.css, /src/components/layout/DesktopAppShell.jsx
+2:52:59 PM [vite] (client) hmr update /src/components/layout/DesktopAppShell.jsx, /src/index.css

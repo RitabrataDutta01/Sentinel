@@ -21,12 +21,11 @@ function MoodShift({ session }) {
   )
 }
 
-function SessionItem({ session, expanded, setExpanded }) {
+function SessionItem({ session, expanded, setExpanded, isFirst }) {
   const rep = reportOf(session)
   const score = sessionScore(session)
   const minutes = sessionMinutes(session)
   const isOpen = expanded === session.id
-  const verdictColor = verdictCssColor(rep?.verdict, rep)
 
   return (
     <motion.div
@@ -34,16 +33,15 @@ function SessionItem({ session, expanded, setExpanded }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, delay: 0.04 }}
-      className={`relative overflow-hidden rounded-2xl border bg-surface transition-colors ${
-        isOpen ? 'border-accent/50' : 'border-border hover:border-border-light'
-      }`}
     >
       <div
-        className="flex items-center justify-between p-4"
+        className={`flex items-center justify-between px-4 py-3 transition-colors cursor-pointer ${
+          !isFirst ? 'border-t border-border' : ''
+        } ${isOpen ? 'bg-accent/5' : 'hover:bg-elevated'}`}
         onClick={() => setExpanded(isOpen ? null : session.id)}
       >
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 shrink-0">
+          <div className="flex h-9 w-9 items-center justify-center rounded-[var(--radius)] bg-accent/15 shrink-0">
             <span className="text-sm font-semibold text-accent">
               {session.scenario?.charAt(0).toUpperCase() ?? 'S'}
             </span>
@@ -62,8 +60,8 @@ function SessionItem({ session, expanded, setExpanded }) {
                 <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: moodColor(endMoodOf(session)) }} />
                 <MoodShift session={session} />
               </span>
-              <span className={`inline-flex items-center px-2 py-1 rounded-lg border text-[11px] font-semibold capitalize ${verdictStyle(rep?.verdict, rep)}`}>
-                {rep?.verdict ?? 'PENDING'}
+              <span className={`inline-flex items-center rounded-[var(--radius)] border px-2 py-0.5 text-[11px] font-semibold ${verdictStyle(rep?.verdict, rep)}`}>
+                {rep?.verdict ?? 'Pending'}
               </span>
               {score != null && (
                 <span className="flex items-center gap-1 font-mono tabular-nums text-primary">
@@ -72,7 +70,7 @@ function SessionItem({ session, expanded, setExpanded }) {
               )}
               {minutes != null && (
                 <span className="flex items-center gap-1 font-mono tabular-nums text-muted">
-                  {minutes} min
+                  {minutes}m
                 </span>
               )}
             </>
@@ -81,8 +79,9 @@ function SessionItem({ session, expanded, setExpanded }) {
           )}
         </div>
       </div>
+
       <AnimatePresence>
-        {expanded === session.id && rep && (
+        {isOpen && rep && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -128,7 +127,7 @@ function SessionItem({ session, expanded, setExpanded }) {
             <div className="px-4 pb-4 flex justify-end">
               <Link
                 to={`/report/${session.id}`}
-                className="inline-block text-sm font-semibold text-accent hover:text-accent-light transition-colors"
+                className="inline-block text-sm font-semibold text-accent hover:opacity-80 transition-opacity"
               >
                 View full report →
               </Link>
@@ -144,7 +143,7 @@ function SessionList({ sessions, expanded, setExpanded }) {
   const reverse = useMemo(() => [...sessions].reverse(), [sessions])
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col border border-border rounded-[var(--radius)] bg-surface">
       <AnimatePresence>
         {reverse.map((s, i) => (
           <SessionItem
@@ -152,6 +151,7 @@ function SessionList({ sessions, expanded, setExpanded }) {
             session={s}
             expanded={expanded}
             setExpanded={setExpanded}
+            isFirst={i === 0}
           />
         ))}
       </AnimatePresence>
@@ -216,7 +216,7 @@ export default function Sessions() {
           title="Your sessions"
           subtitle="Error loading sessions"
         />
-        <div className="mb-6 rounded-xl border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
+        <div className="mb-6 rounded-[var(--radius)] border border-mood-cold/30 bg-mood-cold/5 px-5 py-4 text-sm text-mood-cold">
           {error}
         </div>
       </div>
@@ -238,7 +238,7 @@ export default function Sessions() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
+            className="rounded-[var(--radius)] border border-border bg-elevated px-3 py-2 text-sm text-primary focus:outline-none focus:border-accent transition-colors"
           >
             <option value="all">All scenarios</option>
             {scenarioOptions.map((s) => (
@@ -262,11 +262,11 @@ export default function Sessions() {
       </div>
 
       {sessions.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border px-5 py-12 text-center">
+        <div className="rounded-[var(--radius)] border border-dashed border-border px-5 py-12 text-center">
           <p className="text-sm text-muted mb-4">No completed sessions yet.</p>
           <Link
             to="/scenarios"
-            className="inline-block px-5 py-2.5 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-accent-light transition-colors"
+            className="inline-block px-5 py-2.5 rounded-[var(--radius)] bg-accent text-accent-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             Start a scenario
           </Link>

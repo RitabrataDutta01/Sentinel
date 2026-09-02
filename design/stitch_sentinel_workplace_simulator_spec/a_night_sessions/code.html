@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel - Sessions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "surface-tint": "#ffacea",
+                            "outline": "#a18a99",
+                            "secondary-fixed-dim": "#ffb4a3",
+                            "on-background": "#f0dcf5",
+                            "surface-container-highest": "#3d3043",
+                            "on-secondary-container": "#ffa08a",
+                            "inverse-on-surface": "#392c3e",
+                            "surface": "#1a0f20",
+                            "error-container": "#93000a",
+                            "primary-container": "#c238b0",
+                            "tertiary-fixed": "#71face",
+                            "surface-container-lowest": "#150a1b",
+                            "primary": "#ffacea",
+                            "secondary": "#ffb4a3",
+                            "secondary-fixed": "#ffdad2",
+                            "inverse-surface": "#f0dcf5",
+                            "on-error": "#690005",
+                            "secondary-container": "#8f1b01",
+                            "on-primary-fixed-variant": "#840078",
+                            "inverse-primary": "#a71b98",
+                            "on-primary-fixed": "#390034",
+                            "on-primary-container": "#fffaff",
+                            "on-error-container": "#ffdad6",
+                            "on-tertiary": "#00382a",
+                            "outline-variant": "#54414e",
+                            "surface-container": "#271b2d",
+                            "tertiary": "#51ddb3",
+                            "tertiary-fixed-dim": "#51ddb3",
+                            "on-surface": "#f0dcf5",
+                            "on-secondary-fixed": "#3d0600",
+                            "surface-dim": "#1a0f20",
+                            "on-secondary": "#630f00",
+                            "surface-bright": "#423447",
+                            "tertiary-container": "#008466",
+                            "on-secondary-fixed-variant": "#8c1900",
+                            "on-tertiary-container": "#f2fff7",
+                            "error": "#ffb4ab",
+                            "surface-variant": "#3d3043",
+                            "surface-container-high": "#322538",
+                            "surface-container-low": "#231729",
+                            "primary-fixed": "#ffd7f1",
+                            "on-surface-variant": "#d9c0cf",
+                            "background": "#1a0f20",
+                            "on-tertiary-fixed-variant": "#00513e",
+                            "on-primary": "#5d0055",
+                            "on-tertiary-fixed": "#002117",
+                            "primary-fixed-dim": "#ffacea"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "margin-page": "2rem",
+                            "sidebar-width": "260px",
+                            "gutter": "1rem",
+                            "stack-compact": "0.5rem",
+                            "stack-default": "1.5rem"
+                    },
+                    "fontFamily": {
+                            "body-sm": [
+                                    "Hanken Grotesk"
+                            ],
+                            "label-caps": [
+                                    "Hanken Grotesk"
+                            ],
+                            "display-lg": [
+                                    "\"Source Serif 4\""
+                            ],
+                            "body-md": [
+                                    "Hanken Grotesk"
+                            ],
+                            "headline-sm": [
+                                    "Hanken Grotesk"
+                            ],
+                            "verdict-md": [
+                                    "\"Source Serif 4\""
+                            ]
+                    },
+                    "fontSize": {
+                            "body-sm": [
+                                    "14px",
+                                    {
+                                            "lineHeight": "20px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "label-caps": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "16px",
+                                            "letterSpacing": "0.05em",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "display-lg": [
+                                    "42px",
+                                    {
+                                            "lineHeight": "52px",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "body-md": [
+                                    "16px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "headline-sm": [
+                                    "18px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "verdict-md": [
+                                    "24px",
+                                    {
+                                            "lineHeight": "32px",
+                                            "fontWeight": "500"
+                                    }
+                            ]
+                    }
+            },
+        }
+    </script>
+<style>
+        body { background-color: #150B18; }
+        .hairline-border { border-color: rgba(194, 56, 176, 0.18); border-width: 1px; border-style: solid; }
+        .hairline-border-b { border-bottom-color: rgba(194, 56, 176, 0.18); border-bottom-width: 1px; border-bottom-style: solid; }
+        .hairline-border-r { border-right-color: rgba(194, 56, 176, 0.18); border-right-width: 1px; border-right-style: solid; }
+        .hairline-border-t { border-top-color: rgba(194, 56, 176, 0.18); border-top-width: 1px; border-top-style: solid; }
+        
+        .title-dot { width: 12px; height: 12px; border-radius: 50%; background-color: #54414e; display: inline-block; margin-right: 6px; }
+        
+        /* Custom scrollbar for deep night theme */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #150a1b; }
+        ::-webkit-scrollbar-thumb { background: #3d3043; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #54414e; }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Window Title Bar -->
+<div class="h-10 hairline-border-b bg-surface-container-lowest flex items-center px-4 justify-between shrink-0">
+<div class="flex items-center">
+<span class="title-dot"></span>
+<span class="title-dot"></span>
+<span class="title-dot"></span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-center flex-grow">Workplace conversation simulator</div>
+<div class="w-12"></div> <!-- Spacer for balance -->
+</div>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Mobile Top Nav (Visible on md-, hidden on md+) -->
+<div class="md:hidden flex items-center justify-between px-margin-page h-12 w-full bg-surface-container-lowest hairline-border-b shrink-0 absolute top-0 left-0 z-20">
+<div class="font-headline-sm text-headline-sm text-on-surface">Sentinel</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Sidebar Navigation (Hidden on mobile, visible on md+) -->
+<nav class="hidden md:flex flex-col fixed left-0 top-10 h-[calc(100vh-40px)] w-sidebar-width bg-surface hairline-border-r z-10">
+<div class="p-6 pb-2">
+<h1 class="font-headline-sm text-headline-sm text-on-surface mb-1">Sentinel</h1>
+</div>
+<div class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<!-- Scenarios -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="play_circle">play_circle</span>
+<span class="font-body-sm text-body-sm">Scenarios</span>
+</a>
+<!-- Interview -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-body-sm text-body-sm">Interview</span>
+</a>
+<!-- Report -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="font-body-sm text-body-sm">Report</span>
+</a>
+<!-- Sessions (ACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-surface-container-highest text-primary font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-body-sm text-body-sm">Sessions</span>
+</a>
+<!-- Insights -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span class="font-body-sm text-body-sm">Insights</span>
+</a>
+<!-- People -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span class="font-body-sm text-body-sm">People</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-all duration-200 mt-auto" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</div>
+<!-- Footer -->
+<div class="p-4 hairline-border-t mt-auto">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="person">person</span>
+<span class="font-body-sm text-label-caps text-on-surface-variant uppercase tracking-wider text-[10px]">Account Name</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="corporate_fare">corporate_fare</span>
+<span class="font-body-sm text-label-caps text-on-surface-variant uppercase tracking-wider text-[10px]">Organization Name</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[260px] h-full overflow-y-auto bg-[#150B18] pt-12 md:pt-0">
+<div class="max-w-[1200px] mx-auto p-6 md:p-8 lg:p-12">
+<header class="mb-10">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Session History</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review past simulation transcripts and analytical reports.</p>
+</header>
+<!-- List Header (Columns) -->
+<div class="grid grid-cols-12 gap-4 px-4 py-3 border-b border-surface-container-highest mb-2">
+<div class="col-span-4 lg:col-span-3 font-label-caps text-label-caps text-outline-variant uppercase">Case ID / Subject</div>
+<div class="col-span-3 lg:col-span-3 font-label-caps text-label-caps text-outline-variant uppercase hidden md:block">Scenario Type</div>
+<div class="col-span-2 lg:col-span-2 font-label-caps text-label-caps text-outline-variant uppercase text-right md:text-left">Date</div>
+<div class="col-span-3 lg:col-span-2 font-label-caps text-label-caps text-outline-variant uppercase hidden lg:block text-center">Verdict</div>
+<div class="col-span-3 lg:col-span-2 font-label-caps text-label-caps text-outline-variant uppercase text-right">Action</div>
+</div>
+<!-- Session Rows -->
+<div class="flex flex-col gap-0">
+<!-- Row 1 -->
+<div class="group grid grid-cols-12 gap-4 px-4 py-4 hairline-border-b hover:bg-surface transition-colors items-center bg-[#1a0f20]">
+<div class="col-span-5 md:col-span-4 lg:col-span-3 flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate">PRJ-992-Alpha</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase mt-1">J. Sterling</span>
+</div>
+<div class="col-span-3 lg:col-span-3 hidden md:flex items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface font-body-sm text-[11px] rounded-sm">Conflict Resolution</span>
+</div>
+<div class="col-span-3 md:col-span-2 lg:col-span-2 flex items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">2023-10-24</span>
+</div>
+<div class="col-span-2 lg:col-span-2 hidden lg:flex justify-center items-center">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+</div>
+<div class="col-span-4 md:col-span-3 lg:col-span-2 flex justify-end items-center">
+<button class="font-body-sm text-body-sm px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-[#150B18] transition-colors rounded-sm">View</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="group grid grid-cols-12 gap-4 px-4 py-4 hairline-border-b hover:bg-surface transition-colors items-center">
+<div class="col-span-5 md:col-span-4 lg:col-span-3 flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate">PRJ-881-Beta</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase mt-1">M. Chen</span>
+</div>
+<div class="col-span-3 lg:col-span-3 hidden md:flex items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface font-body-sm text-[11px] rounded-sm">Performance Review</span>
+</div>
+<div class="col-span-3 md:col-span-2 lg:col-span-2 flex items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">2023-10-22</span>
+</div>
+<div class="col-span-2 lg:col-span-2 hidden lg:flex justify-center items-center">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+</div>
+<div class="col-span-4 md:col-span-3 lg:col-span-2 flex justify-end items-center">
+<button class="font-body-sm text-body-sm px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-[#150B18] transition-colors rounded-sm">View</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="group grid grid-cols-12 gap-4 px-4 py-4 hairline-border-b hover:bg-surface transition-colors items-center bg-[#1a0f20]">
+<div class="col-span-5 md:col-span-4 lg:col-span-3 flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate">PRJ-875-Delta</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase mt-1">A. Rossi</span>
+</div>
+<div class="col-span-3 lg:col-span-3 hidden md:flex items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface font-body-sm text-[11px] rounded-sm">Termination Procedure</span>
+</div>
+<div class="col-span-3 md:col-span-2 lg:col-span-2 flex items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">2023-10-18</span>
+</div>
+<div class="col-span-2 lg:col-span-2 hidden lg:flex justify-center items-center">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="col-span-4 md:col-span-3 lg:col-span-2 flex justify-end items-center">
+<button class="font-body-sm text-body-sm px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-[#150B18] transition-colors rounded-sm">View</button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="group grid grid-cols-12 gap-4 px-4 py-4 hairline-border-b hover:bg-surface transition-colors items-center">
+<div class="col-span-5 md:col-span-4 lg:col-span-3 flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate">PRJ-802-Gamma</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase mt-1">L. Vance</span>
+</div>
+<div class="col-span-3 lg:col-span-3 hidden md:flex items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface font-body-sm text-[11px] rounded-sm">Negotiation Tactics</span>
+</div>
+<div class="col-span-3 md:col-span-2 lg:col-span-2 flex items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">2023-10-15</span>
+</div>
+<div class="col-span-2 lg:col-span-2 hidden lg:flex justify-center items-center">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div class="col-span-4 md:col-span-3 lg:col-span-2 flex justify-end items-center">
+<button class="font-body-sm text-body-sm px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-[#150B18] transition-colors rounded-sm">View</button>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="group grid grid-cols-12 gap-4 px-4 py-4 hairline-border-b hover:bg-surface transition-colors items-center bg-[#1a0f20]">
+<div class="col-span-5 md:col-span-4 lg:col-span-3 flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold truncate">PRJ-799-Epsilon</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase mt-1">E. Thorne</span>
+</div>
+<div class="col-span-3 lg:col-span-3 hidden md:flex items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-on-surface font-body-sm text-[11px] rounded-sm">Onboarding Protocol</span>
+</div>
+<div class="col-span-3 md:col-span-2 lg:col-span-2 flex items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">2023-10-10</span>
+</div>
+<div class="col-span-2 lg:col-span-2 hidden lg:flex justify-center items-center">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+</div>
+<div class="col-span-4 md:col-span-3 lg:col-span-2 flex justify-end items-center">
+<button class="font-body-sm text-body-sm px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-[#150B18] transition-colors rounded-sm">View</button>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More (Minimalist) -->
+<div class="mt-8 flex justify-center">
+<button class="font-label-caps text-label-caps text-on-surface-variant uppercase hover:text-on-surface transition-colors flex items-center gap-2">
+                        Load previous records <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>
