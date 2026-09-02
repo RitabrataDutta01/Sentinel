@@ -51,10 +51,6 @@ linux:
   icon: "electron/icons/icon.png"
   category: "Utility"
   maintainer: "Sentinel Team <sentinel@example.com>"
-  desktop:
-    Name: "Sentinel HR Simulator"
-    Comment: "HR training and simulation platform"
-    Categories: "Office;Education;"
   executableName: "sentinel"
 
 deb:

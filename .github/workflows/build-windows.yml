@@ -1,4 +1,4 @@
-name: Build Windows and Linux Electron App
+name: Build Windows Electron App
 
 on:
   push:
@@ -38,67 +38,20 @@ jobs:
       - name: Upload Windows installer
         uses: actions/upload-artifact@v4
         with:
-          name: sentinel-windows
+          name: sentinel-windows-installer
           path: frontend/dist-electron/*.exe
           retention-days: 7
 
-  build-linux:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libnotify-dev libnss3-dev libxss-dev libxtst-dev xdg-utils libatspi2.0-dev uuid-dev libsecret-1-dev rpm fakeroot dpkg-dev fuse libfuse2
-
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
-      - name: Build Electron app (Linux)
-        working-directory: ./frontend
-        run: npm run electron:build -- --linux --x64
-
-      - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: sentinel-linux
-          path: |
-            frontend/dist-electron/*.AppImage
-            frontend/dist-electron/*.deb
-            frontend/dist-electron/*.rpm
-          retention-days: 7
-
   release:
-    needs: [build-windows, build-linux]
+    needs: build-windows
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Download Windows installer
         uses: actions/download-artifact@v4
         with:
-          name: sentinel-windows
-          path: ./dist-electron/windows
-
-      - name: Download Linux artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: sentinel-linux
-          path: ./dist-electron/linux
+          name: sentinel-windows-installer
+          path: ./dist-electron
 
       - name: Get version from tag
         id: version
@@ -110,28 +63,18 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Sentinel ${{ steps.version.outputs.VERSION }}
           body: |
-            ## Sentinel HR Simulator - Windows & Linux Release
-
-            ### Windows
-            - `Sentinel-Setup-${{ steps.version.outputs.VERSION }}.exe` - NSIS Installer (x64)
-
-            ### Linux
-            - `Sentinel-${{ steps.version.outputs.VERSION }}.AppImage` - Portable (x64)
-            - `sentinel_${{ steps.version.outputs.VERSION }}_amd64.deb` - Debian/Ubuntu
-            - `sentinel-${{ steps.version.outputs.VERSION }}.x86_64.rpm` - Fedora/RHEL
+            ## Sentinel HR Simulator - Windows Release
 
             ### Installation
-            **Windows:** Run the `.exe` installer
-            **Linux:** Use `.deb` (Ubuntu/Debian), `.rpm` (Fedora/RHEL), or run `.AppImage` directly (make executable with `chmod +x`)
+            1. Download `Sentinel-Setup-${{ steps.version.outputs.VERSION }}.exe`
+            2. Run the installer
+            3. Follow the setup wizard
 
             ### Changes
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
           draft: false
           prerelease: false
           files: |
-            ./dist-electron/windows/*.exe
-            ./dist-electron/linux/*.AppImage
-            ./dist-electron/linux/*.deb
-            ./dist-electron/linux/*.rpm
+            ./dist-electron/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
