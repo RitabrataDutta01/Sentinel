@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -31,9 +31,9 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Build Electron app (Windows)
+      - name: Build Electron app
         working-directory: ./frontend
-        run: npm run electron:build -- --win --x64
+        run: npm run electron:build
 
       - name: Upload Windows installer
         uses: actions/upload-artifact@v4
@@ -43,7 +43,7 @@ jobs:
           retention-days: 7
 
   release:
-    needs: build-windows
+    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
