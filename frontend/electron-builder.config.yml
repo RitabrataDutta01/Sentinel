@@ -1,9 +1,10 @@
 appId: com.sentinel.app
 productName: Sentinel
-copyright: "Copyright © 2005 Sentinel"
+copyright: "Copyright © 2025 Sentinel"
 
 directories:
   output: "../dist-electron"
+  buildResources: "build"
 
 files:
   - "**/*"
@@ -12,12 +13,17 @@ asar: false
 
 publish: null
 
+extraResources:
+  - from: "electron/icons"
+    to: "icons"
+    filter: ["**/*"]
+
 win:
   target:
     - target: nsis
       arch:
         - x64
-  icon: "icons/icon.ico"
+  icon: "electron/icons/icon.ico"
 
 nsis:
   oneClick: false
@@ -27,6 +33,86 @@ nsis:
   createStartMenuShortcut: true
   shortcutName: Sentinel
   uninstallDisplayName: Sentinel HR Simulator
-  installerIcon: "icons/icon.ico"
-  uninstallerIcon: "icons/icon.ico"
-  installerHeaderIcon: "icons/icon.ico"
+  installerIcon: "electron/icons/icon.ico"
+  uninstallerIcon: "electron/icons/icon.ico"
+  installerHeaderIcon: "electron/icons/icon.ico"
+
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: zip
+      arch:
+        - x64
+        - arm64
+  icon: "electron/icons/icon.icns"
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: "build/entitlements.mac.plist"
+  entitlementsInherit: "build/entitlements.mac.plist"
+  category: "public.app-category.utilities"
+  darkModeSupport: true
+
+dmg:
+  contents:
+    - x: 130
+      y: 220
+      type: link
+      path: /Applications
+    - x: 410
+      y: 220
+      type: file
+  window:
+    width: 540
+    height: 380
+  icon: "electron/icons/icon.icns"
+  iconSize: 100
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+    - target: rpm
+      arch:
+        - x64
+  icon: "electron/icons/icon.png"
+  category: "Utility"
+  maintainer: "Sentinel Team <sentinel@example.com>"
+  desktop:
+    Name: "Sentinel HR Simulator"
+    Comment: "HR training and simulation platform"
+    Categories: "Office;Education;"
+  executableName: "sentinel"
+
+appImage:
+  runtime: "fuse"
+
+deb:
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+
+rpm:
+  depends:
+    - gtk3
+    - libnotify
+    - nss
+    - libXScrnSaver
+    - libxtst
+    - xdg-utils
+    - at-spi2-core
+    - libuuid
+    - libsecret

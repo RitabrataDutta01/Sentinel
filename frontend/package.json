@@ -57,46 +57,5 @@
   },
   "allowScripts": {
     "electron-winstaller@5.4.0": true
-  },
-  "build": {
-    "appId": "com.sentinel.app",
-    "productName": "Sentinel",
-    "copyright": "Copyright © 2025 Sentinel",
-    "directories": {
-      "output": "dist-electron",
-      "app": "dist-electron-build"
-    },
-    "files": [
-      "dist/**/*"
-    ],
-    "asar": false,
-    "extraResources": [
-      {
-        "from": "electron/icons",
-        "to": "icons",
-        "filter": ["**/*"]
-      }
-    ],
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        }
-      ],
-      "icon": "electron/icons/icon.ico"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": true,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "Sentinel",
-      "uninstallDisplayName": "Sentinel HR Simulator",
-      "installerIcon": "electron/icons/icon.ico",
-      "uninstallerIcon": "electron/icons/icon.ico",
-      "installerHeaderIcon": "electron/icons/icon.ico"
-    }
   }
 }
