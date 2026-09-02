@@ -1,1 +1,0 @@
-import{v as e}from"./supabase-DZ7yrkAU.js";function t(e){let t=[168,80,66],n=[156,143,125],r=[126,191,142],i=Math.max(1,Math.min(10,e)),[a,o,s]=i<=5?[t,n,(i-1)/4]:[n,r,(i-5)/5];return`rgb(${a.map((e,t)=>Math.round(e+(o[t]-e)*s)).join(`,`)})`}var n=e((()=>{}));export{t as n,n as t};

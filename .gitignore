@@ -1,7 +1,57 @@
-.venv
-*.toml
+# Dependencies
+node_modules/
+frontend/node_modules/
+electron/node_modules/
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+frontend/dist-electron/
+frontend/dist-electron-build/
+electron/dist/
+
+# Electron builder output
+*.exe
+*.dmg
+*.AppImage
+*.snap
+*.deb
+*.rpm
+
+# Environment files
 .env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.toml
 .out
 .opencode/
 __pycache__/
 *.pyc
+.venv/
+.venv
+*.orig
+*.bak
