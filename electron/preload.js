@@ -23,26 +23,35 @@ contextBridge.exposeInMainWorld('electronAPI', {
 contextBridge.exposeInMainWorld('isDev', !process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 contextBridge.exposeInMainWorld('electronVersion', process.versions.electron);
 
+// Helper to create a proper unsubscribe function for ipcRenderer.on
+function createIpcListener(channel) {
+  return (callback) => {
+    ipcRenderer.on(channel, callback);
+    // Return a proper cleanup function
+    return () => ipcRenderer.off(channel, callback);
+  };
+}
+
 // Listen for events from main process
 contextBridge.exposeInMainWorld('electronEvents', {
-  onNewSession: (callback) => ipcRenderer.on('new-session', callback),
-  onExportReport: (callback) => ipcRenderer.on('export-report', callback),
-  onNavigateSessions: (callback) => ipcRenderer.on('navigate-sessions', callback),
-  onNavigateSettings: (callback) => ipcRenderer.on('navigate-settings', callback),
-  onNewSimulation: (callback) => ipcRenderer.on('new-simulation', callback),
-  onPauseResumeSimulation: (callback) => ipcRenderer.on('pause-resume-simulation', callback),
-  onStopSimulation: (callback) => ipcRenderer.on('stop-simulation', callback),
-  onExportTranscript: (callback) => ipcRenderer.on('export-transcript', callback),
-  onOpenDocumentation: (callback) => ipcRenderer.on('open-documentation', callback),
-  onOpenTutorials: (callback) => ipcRenderer.on('open-tutorials', callback),
-  onZoomIn: (callback) => ipcRenderer.on('zoom-in', callback),
-  onZoomOut: (callback) => ipcRenderer.on('zoom-out', callback),
-  onZoomReset: (callback) => ipcRenderer.on('zoom-reset', callback),
-  onToggleSidebar: (callback) => ipcRenderer.on('toggle-sidebar', callback),
-  onFind: (callback) => ipcRenderer.on('find', callback),
-  onUndo: (callback) => ipcRenderer.on('undo', callback),
-  onRedo: (callback) => ipcRenderer.on('redo', callback),
-  onSelectAll: (callback) => ipcRenderer.on('select-all', callback),
-  onCheckUpdates: (callback) => ipcRenderer.on('check-updates', callback),
-  onResumeLastSession: (callback) => ipcRenderer.on('resume-last-session', callback)
+  onNewSession: createIpcListener('new-session'),
+  onExportReport: createIpcListener('export-report'),
+  onNavigateSessions: createIpcListener('navigate-sessions'),
+  onNavigateSettings: createIpcListener('navigate-settings'),
+  onNewSimulation: createIpcListener('new-simulation'),
+  onPauseResumeSimulation: createIpcListener('pause-resume-simulation'),
+  onStopSimulation: createIpcListener('stop-simulation'),
+  onExportTranscript: createIpcListener('export-transcript'),
+  onOpenDocumentation: createIpcListener('open-documentation'),
+  onOpenTutorials: createIpcListener('open-tutorials'),
+  onZoomIn: createIpcListener('zoom-in'),
+  onZoomOut: createIpcListener('zoom-out'),
+  onZoomReset: createIpcListener('zoom-reset'),
+  onToggleSidebar: createIpcListener('toggle-sidebar'),
+  onFind: createIpcListener('find'),
+  onUndo: createIpcListener('undo'),
+  onRedo: createIpcListener('redo'),
+  onSelectAll: createIpcListener('select-all'),
+  onCheckUpdates: createIpcListener('check-updates'),
+  onResumeLastSession: createIpcListener('resume-last-session')
 });

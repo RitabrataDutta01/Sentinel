@@ -2,7 +2,7 @@
 set -e
 
 echo "Installing Python dependencies..."
-uv sync
+pip install -r requirements.txt
 
 echo "Building frontend..."
 npm ci --prefix ../frontend
