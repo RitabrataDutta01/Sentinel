@@ -2,7 +2,7 @@
 set -e
 
 echo "Installing Python dependencies..."
-pip install -r requirements.txt
+pip install --no-verify-hashes -r requirements.txt
 
 echo "Building frontend..."
 npm ci --prefix ../frontend
