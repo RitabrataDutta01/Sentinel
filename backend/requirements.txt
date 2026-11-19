@@ -551,6 +551,10 @@ google-auth==2.56.0 \
     --hash=sha256:6e88c10217e07a92bfd01cac8ee99e32ccfb08414c3102e6c5b8d58f37a0d1e0 \
     --hash=sha256:f90fa030b569a92654b9d690665a073841df33d57487be53db583a9a0867a553
     # via google-genai
+google-auth[requests]==2.56.0 \
+    --hash=sha256:6e88c10217e07a92bfd01cac8ee99e32ccfb08414c3102e6c5b8d58f37a0d1e0 \
+    --hash=sha256:f90fa030b569a92654b9d690665a073841df33d57487be53db583a9a0867a553
+    # via google-genai
 google-genai==2.11.0 \
     --hash=sha256:4c5e524d24b145c96be327f9a7f8f04b0fe4efee0533877795e9848afed01749 \
     --hash=sha256:5bc8186100e1d34d691fbe0cba392b7e04e98d286ca952323a6672d054accf95
