@@ -547,6 +547,9 @@ fonttools==4.63.0 \
     --hash=sha256:ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af \
     --hash=sha256:fd1e3094f42d806d3d7c79162fc59e5910fcbe3a7360c385b8da969bc4493745
     # via weasyprint
+fonttools[woff]==4.63.0 \
+    --hash=sha256:d7e5c9973aa04c95650c96e5f5ad865fbf42d62079163ecfab1e01cbc2504c22
+    # via weasyprint
 google-auth==2.56.0 \
     --hash=sha256:6e88c10217e07a92bfd01cac8ee99e32ccfb08414c3102e6c5b8d58f37a0d1e0 \
     --hash=sha256:f90fa030b569a92654b9d690665a073841df33d57487be53db583a9a0867a553
