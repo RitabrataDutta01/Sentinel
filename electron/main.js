@@ -56,7 +56,7 @@ function createWindow(url) {
       nodeIntegration: false,
       contentSecurityPolicy: isDev ?
         "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*;" :
-        "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' http://localhost:5000;"
+        "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://sentinel-ojdo.onrender.com http://localhost:5000;"
     }
   });
 

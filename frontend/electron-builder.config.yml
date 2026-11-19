@@ -7,6 +7,8 @@ directories:
 
 files:
   - "**/*"
+  - "dist/**/*"
+  - "dist/*"
 
 asar: false
 
