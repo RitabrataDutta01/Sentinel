@@ -561,6 +561,9 @@ google-auth[requests]==2.56.0 \
 supabase==2.33.0 \
     --hash=sha256:57c3aeeac3d612321deac8176b935077a7643461c8df4bf28722c2024c87ccc6
     # via backend
+storage3==2.33.0 \
+    --hash=sha256:6e357ea7328961bcecc02a35fac8fae555b0c4b6b02ff553a956824693fd4cec
+    # via supabase
 google-genai==2.11.0 \
     --hash=sha256:4c5e524d24b145c96be327f9a7f8f04b0fe4efee0533877795e9848afed01749 \
     --hash=sha256:5bc8186100e1d34d691fbe0cba392b7e04e98d286ca952323a6672d054accf95
