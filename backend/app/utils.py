@@ -3,7 +3,14 @@ from app.models import supabase
 from flask import request, jsonify, g
 import functools
 
-nlp = spacy.load('en_core_web_sm')
+# Lazy-loaded spaCy model
+_nlp = None
+
+def _get_nlp():
+    global _nlp
+    if _nlp is None:
+        _nlp = spacy.load('en_core_web_sm')
+    return _nlp
 
 def count_filler_words(text: str) -> dict:
 
@@ -13,7 +20,7 @@ def count_filler_words(text: str) -> dict:
     found = {}
     total = 0
 
-    doc = nlp(text.lower())
+    doc = _get_nlp()(text.lower())
 
     for token in doc:
 
@@ -36,7 +43,7 @@ HEDGING_WORDS = {"maybe", "perhaps", "possibly", "probably", "i think", "i feel"
 ASSERTIVE_WORDS = {"i believe", "i am confident", "certainly", "definitely", "absolutely", "undoubtedly", "without question", "clearly", "i know", "i am sure"}
 
 def calculate_confidence(text: str) -> int:
-    doc = nlp(text.lower())
+    doc = _get_nlp()(text.lower())
     words = [token.text for token in doc if not token.is_punct and not token.is_space]
     total_words = len(words)
     if total_words == 0:

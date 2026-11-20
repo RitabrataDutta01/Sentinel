@@ -3,7 +3,6 @@
  * Coordinates initialization of all Electron desktop features
  */
 import { isElectron as isElectronUtil, getElectronInfo as getElectronInfoUtil, electron } from '../lib/electron.js'
-import { shortcutManager } from './shortcuts.js'
 
 /**
  * Initialize all desktop features
@@ -125,6 +124,3 @@ export function isElectron() {
 export async function getElectronInfo() {
   return getElectronInfoUtil()
 }
-
-// Re-export shortcutManager from shortcuts.js
-export { shortcutManager }

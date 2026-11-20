@@ -1,6 +1,7 @@
 appId: com.sentinel.app
 productName: Sentinel
 copyright: "Copyright © 2025 Sentinel"
+executableName: Sentinel
 
 directories:
   output: "../dist-electron"
@@ -10,7 +11,7 @@ files:
   - "dist/**/*"
   - "dist/*"
 
-asar: false
+asar: true
 
 publish: null
 
@@ -37,3 +38,11 @@ nsis:
   installerIcon: "icons/icon.ico"
   uninstallerIcon: "icons/icon.ico"
   installerHeaderIcon: "icons/icon.ico"
+
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: "icons/icon.png"
+  category: Office
+  maintainer: Sentinel Team <sentinel@example.com>

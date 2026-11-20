@@ -20,6 +20,33 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor-react'
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix'
+            }
+            if (id.includes('recharts') || id.includes('d3-')) {
+              return 'vendor-charts'
+            }
+            if (id.includes('@supabase') || id.includes('@tanstack/react-query')) {
+              return 'vendor-supabase'
+            }
+            if (id.includes('axios') || id.includes('clsx') || id.includes('tailwind-merge') ||
+                id.includes('class-variance-authority') || id.includes('lucide-react') ||
+                id.includes('framer-motion') || id.includes('sonner')) {
+              return 'vendor-utils'
+            }
+            return 'vendor-other'
+          }
+        },
+      },
+    },
   },
 })

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Toaster } from 'sonner'
 import { supabase } from './lib/supabase'
 import { useTheme } from './lib/useTheme'
+import { checkHealth } from './lib/api'
 import Auth from './pages/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 import DesktopAppShell from './components/layout/DesktopAppShell'
@@ -37,6 +38,9 @@ function AnimatedRoutes() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Fire health check ping to wake up Render backend while auth loads
+    checkHealth().catch(() => {})
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       setLoading(false)

@@ -107,21 +107,29 @@ def start_session():
         "message" : "Simulation initialized. Ready for first prompt"
         }), 201
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, '..', 'toxicity_model.pkl')
+# Lazy-loaded toxicity model (joblib pickle - trusted local file from training pipeline)
+_toxicity_model = None
 
-try:
-    toxicity_model = joblib.load(MODEL_PATH)
-    print("✅ ML Toxicity Model loaded into memory successfully!")
-except Exception as e:
-    print(f"⚠️ Warning: Could not load ML model. Ensure toxicity_model.pkl is in the root directory. Error: {e}")
-    toxicity_model = None
+def _get_toxicity_model():
+    global _toxicity_model
+    if _toxicity_model is None:
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        MODEL_PATH = os.path.join(BASE_DIR, '..', 'toxicity_model.pkl')
+        try:
+            _toxicity_model = joblib.load(MODEL_PATH)
+            print("✅ ML Toxicity Model loaded into memory successfully!")
+        except Exception as e:
+            print(f"⚠️ Warning: Could not load ML model. Ensure toxicity_model.pkl is in the root directory. Error: {e}")
+            _toxicity_model = None
+    return _toxicity_model
 
 def process_chat(usr_msg: str) -> tuple[bool, int]:
 
-    if toxicity_model:
+    model = _get_toxicity_model()
 
-        probabilities = toxicity_model.predict_proba([usr_msg])[0]
+    if model:
+
+        probabilities = model.predict_proba([usr_msg])[0]
         toxicity_score = round(probabilities[1] * 100, 2)
         is_toxic = bool(toxicity_score > TOXICITY_THRESHOLD)
 
