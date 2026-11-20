@@ -48,15 +48,16 @@ function createWindow(url) {
     width: 1200,
     height: 800,
     frame: false,
-    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : undefined,
+    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'hidden',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       enableRemoteModule: false,
       nodeIntegration: false,
+      backgroundThrottling: false,
       contentSecurityPolicy: isDev ?
-        "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*;" :
-        "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://sentinel-ojdo.onrender.com http://localhost:5000;"
+        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*;" :
+        "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://sentinel-ojdo.onrender.com http://localhost:5000;"
     }
   });
 

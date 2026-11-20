@@ -194,27 +194,32 @@ function Titlebar({ setup, currentMood, sessionId }) {
 
   const { minimizeWindow, maximizeWindow, closeWindow } = electron
 
+  const noDrag = { WebkitAppRegion: 'no-drag' }
+  const drag = { WebkitAppRegion: 'drag' }
+
   return (
     <div
       className="flex h-10 items-center border-b border-sidebar-border bg-sidebar px-4 text-muted select-none shrink-0"
-      style={{ WebkitAppRegion: 'drag' }}
     >
-      {/* Left: traffic light dots (macOS style) */}
-      <div className="flex shrink-0 items-center gap-1.5" style={{ WebkitAppRegion: 'no-drag' }}>
+      {/* Left: traffic light dots (macOS style) — explicit no-drag */}
+      <div className="flex shrink-0 items-center gap-1.5" style={noDrag}>
         {isElectron() && (
           <>
             <button
               onClick={() => closeWindow()}
+              style={noDrag}
               className="h-3 w-3 rounded-full bg-mood-cold/80 hover:bg-mood-cold transition-colors"
               title="Close"
             />
             <button
               onClick={() => minimizeWindow()}
+              style={noDrag}
               className="h-3 w-3 rounded-full bg-secondary/80 hover:bg-secondary transition-colors"
               title="Minimize"
             />
             <button
               onClick={() => maximizeWindow()}
+              style={noDrag}
               className="h-3 w-3 rounded-full bg-mood-warm/80 hover:bg-mood-warm transition-colors"
               title="Maximize"
             />
@@ -229,8 +234,8 @@ function Titlebar({ setup, currentMood, sessionId }) {
         )}
       </div>
 
-      {/* Center: subtitle + mood chip */}
-      <div className="flex flex-1 items-center justify-center gap-3">
+      {/* Center: subtitle + mood chip — THIS is the drag region */}
+      <div className="flex flex-1 items-center justify-center gap-3" style={drag}>
         <span className="text-[12px] font-medium tracking-wide text-muted">
           workplace conversation simulator
         </span>
@@ -244,12 +249,13 @@ function Titlebar({ setup, currentMood, sessionId }) {
         )}
       </div>
 
-      {/* Right: window controls (non-macOS Electron) */}
-      <div className="flex shrink-0 items-center gap-0.5 w-16" style={{ WebkitAppRegion: 'no-drag' }}>
+      {/* Right: window controls (non-macOS Electron) — explicit no-drag */}
+      <div className="flex shrink-0 items-center gap-0.5 w-16" style={noDrag}>
         {isElectron() && (
           <>
             <button
               onClick={() => minimizeWindow()}
+              style={noDrag}
               className="rounded p-1 text-muted hover:bg-elevated hover:text-foreground"
             >
               <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -258,6 +264,7 @@ function Titlebar({ setup, currentMood, sessionId }) {
             </button>
             <button
               onClick={() => maximizeWindow()}
+              style={noDrag}
               className="rounded p-1 text-muted hover:bg-elevated hover:text-foreground"
             >
               <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -266,6 +273,7 @@ function Titlebar({ setup, currentMood, sessionId }) {
             </button>
             <button
               onClick={() => closeWindow()}
+              style={noDrag}
               className="rounded p-1 text-muted hover:bg-destructive/20 hover:text-destructive"
             >
               <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="1.5">
