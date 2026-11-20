@@ -18,15 +18,27 @@ Sentinel doesn't ask scripted questions. A dynamic **mood engine** (1–10 scale
 - **Owned-data isolation** — Supabase Row Level Security scopes every row to the signed-in user (org staff can read their org's data)
 - **Desktop app** — Electron wrapper with native titlebar, custom mood chip, global shortcuts (Cmd+N, Cmd+,, Cmd+B), system tray with "Resume last session"
 
-## Documentation
+## 📚 Documentation
 
-- [Project Overview](Documents/Overview.md)
-- [API Contract](Documents/api_Contract.md)
-- [Database Schema](Documents/Database_Schema.md)
-- [Design System](Documents/Design_System.md)
-- [Development Guide](Documents/Development_guide.md)
-- [Demo Script](Documents/Demo_script.md)
-- [Prompt Library](Documents/Prompts.md)
+| Part | Document | Description |
+|------|----------|-------------|
+| **01** | [Project Overview](./docs/01-project-overview.md) | Vision, problem, solution, core flow, target users |
+| **02** | [Technical Architecture](./docs/02-technical-architecture.md) | Tech stack, system design, data flow, security |
+| **03** | [Database Design](./docs/03-database-design.md) | Schema, relationships, RLS policies, migrations |
+| **04** | [API Specification](./docs/04-api-specification.md) | Complete REST API + SSE endpoints |
+| **05** | [Frontend Architecture](./docs/05-frontend-architecture.md) | React, routing, state management, components |
+| **06** | [Backend Architecture](./docs/06-backend-architecture.md) | Flask, AI engine, mood engine, PDF generation |
+| **07** | [AI & Mood Engine](./docs/07-ai-mood-engine.md) | Mood scoring, interviewer behavior, evaluation |
+| **08** | [Desktop Application](./docs/08-desktop-application.md) | Electron, packaging, distribution |
+| **09** | [CI/CD Pipeline](./docs/09-ci-cd-pipeline.md) | GitHub Actions, builds, releases |
+| **10** | [Deployment Guide](./docs/10-deployment-guide.md) | Local, Render, Docker, desktop distribution |
+| **11** | [Development Guide](./docs/11-development-guide.md) | Setup, workflow, coding standards |
+| **12** | [API Reference](./docs/12-api-reference.md) | Complete endpoint reference |
+| **13** | [Design System](./docs/13-design-system.md) | Colors, typography, components, rules |
+| **14** | [Testing & QA](./docs/14-testing-qa.md) | Test strategy, scenarios, metrics |
+| **15** | [Appendices](./docs/15-appendices.md) | Glossary, paths, env vars, commands |
+
+> **Legacy docs** (in `Documents/`) are preserved for reference.
 
 ## Tech Stack
 
