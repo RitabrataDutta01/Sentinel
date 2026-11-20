@@ -426,6 +426,28 @@ app.on('window-all-closed', () => {
 // Handle IPC messages from renderer
 const fs = require('fs');
 
+// Window control handlers
+ipcMain.on('minimize-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win) win.minimize();
+});
+
+ipcMain.on('maximize-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win) {
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      win.maximize();
+    }
+  }
+});
+
+ipcMain.on('close-window', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (win) win.close();
+});
+
 ipcMain.handle('save-file', async (event, data) => {
   try {
     const { filePath } = await dialog.showSaveDialog({
