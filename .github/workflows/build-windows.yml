@@ -39,7 +39,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sentinel-windows-installer
-          path: frontend/dist-electron/*.exe
+          path: |
+            frontend/dist-electron/*.exe
+            frontend/dist-electron/*.msi
           retention-days: 7
 
   build-linux:
@@ -79,8 +81,8 @@ jobs:
         with:
           name: sentinel-linux
           path: |
-            frontend/dist-electron-build/dist/*.AppImage
-            frontend/dist-electron-build/dist/*.deb
+            frontend/dist-electron/*.AppImage
+            frontend/dist-electron/*.deb
           retention-days: 7
 
   release:
