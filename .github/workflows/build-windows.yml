@@ -1,4 +1,4 @@
-name: Build Windows Electron App
+name: Build Electron Apps
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -31,7 +31,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Build Electron app
+      - name: Build Electron app (Windows)
         working-directory: ./frontend
         run: npm run electron:build
 
@@ -42,8 +42,49 @@ jobs:
           path: frontend/dist-electron/*.exe
           retention-days: 7
 
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libappindicator3-1 libsecret-1-dev libgconf-2-4 libxss1 libasound2
+
+      - name: Build Electron app (Linux)
+        working-directory: ./frontend
+        run: |
+          npm run build:electron
+          npx electron-builder --linux AppImage deb --projectDir=dist-electron-build --config electron-builder.config.yml
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-linux
+          path: |
+            frontend/dist-electron-build/dist/*.AppImage
+            frontend/dist-electron-build/dist/*.deb
+          retention-days: 7
+
   release:
-    needs: build
+    needs: [build-windows, build-linux]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -51,6 +92,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: sentinel-windows-installer
+          path: ./dist-electron
+
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: sentinel-linux
           path: ./dist-electron
 
       - name: Get version from tag
@@ -63,12 +110,16 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Sentinel ${{ steps.version.outputs.VERSION }}
           body: |
-            ## Sentinel HR Simulator - Windows Release
+            ## Sentinel HR Simulator - Release ${{ steps.version.outputs.VERSION }}
 
-            ### Installation
+            ### Windows
             1. Download `Sentinel-Setup-${{ steps.version.outputs.VERSION }}.exe`
             2. Run the installer
             3. Follow the setup wizard
+
+            ### Linux
+            - **AppImage**: Download `Sentinel-${{ steps.version.outputs.VERSION }}.AppImage`, make executable (`chmod +x`), and run
+            - **Debian/Ubuntu**: Download `sentinel_${{ steps.version.outputs.VERSION }}_amd64.deb` and install with `sudo dpkg -i`
 
             ### Changes
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
@@ -76,5 +127,7 @@ jobs:
           prerelease: false
           files: |
             ./dist-electron/*.exe
+            ./dist-electron/*.AppImage
+            ./dist-electron/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
