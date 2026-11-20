@@ -2,7 +2,6 @@ appId: com.sentinel.app
 productName: Sentinel
 copyright: "Copyright © 2025 Sentinel"
 executableName: Sentinel
-homepage: https://github.com/RitabrataDutta01/Sentinel
 
 directories:
   output: "../dist-electron"
@@ -47,4 +46,3 @@ linux:
   icon: "icons/icon.png"
   category: Office
   maintainer: Sentinel Team <sentinel@example.com>
-  desktopName: Sentinel
