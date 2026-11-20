@@ -202,6 +202,11 @@ export const electronEvents = {
 // Helper to check if running in Electron
 export const isElectron = isElectronRenderer;
 
+// React hook for Electron detection (works in components)
+export function useElectron() {
+  return isElectron();
+}
+
 // Helper to get Electron info
 export const getElectronInfo = async () => {
   if (!isElectron()) return null;
