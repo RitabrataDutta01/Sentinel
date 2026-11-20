@@ -56,8 +56,8 @@ function createWindow(url) {
       nodeIntegration: false,
       backgroundThrottling: false,
       contentSecurityPolicy: isDev ?
-        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:*;" :
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://sentinel-ojdo.onrender.com http://localhost:5000;"
+        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' http://localhost:* http://127.0.0.1:* https://mhkxctmbyoswmjbxnxsm.supabase.co;" :
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://sentinel-ojdo.onrender.com https://mhkxctmbyoswmjbxnxsm.supabase.co http://localhost:5000;"
     }
   });
 
