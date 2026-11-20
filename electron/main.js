@@ -69,6 +69,22 @@ function createWindow(url) {
     mainWindow.webContents.openDevTools();
   }
 
+  // Add Ctrl+Shift+I for DevTools in production
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.control && input.shift && input.key === 'I') {
+      mainWindow.webContents.toggleDevTools();
+    }
+    // Also F12
+    if (input.key === 'F12') {
+      mainWindow.webContents.toggleDevTools();
+    }
+  });
+
+  // Log console messages from renderer
+  mainWindow.webContents.on('console-message', (event, level, message, line, sourceId) => {
+    console.log(`[Renderer ${level}] ${message}`);
+  });
+
   // Handle window closed
   mainWindow.on('closed', () => {
     mainWindow = null;
