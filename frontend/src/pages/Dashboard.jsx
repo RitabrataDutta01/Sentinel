@@ -5,6 +5,7 @@ import { useSessionStore } from '../store/sessionStore'
 import { PlayCircle, TrendingUp, Clock, Activity, Zap } from 'lucide-react'
 import { verdictStyle } from '../lib/verdict'
 import { moodColor } from '../lib/mood'
+import { useElectron } from '../lib/electron'
 
 function computeStreak(sessions) {
   if (!sessions.length) return 0
@@ -45,6 +46,7 @@ function StatCard({ icon: Icon, label, value, sub }) {
 export default function Dashboard() {
   const navigate = useNavigate()
   const { sessionId } = useSessionStore()
+  const isElectron = useElectron()
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -97,7 +99,7 @@ export default function Dashboard() {
       <div className="p-8 text-center">
         <p className="text-sm text-muted mb-4">{error}</p>
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => isElectron() ? window.location.reload() : window.location.reload()}
           className="rounded-[var(--radius)] bg-accent px-4 py-2 text-xs font-semibold text-accent-foreground hover:opacity-90 transition-colors"
         >
           Retry

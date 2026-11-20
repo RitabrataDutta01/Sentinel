@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { getMyOrg, fetchPendingInvites } from './api'
+import { getToken } from './supabase'
 
 // Module-level cache shared by every useOrg() consumer (AppShell nav gating,
 // People page, Settings). Multiple mounted instances stay in sync.
@@ -20,6 +21,13 @@ async function loadOrg() {
   if (inflight) return inflight
   inflight = (async () => {
     try {
+      const token = await getToken()
+      if (!token) {
+        // No auth token — skip org fetch, user isn't logged in
+        setCache({ org: null, membership: null, pendingInvites: [], loading: false })
+        return
+      }
+
       // Fetch both independently so a pending-invites failure doesn't lose org data
       const [orgResult, invitesResult] = await Promise.allSettled([
         getMyOrg(),

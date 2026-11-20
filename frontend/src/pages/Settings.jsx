@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { getProfile, saveProfile } from '../lib/supabase'
 import { signOut } from '../lib/supabase'
@@ -48,6 +49,7 @@ function FormField({ label, description, children, htmlFor }) {
 
 export default function Settings() {
   const { theme, setTheme } = useTheme()
+  const navigate = useNavigate()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -214,7 +216,7 @@ export default function Settings() {
         >
           <Button
             variant="outline"
-            onClick={() => signOut().finally(() => (window.location.href = '/'))}
+            onClick={() => signOut().finally(() => navigate('/', { replace: true }))}
             className="flex items-center gap-2"
           >
             <LogOut className="h-4 w-4" />
